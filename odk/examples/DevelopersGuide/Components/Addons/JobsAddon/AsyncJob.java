@@ -2,13 +2,13 @@
  *
  *  $RCSfile: AsyncJob.java,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: hr $ $Date: 2003-06-30 15:11:10 $
+ *  last change: $Author: vg $ $Date: 2003-07-11 11:23:14 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
- *  
+ *
  *  Copyright (c) 2003 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
@@ -35,7 +35,7 @@
  *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
  *  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  *  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *     
+ *
  *************************************************************************/
 
 //_______________________________________________
@@ -67,7 +67,7 @@ public class AsyncJob extends    WeakBase implements XServiceInfo, XAsyncJob
     //___________________________________________
     // const
     public final XComponentContext m_xCmpCtx;
-    
+
     /** the const list of supported uno service names. */
     public static final java.lang.String[] SERVICENAMES = {"com.sun.star.task.AsyncJob"};
 
@@ -169,8 +169,6 @@ public class AsyncJob extends    WeakBase implements XServiceInfo, XAsyncJob
             java.lang.String sMessage = "\"" + sEnvType + "\" isn't a valid value for EnvType";
             throw new com.sun.star.lang.IllegalArgumentException(sMessage);
         }
-
-        System.out.println("environment analyzed ...");
 
         // Analyze the set of shared config data.
         java.lang.String sAlias = null;
@@ -316,6 +314,11 @@ public class AsyncJob extends    WeakBase implements XServiceInfo, XAsyncJob
     private void showInfoNonModal( java.lang.String sTitle   ,
                                    java.lang.String sMessage )
     {
+        // Couldnt be implemented realy using the toolkit ...
+        // Because we need a parent anytime.
+        // And showing e.g. a java dialog can make some trouble
+        // inside office ... but we have no chance here.
+        javax.swing.JOptionPane.showMessageDialog(null, sMessage, sTitle, javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     //___________________________________________
@@ -392,20 +395,20 @@ public class AsyncJob extends    WeakBase implements XServiceInfo, XAsyncJob
 
     public boolean supportsService( String sService ) {
         int len = SERVICENAMES.length;
-        
+
         for( int i=0; i < len; i++) {
             if ( sService.equals( SERVICENAMES[i] ) )
                 return true;
         }
-        
+
         return false;
     }
-    
+
     public String getImplementationName() {
         return( AsyncJob.class.getName() );
     }
 
-    
+
     //___________________________________________
 
     public synchronized static com.sun.star.lang.XSingleComponentFactory __getComponentFactory(java.lang.String sImplName)
