@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_struct.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2004-07-12 15:29:41 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:34:11 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -66,6 +66,7 @@
 
 // NOT FULLY DEFINED SERVICES
 #include <ary/idl/i_ce.hxx>
+#include <ary/idl/i_struct.hxx>
 #include <ary/idl/ik_exception.hxx>
 #include <ary/idl/ik_struct.hxx>
 #include <toolkit/hf_docentry.hxx>
@@ -77,21 +78,21 @@
 #include "hfi_typetext.hxx"
 #include "hi_linkhelper.hxx"
 
- 
+
 extern const String
     C_sCePrefix_Struct("struct");
 extern const String
     C_sCePrefix_Exception("exception");
-                
-                
-namespace 
+
+
+namespace
 {
 
 const String
     C_sBaseStruct("Base Hierarchy");
 const String
     C_sBaseException("Base Hierarchy");
- 
+
 const String
     C_sList_Elements("Elements' Summary");
 const String
@@ -107,9 +108,9 @@ enum E_SubListIndices
     sli_ElementsSummary = 0,
     sli_ElementsDetails = 1
 };
-    
+
 }   // anonymous namespace
-                
+
 
 
 HF_IdlStruct::HF_IdlStruct( Environment &         io_rEnv,
@@ -126,41 +127,68 @@ HF_IdlStruct::~HF_IdlStruct()
 
 void
 HF_IdlStruct::Produce_byData( const client & i_ce ) const
-{                  
+{
+    const ary::idl::Struct *
+        pStruct =
+            bIsException
+                ?   0
+                :   static_cast< const ary::idl::Struct* >(&i_ce);
+    bool bIsTemplate =
+            pStruct != 0
+                ?   pStruct->TemplateParameterType().IsValid()
+                :   false;
+
     Dyn<HF_NaviSubRow>
         pNaviSubRow( &make_Navibar(i_ce) );
 
     HF_TitleTable
-        aTitle(CurOut());   
+        aTitle(CurOut());
     HF_LinkedNameChain
         aNameChain(aTitle.Add_Row());
 
     aNameChain.Produce_CompleteChain(Env().CurPosition(), nameChainLinker);
-    aTitle.Produce_Title( StreamLock(200)()
-                          << (bIsException 
-                                ?   C_sCePrefix_Exception 
-                                :   C_sCePrefix_Struct)
-                          << " "
-                          << i_ce.LocalName()
-                          << c_str );
+
+    // Title:
+    StreamLock rTitle(200);
+    if (bIsTemplate)
+        rTitle() << "template ";
+    rTitle()
+        << (bIsException
+            ?   C_sCePrefix_Exception
+            :   C_sCePrefix_Struct)
+        << " "
+        << i_ce.LocalName();
+    if (bIsTemplate)
+    {
+        csv_assert(pStruct != 0);
+        rTitle()
+            << "<"
+            << pStruct->TemplateParameter()
+            << ">";
+    }
+    aTitle.Produce_Title( rTitle().c_str() );
+
+    // Bases:
     produce_Bases( aTitle.Add_Row(),
                    i_ce,
                    bIsException
                     ?   C_sBaseException
                     :   C_sBaseStruct );
-               
+
+    // Docu:
     write_Docu(aTitle.Add_Row(), i_ce);
     CurOut() << new Html::HorizontalLine();
-                      
-    dyn_ce_list 
+
+    // Elements:
+    dyn_ce_list
         dpElements;
     if (bIsException)
         ary::idl::ifc_exception::attr::Get_Elements(dpElements, i_ce);
     else
         ary::idl::ifc_struct::attr::Get_Elements(dpElements, i_ce);
-    
+
     if ( (*dpElements).operator bool() )
-    {               
+    {
         produce_Members( *dpElements,
                          C_sList_Elements,
                          C_sList_Elements_Label,
@@ -175,12 +203,12 @@ HF_IdlStruct::Produce_byData( const client & i_ce ) const
 HtmlFactory_Idl::type_id
 HF_IdlStruct::inq_BaseOf( const client & i_ce ) const
 {
-    return bIsException 
+    return bIsException
                 ?   ary::idl::ifc_exception::attr::Base(i_ce)
-                :   ary::idl::ifc_struct::attr::Base(i_ce); 
+                :   ary::idl::ifc_struct::attr::Base(i_ce);
 }
 
-HF_NaviSubRow &    
+HF_NaviSubRow &
 HF_IdlStruct::make_Navibar( const client & i_ce ) const
 {
     HF_IdlNavigationBar
@@ -196,7 +224,7 @@ HF_IdlStruct::make_Navibar( const client & i_ce ) const
     return ret;
 }
 
-void                
+void
 HF_IdlStruct::produce_MemberDetails( HF_SubTitleTable &  o_table,
                                      const client &      i_ce) const
 {
@@ -204,4 +232,3 @@ HF_IdlStruct::produce_MemberDetails( HF_SubTitleTable &  o_table,
         aElement( Env(), o_table );
     aElement.Produce_byData(i_ce);
 }
-
