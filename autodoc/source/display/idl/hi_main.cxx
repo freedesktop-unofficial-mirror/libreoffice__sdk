@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hi_main.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: np $ $Date: 2002-11-29 10:20:06 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:31:48 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -74,6 +74,7 @@
 #include <ary/idl/ik_exception.hxx>
 #include <ary/idl/ik_interface.hxx>
 #include <ary/idl/ik_service.hxx>
+#include <ary/idl/ik_siservice.hxx>
 #include <ary/idl/ik_struct.hxx>
 #include <ary/idl/ik_typedef.hxx>
 #include <cfrstd.hxx>
@@ -88,6 +89,7 @@
 #include "hfi_struct.hxx"
 #include "hfi_service.hxx"
 #include "hfi_singleton.hxx"
+#include "hfi_siservice.hxx"
 #include "hfi_typedef.hxx"
 #include "hfi_xrefpage.hxx"
 #include "hi_env.hxx"
@@ -98,9 +100,9 @@ using       ::ary::idl::Ce_id;
 using       ::ary::idl::Type_id;
 using       ::ary::idl::ifc_ce::Dyn_CeIterator;
 
-                    
-/*                    
-typedef     ::ary::Dyn_StdConstIterator< ::ary::idl::CommentedReference>
+
+/*
+typedef     ::ary::Dyn_StdConstIterator< ::ary::idl::CommentedRelation>
             Dyn_ComRefIterator;
 namespace   read_module     = ::ary::idl::ifc_module;
 namespace   read_interface  = ::ary::idl::ifc_interface;
@@ -325,6 +327,12 @@ MainDisplay_Idl::do_Service( const ary::idl::CodeEntity & i_ce )
 }
 
 void
+MainDisplay_Idl::do_SglIfcService( const ary::idl::CodeEntity & i_ce )
+{
+    do_SglIfcServiceDescr(i_ce);
+}
+
+void
 MainDisplay_Idl::do_Struct( const ary::idl::CodeEntity & i_ce )
 {
     do_StructDescr(i_ce);
@@ -375,9 +383,21 @@ MainDisplay_Idl::do_Singleton( const ary::idl::CodeEntity & i_ce )
     HF_IdlSingleton     aFactory( *pEnv, pMyFile->Body() );
     Guard_CurFactoryPtr gFactory(pCurFactory,aFactory);
 
-    aFactory.Produce_byData(i_ce);
+    aFactory.Produce_byData_ServiceBased(i_ce);
 }
 
+void
+MainDisplay_Idl::do_SglIfcSingleton( const ary::idl::CodeEntity & i_ce )
+{
+    Guard_CurFile       gFile( *pMyFile,
+                               Env(),
+                               i_ce,
+                               "Singleton" );
+    HF_IdlSingleton     aFactory( *pEnv, pMyFile->Body() );
+    Guard_CurFactoryPtr gFactory(pCurFactory,aFactory);
+
+    aFactory.Produce_byData_InterfaceBased(i_ce);
+}
 
 void
 MainDisplay_Idl::do_InterfaceDescr( const ary::idl::CodeEntity & i_ce )
@@ -400,6 +420,19 @@ MainDisplay_Idl::do_ServiceDescr( const ary::idl::CodeEntity & i_ce )
                                i_ce,
                                "Service" );
     HF_IdlService       aFactory( *pEnv, pMyFile->Body() );
+    Guard_CurFactoryPtr gFactory(pCurFactory,aFactory);
+
+    aFactory.Produce_byData(i_ce);
+}
+
+void
+MainDisplay_Idl::do_SglIfcServiceDescr( const ary::idl::CodeEntity & i_ce )
+{
+    Guard_CurFile       gFile( *pMyFile,
+                               Env(),
+                               i_ce,
+                               "Service" );
+    HF_IdlSglIfcService aFactory( *pEnv, pMyFile->Body() );
     Guard_CurFactoryPtr gFactory(pCurFactory,aFactory);
 
     aFactory.Produce_byData(i_ce);
@@ -474,29 +507,37 @@ MainDisplay_Idl::do_Interface2s( const ary::idl::CodeEntity & i_ce )
                                C_sCePrefix_Interface,
                                i_ce );
 
-    Dyn_CeIterator  pXrefList;
-    ary::idl::ifc_interface::xref::Get_Derivations(pXrefList,i_ce);
-    aUses.Produce_List( 
+
+    aUses.Produce_Tree(
         "Derived Interfaces",
         "#Deriveds",
-        *pXrefList );
-    ary::idl::ifc_interface::xref::Get_SynonymTypedefs(pXrefList,i_ce);        
-    aUses.Produce_List( 
+        i_ce,
+        &ary::idl::ifc_interface::xref::Get_Derivations );
+
+    Dyn_CeIterator  pXrefList;
+
+    ary::idl::ifc_interface::xref::Get_SynonymTypedefs(pXrefList,i_ce);
+    aUses.Produce_List(
         "Synonym Typedefs",
         "#Synonyms",
         *pXrefList );
-    ary::idl::ifc_interface::xref::Get_ExportingServices(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_interface::xref::Get_ExportingServices(pXrefList,i_ce);
+    aUses.Produce_List(
         "Services which Support this Interface",
         "#SupportingServices",
         *pXrefList );
-    ary::idl::ifc_interface::xref::Get_AsReturns(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_interface::xref::Get_ExportingSingletons(pXrefList,i_ce);
+    aUses.Produce_List(
+        "Singletons which Support this Interface",
+        "#SupportingSingletons",
+        *pXrefList );
+    ary::idl::ifc_interface::xref::Get_AsReturns(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
-    ary::idl::ifc_interface::xref::Get_AsParameters(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_interface::xref::Get_AsParameters(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Parameter",
         "#Parameters",
         *pXrefList );
@@ -510,32 +551,32 @@ MainDisplay_Idl::do_Interface2s( const ary::idl::CodeEntity & i_ce )
 
 void
 MainDisplay_Idl::do_Service2s( const ary::idl::CodeEntity & i_ce )
-{                                              
+{
     String sUsesFileName(
-                StreamLock(100)() 
-                    << i_ce.LocalName() 
+                StreamLock(100)()
+                    << i_ce.LocalName()
                     << Env().Linker().XrefsSuffix()
                     << c_str );
     Guard_CurFile   gFile(  *pMyFile,
                             Env(),
                             sUsesFileName,
                             "Uses of Service" );
-    HF_IdlXrefs     aUses(  *pEnv, 
+    HF_IdlXrefs     aUses(  *pEnv,
                             pMyFile->Body(),
                             C_sCePrefix_Service,
                             i_ce );
-    Dyn_CeIterator  pXrefList;                                                                                
-    ary::idl::ifc_service::xref::Get_IncludingServices(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    Dyn_CeIterator  pXrefList;
+    ary::idl::ifc_service::xref::Get_IncludingServices(pXrefList,i_ce);
+    aUses.Produce_List(
         "Services which Include this Service",
         "#IncludingServices",
-        *pXrefList );    
-        
-    ary::idl::ifc_service::xref::Get_InstantiatingSingletons(pXrefList,i_ce);        
-    aUses.Produce_List( 
+        *pXrefList );
+
+    ary::idl::ifc_service::xref::Get_InstantiatingSingletons(pXrefList,i_ce);
+    aUses.Produce_List(
         "Singletons which Instantiate this Service",
         "#Singletons",
-        *pXrefList );    
+        *pXrefList );
     aUses.Write_ManualLinks(i_ce);
 }
 
@@ -543,36 +584,39 @@ void
 MainDisplay_Idl::do_Struct2s( const ary::idl::CodeEntity & i_ce )
 {
     String sUsesFileName(
-                StreamLock(100)() 
-                    << i_ce.LocalName() 
+                StreamLock(100)()
+                    << i_ce.LocalName()
                     << Env().Linker().XrefsSuffix()
                     << c_str );
     Guard_CurFile   gFile(  *pMyFile,
                             Env(),
                             sUsesFileName,
                             "Uses of Struct" );
-    HF_IdlXrefs     aUses(  *pEnv, 
+    HF_IdlXrefs     aUses(  *pEnv,
                             pMyFile->Body(),
                             C_sCePrefix_Struct,
                             i_ce );
-    Dyn_CeIterator  pXrefList;                                                                                
-    ary::idl::ifc_struct::xref::Get_Derivations(pXrefList,i_ce);        
-    aUses.Produce_List( 
+
+    aUses.Produce_Tree(
         "Derived Structs",
         "#Deriveds",
-        *pXrefList );
-    ary::idl::ifc_struct::xref::Get_SynonymTypedefs(pXrefList,i_ce);        
-    aUses.Produce_List( 
+        i_ce,
+        &ary::idl::ifc_struct::xref::Get_Derivations );
+
+    Dyn_CeIterator  pXrefList;
+
+    ary::idl::ifc_struct::xref::Get_SynonymTypedefs(pXrefList,i_ce);
+    aUses.Produce_List(
         "Synonym Typedefs",
         "#Synonyms",
         *pXrefList );
-    ary::idl::ifc_struct::xref::Get_AsReturns(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_struct::xref::Get_AsReturns(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
     ary::idl::ifc_struct::xref::Get_AsParameters(pXrefList,i_ce);
-    aUses.Produce_List( 
+    aUses.Produce_List(
         "Uses as Parameter",
         "#Parameters",
         *pXrefList );
@@ -588,26 +632,29 @@ void
 MainDisplay_Idl::do_Exception2s( const ary::idl::CodeEntity & i_ce )
 {
     String sUsesFileName(
-                StreamLock(100)() 
-                    << i_ce.LocalName() 
+                StreamLock(100)()
+                    << i_ce.LocalName()
                     << Env().Linker().XrefsSuffix()
                     << c_str );
     Guard_CurFile   gFile(  *pMyFile,
                             Env(),
                             sUsesFileName,
                             "Uses of Exception" );
-    HF_IdlXrefs     aUses(  *pEnv, 
+    HF_IdlXrefs     aUses(  *pEnv,
                             pMyFile->Body(),
                             C_sCePrefix_Exception,
                             i_ce );
-    Dyn_CeIterator  pXrefList;                                                                                
-    ary::idl::ifc_exception::xref::Get_Derivations(pXrefList,i_ce);        
-    aUses.Produce_List( 
+
+    aUses.Produce_Tree(
         "Derived Exceptions",
         "#Deriveds",
-        *pXrefList );
-    ary::idl::ifc_exception::xref::Get_RaisingFunctions(pXrefList,i_ce);        
-    aUses.Produce_List( 
+        i_ce,
+        &ary::idl::ifc_exception::xref::Get_Derivations );
+
+    Dyn_CeIterator  pXrefList;
+
+    ary::idl::ifc_exception::xref::Get_RaisingFunctions(pXrefList,i_ce);
+    aUses.Produce_List(
         "Raising Functions",
         "#Raisers",
         *pXrefList );
@@ -618,31 +665,31 @@ void
 MainDisplay_Idl::do_Enum2s( const ary::idl::CodeEntity & i_ce )
 {
     String sUsesFileName(
-                StreamLock(100)() 
-                    << i_ce.LocalName() 
+                StreamLock(100)()
+                    << i_ce.LocalName()
                     << Env().Linker().XrefsSuffix()
                     << c_str );
     Guard_CurFile   gFile(  *pMyFile,
                             Env(),
                             sUsesFileName,
                             "Uses of Enum" );
-    HF_IdlXrefs     aUses(  *pEnv, 
+    HF_IdlXrefs     aUses(  *pEnv,
                             pMyFile->Body(),
                             C_sCePrefix_Enum,
                             i_ce );
-    Dyn_CeIterator  pXrefList;                                                                                
-    ary::idl::ifc_enum::xref::Get_SynonymTypedefs(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    Dyn_CeIterator  pXrefList;
+    ary::idl::ifc_enum::xref::Get_SynonymTypedefs(pXrefList,i_ce);
+    aUses.Produce_List(
         "Synonym Typedefs",
         "#Synonyms",
         *pXrefList );
-    ary::idl::ifc_enum::xref::Get_AsReturns(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_enum::xref::Get_AsReturns(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
     ary::idl::ifc_enum::xref::Get_AsParameters(pXrefList,i_ce);
-    aUses.Produce_List( 
+    aUses.Produce_List(
         "Uses as Parameter",
         "#Parameters",
         *pXrefList );
