@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hdimpl.cxx,v $
  *
- *  $Revision: 1.5 $
+ *  $Revision: 1.6 $
  *
- *  last change: $Author: rt $ $Date: 2003-12-01 16:11:32 $
+ *  last change: $Author: vg $ $Date: 2005-03-23 08:54:58 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -346,7 +346,7 @@ Create_ChildListTable( const char * i_sTitle )
     html::TableRow &
             rRow = dpTable->AddRow();
     rRow
-        << new html::BgColorAttr("#CCCCFF")
+        << new html::ClassAttr("subtitle")
         >> *new html::TableCell
                 << new xml::AnAttribute( "colspan","2" )
                 >> *new html::Headline(4)
@@ -354,7 +354,7 @@ Create_ChildListTable( const char * i_sTitle )
     return *dpTable;
 }
 
- 
+
 const char *
 Link2Ce( const OuputPage_Environment & i_rEnv,
          const ary::CodeEntity &       i_rCe )
@@ -394,7 +394,7 @@ FindUnambiguousCe( const OuputPage_Environment & i_rEnv,
 {
      if ( i_rEnv.CurNamespace() == 0 )
         return 0;
-    
+
     const ary::CodeEntity * ret = 0;
 
     if ( NOT i_rQuName.IsQualified() )
