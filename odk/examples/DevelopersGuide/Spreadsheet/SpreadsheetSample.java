@@ -2,13 +2,13 @@
  *
  *  $RCSfile: SpreadsheetSample.java,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: hr $ $Date: 2003-06-30 15:46:09 $
+ *  last change: $Author: vg $ $Date: 2003-07-23 08:57:47 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
- *  
+ *
  *  Copyright (c) 2003 by Sun Microsystems, Inc.
  *  All rights reserved.
  *
@@ -35,7 +35,7 @@
  *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
  *  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
  *  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *     
+ *
  *************************************************************************/
 
 import com.sun.star.uno.UnoRuntime;
@@ -880,7 +880,7 @@ public class SpreadsheetSample extends SpreadsheetDocHelper
         // --- Data validation ---
         prepareRange( xSheet, "A5:C7", "Validation" );
         setFormula( xSheet, "A6", "Insert values between 0.0 and 5.0 below:" );
-        
+
         com.sun.star.table.XCellRange xCellRange = xSheet.getCellRangeByName( "A7:C7" );
         com.sun.star.beans.XPropertySet xCellPropSet = (com.sun.star.beans.XPropertySet)
             UnoRuntime.queryInterface( com.sun.star.beans.XPropertySet.class, xCellRange );
@@ -1188,10 +1188,12 @@ public class SpreadsheetSample extends SpreadsheetDocHelper
 
 
         // --- sort by second column, ascending ---
-        com.sun.star.util.SortField[] aSortFields = new com.sun.star.util.SortField[1];
-        aSortFields[0] = new com.sun.star.util.SortField();
+        com.sun.star.table.TableSortField[] aSortFields = new com.sun.star.table.TableSortField[1];
+        aSortFields[0] = new com.sun.star.table.TableSortField();
         aSortFields[0].Field         = 1;
-        aSortFields[0].SortAscending = true;
+        aSortFields[0].IsAscending = false;
+        aSortFields[0].IsCaseSensitive = false;
+
 
         com.sun.star.beans.PropertyValue[] aSortDesc = new com.sun.star.beans.PropertyValue[2];
         aSortDesc[0] = new com.sun.star.beans.PropertyValue();
