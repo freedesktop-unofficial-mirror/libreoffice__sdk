@@ -2,9 +2,9 @@
  *
  *  $RCSfile: adc_cmds.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:02:01 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:34:37 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -86,6 +86,7 @@ extern const String C_opt_Name("-name");
 extern const String C_opt_LangAll("-lg");
 extern const String C_opt_ExtensionsAll("-extg");
 extern const String C_opt_DevmanFile("-dvgfile");
+extern const String C_opt_SinceFile("-sincefile");
 
 extern const String C_arg_Cplusplus("c++");
 extern const String C_arg_Idl("idl");
@@ -100,7 +101,6 @@ extern const String C_opt_SourceFile("-f");
 
 extern const String C_opt_CreateHtml("-html");
 extern const String C_opt_DevmanRoot("-dvgroot");
-extern const String C_opt_SimpleLinks("-simplelinks");
 
 //extern const String C_opt_CreateXml("-xml");
 //extern const String C_opt_Load("-load");
@@ -113,8 +113,7 @@ extern const String C_opt_SimpleLinks("-simplelinks");
 
 CreateHtml::CreateHtml()
     :   sOutputRootDirectory(),
-        sDevelopersManual_HtmlRoot(),
-        bSimpleLinks(false)
+        sDevelopersManual_HtmlRoot()
 {
 }
 
@@ -130,9 +129,9 @@ CreateHtml::do_Init( opt_iter &          it,
     CHECKOPT( it != itEnd && (*it).char_at(0) != '-',
               "output directory", C_opt_CreateHtml );
     sOutputRootDirectory = *it;
-    
-    for ( ++it;                 
-          it != itEnd AND (*it == C_opt_DevmanRoot OR *it == C_opt_SimpleLinks);
+
+    for ( ++it;
+          it != itEnd AND (*it == C_opt_DevmanRoot);
           ++it )
     {
         if (*it == C_opt_DevmanRoot)
@@ -141,11 +140,7 @@ CreateHtml::do_Init( opt_iter &          it,
             CHECKOPT( it != itEnd AND (*it).char_at(0) != '-',
                       "HTML root directory of Developers Guide",
                       C_opt_DevmanRoot );
-            sDevelopersManual_HtmlRoot = *it;         
-        }   
-        else if (*it == C_opt_SimpleLinks)
-        {
-            bSimpleLinks = true;            
+            sDevelopersManual_HtmlRoot = *it;
         }
     }   // end for
 }
@@ -154,24 +149,24 @@ bool
 CreateHtml::do_Run() const
 {
     if ( ::ary::n22::Repository::The_().HasIdl() )
-        run_Idl();            
+        run_Idl();
     if ( ::ary::n22::Repository::The_().HasCpp() )
-        run_Cpp();            
+        run_Cpp();
     return true;
-}   
-
-int         
-CreateHtml::inq_RunningRank() const
-{
-    return static_cast<int>(rank_CreateHtml); 
 }
 
-void                
+int
+CreateHtml::inq_RunningRank() const
+{
+    return static_cast<int>(rank_CreateHtml);
+}
+
+void
 CreateHtml::run_Idl() const
-{                                                       
+{
     const ary::idl::Gate &
         rGate = ary::n22::Repository::The_().Gate_Idl();
-        
+
     Cout() << "Creating HTML-output into the directory "
               << sOutputRootDirectory
               << "."
@@ -179,32 +174,30 @@ CreateHtml::run_Idl() const
 
     const DisplayToolsFactory_Ifc &
         rToolsFactory = DisplayToolsFactory_Ifc::GetIt_();
-    Dyn<autodoc::HtmlDisplay_Idl_Ifc> 
+    Dyn<autodoc::HtmlDisplay_Idl_Ifc>
         pDisplay( rToolsFactory.Create_HtmlDisplay_Idl() );
-                   
-    DYN display::CorporateFrame &   // KORR: Remove the need for const_cast in future. 
+
+    DYN display::CorporateFrame &   // KORR: Remove the need for const_cast in future.
         drFrame = const_cast< display::CorporateFrame& >(rToolsFactory.Create_StdFrame());
     if (NOT DevelopersManual_HtmlRoot().empty())
         drFrame.Set_DevelopersGuideHtmlRoot( DevelopersManual_HtmlRoot() );
-    if (bSimpleLinks) 
-        drFrame.Set_SimpleLinks();
-                                            
+
     pDisplay->Run( sOutputRootDirectory,
                    rGate,
-                   drFrame );    
+                   drFrame );
 }
 
-void                
+void
 CreateHtml::run_Cpp() const
-{                                            
-    const ary::n22::Repository & 
+{
+    const ary::n22::Repository &
         rReposy = ary::n22::Repository::The_();
     const ary::cpp::DisplayGate &
         rGate = rReposy.Gate_Cpp();
 
     const DisplayToolsFactory_Ifc &
         rToolsFactory = DisplayToolsFactory_Ifc::GetIt_();
-    Dyn< autodoc::HtmlDisplay_UdkStd > 
+    Dyn< autodoc::HtmlDisplay_UdkStd >
         pDisplay( rToolsFactory.Create_HtmlDisplay_UdkStd() );
 
     pDisplay->Run( sOutputRootDirectory,
