@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cxt2ary.cxx,v $
  *
- *  $Revision: 1.1.1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-03-08 14:45:29 $
+ *  last change: $Author: hr $ $Date: 2003-04-15 18:45:56 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -76,6 +76,7 @@
 #include <ary/cpp/c_rwgate.hxx>
 #include <ary/cpp/c_tydef.hxx>
 #include <ary/cpp/c_vari.hxx>
+#include <ary/info/codeinfo.hxx>
 #include <ary/info/docstore.hxx>
 #include "icprivow.hxx"
 
@@ -301,7 +302,7 @@ ContextForAry::do_Event_Store_Variable( ary::cpp::Variable & io_rVariable )
 void
 ContextForAry::do_TakeDocu( DYN ary::Documentation & let_drInfo )
 {
-    let_drInfo.Store2(*pDocuDistributor);
+    let_drInfo.Store2(*pDocuDistributor);  
 }
 
 void
