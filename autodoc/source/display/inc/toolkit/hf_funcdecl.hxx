@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hf_funcdecl.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:15:15 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:35:39 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -70,7 +70,8 @@
     // PARAMETERS
 
 
-/** @resp   
+#if 0   // old
+/** @resp
     Provides three cells to put in a function declaration.
 */
 class HF_FunctionDeclaration : public HtmlMaker
@@ -79,27 +80,55 @@ class HF_FunctionDeclaration : public HtmlMaker
                         HF_FunctionDeclaration(
                             Xml::Element &      o_rParent );
     virtual             ~HF_FunctionDeclaration();
-                                      
-    /// Inserts empty line in 2nd and 3rd cell and returns first.                                      
+
+    /// Inserts empty line in 2nd and 3rd cell and returns first.
     Xml::Element &      Add_ReturnLine();
-    
-    /** Inserts empty line in 1st cell, "raises (" in 2nd 
-        and returns 3rd.                                      
+
+    /** Inserts empty line in 1st cell, "raises (" in 2nd
+        and returns 3rd.
     */
     Xml::Element &      Add_RaisesLine(
                             const char *        i_sRaisesText,
                             bool                i_bSuppressExtraLine = false );
-                             
+
     Xml::Element &      Front()                 { return *pFront; }
     Xml::Element &      Types()                 { return *pTypes; }
     Xml::Element &      Names()                 { return *pNames; }
 
   private:
-    Xml::Element *      pFront;  
-    Xml::Element *      pTypes;  
-    Xml::Element *      pNames;  
+    Xml::Element *      pFront;
+    Xml::Element *      pTypes;
+    Xml::Element *      pNames;
 };
+#endif // 0  old
 
+class HF_FunctionDeclaration : public HtmlMaker
+{
+  public:
+                        HF_FunctionDeclaration(
+                            Xml::Element &      o_rParent,
+                            const String &      i_sRaisesText );
+    virtual             ~HF_FunctionDeclaration();
+
+    // OPERATIONS
+    Xml::Element &      ReturnCell();
+    Xml::Element &      NameCell();
+    Xml::Element &      NewParamTypeCell();
+    Xml::Element &      ParamNameCell();
+    Xml::Element &      ExceptionCell();
+
+  private:
+    Html::TableRow &    ParameterLine();
+
+    // DATA
+    String              sRaisesText;
+    Html::Table *       pTable;
+    Xml::Element *      pReturnCell;
+    Xml::Element *      pNameCell;
+    Html::TableRow *    pParameterLine;
+    Xml::Element *      pLastParameterCell;
+    Xml::Element *      pExceptionCell;
+};
 
 
 // IMPLEMENTATION
