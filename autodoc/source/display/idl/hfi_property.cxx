@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_property.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:14:39 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:27:50 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following li
@@ -71,68 +71,69 @@
 #include <ary/idl/ik_enumvalue.hxx>
 #include <ary/idl/ik_property.hxx>
 #include <ary/idl/ik_structelem.hxx>
+#include <toolkit/hf_docentry.hxx>
 #include <toolkit/hf_title.hxx>
 #include "hfi_typetext.hxx"
-                  
-void                
+
+void
 HF_IdlDataMember::Produce_byData( const client & ce ) const
 {
     // Title:
-    CurOut()   
+    CurOut()
         >> *new Html::Label(ce.LocalName())
             << new Html::ClassAttr(C_sMemberTitle)
             << ce.LocalName();
-            
-    enter_ContentCell();                            
+
+    enter_ContentCell();
     write_Declaration(ce);
     CurOut() << new Html::HorizontalLine;
     write_Docu(CurOut(), ce);
     leave_ContentCell();
 }
-    
+
 HF_IdlDataMember::HF_IdlDataMember( Environment &       io_rEnv,
                                     HF_SubTitleTable &  o_table )
-    :   HtmlFactory_Idl( io_rEnv, 
+    :   HtmlFactory_Idl( io_rEnv,
                          &(o_table.Add_Row()
                             >> *new Html::TableCell
-                                << new Html::ClassAttr(C_sCellStyle_MDetail)) 
+                                << new Html::ClassAttr(C_sCellStyle_MDetail))
                        )
 {
 }
-      
+
 const String sContentBorder("0");
 const String sContentWidth("96%");
-const String sContentPadding("5");    
-const String sContentSpacing("0"); 
+const String sContentPadding("5");
+const String sContentSpacing("0");
 
-const String sBgWhite("#ffffff"); 
-const String sCenter("center"); 
+const String sBgWhite("#ffffff");
+const String sCenter("center");
 
-void                
+void
 HF_IdlDataMember::enter_ContentCell() const
 {
 
     Xml::Element &
-        rContentCell = CurOut() 
+        rContentCell = CurOut()
                         >> *new Html::Table( sContentBorder,
                                              sContentWidth,
                                              sContentPadding,
-                                             sContentSpacing ) 
+                                             sContentSpacing )
                             << new Html::BgColorAttr(sBgWhite)
                             << new Html::AlignAttr(sCenter)
                             >> *new Html::TableRow
                                 >> *new Html::TableCell;
-    Out().Enter(rContentCell);                                
+    Out().Enter(rContentCell);
 }
 
 
-void                
+void
 HF_IdlDataMember::leave_ContentCell() const
 {
     Out().Leave();
 }
 
-                            
+
 HF_IdlProperty::~HF_IdlProperty()
 {
 }
@@ -141,28 +142,29 @@ typedef ary::idl::ifc_property::attr    PropertyAttr;
 
 void
 HF_IdlProperty::write_Declaration( const client & i_ce ) const
-{          
+{
     if (PropertyAttr::HasAnyStereotype(i_ce))
+    {
         CurOut() << "[ ";
-    if (PropertyAttr::IsReadOnly(i_ce))
-        CurOut() << "readonly ";
-    if (PropertyAttr::IsBound(i_ce))
-        CurOut() << "bound ";
-    if (PropertyAttr::IsConstrained(i_ce))
-        CurOut() << "constrained ";
-    if (PropertyAttr::IsMayBeAmbigious(i_ce))
-        CurOut() << "maybeambigious ";
-    if (PropertyAttr::IsMayBeDefault(i_ce))
-        CurOut() << "maybedefault ";
-    if (PropertyAttr::IsMayBeVoid(i_ce))
-        CurOut() << "maybevoid ";
-    if (PropertyAttr::IsRemovable(i_ce))
-        CurOut() << "removable ";
-    if (PropertyAttr::IsTransient(i_ce))
-        CurOut() << "transient ";
-    if (PropertyAttr::HasAnyStereotype(i_ce))
-        CurOut() << " ] ";
-                              
+        if (PropertyAttr::IsReadOnly(i_ce))
+            CurOut() << "readonly ";
+        if (PropertyAttr::IsBound(i_ce))
+            CurOut() << "bound ";
+        if (PropertyAttr::IsConstrained(i_ce))
+            CurOut() << "constrained ";
+        if (PropertyAttr::IsMayBeAmbiguous(i_ce))
+            CurOut() << "maybeambiguous ";
+        if (PropertyAttr::IsMayBeDefault(i_ce))
+            CurOut() << "maybedefault ";
+        if (PropertyAttr::IsMayBeVoid(i_ce))
+            CurOut() << "maybevoid ";
+        if (PropertyAttr::IsRemovable(i_ce))
+            CurOut() << "removable ";
+        if (PropertyAttr::IsTransient(i_ce))
+            CurOut() << "transient ";
+        CurOut() << "] ";
+    }   // end if
+
     HF_IdlTypeText
         aType( Env(), CurOut(), true );
     aType.Produce_byData( PropertyAttr::Type(i_ce) );
@@ -170,7 +172,7 @@ HF_IdlProperty::write_Declaration( const client & i_ce ) const
     CurOut() << " " >> *new Html::Bold << i_ce.LocalName();
     CurOut() << ";";
 }
-    
+
 
 
 
@@ -182,18 +184,84 @@ typedef ary::idl::ifc_attribute::attr    AttributeAttr;
 
 void
 HF_IdlAttribute::write_Declaration( const client & i_ce ) const
-{          
-    if (AttributeAttr::IsReadOnly(i_ce))
-        CurOut() << "[ readonly ] ";
-                              
+{
+    if (AttributeAttr::HasAnyStereotype(i_ce))
+    {
+        CurOut() << "[ ";
+        if (AttributeAttr::IsReadOnly(i_ce))
+            CurOut() << "readonly ";
+        if (AttributeAttr::IsBound(i_ce))
+            CurOut() << "bound ";
+        CurOut() << "] ";
+    }
+
     HF_IdlTypeText
         aType( Env(), CurOut(), true );
     aType.Produce_byData( AttributeAttr::Type(i_ce) );
 
-    CurOut() << " " >> *new Html::Bold << i_ce.LocalName();
-    CurOut() << ";";
+    CurOut()
+        << " "
+        >> *new Html::Bold
+            << i_ce.LocalName();
+
+    dyn_type_list pGetExceptions;
+    dyn_type_list pSetExceptions;
+    AttributeAttr::Get_GetExceptions(pGetExceptions, i_ce);
+    AttributeAttr::Get_SetExceptions(pSetExceptions, i_ce);
+
+    bool bGetRaises = (*pGetExceptions).IsValid();
+    bool bSetRaises = (*pSetExceptions).IsValid();
+    bool bRaises = bGetRaises OR bSetRaises;
+    if (bRaises)
+    {
+        HF_DocEntryList aSub(CurOut());
+
+        if (bGetRaises)
+        {
+            Xml::Element &
+                rGet = aSub.Produce_Definition();
+            HF_IdlTypeText
+                aExc(Env(), rGet, true);
+            type_list & itExc = *pGetExceptions;
+
+            rGet << "get raises (";
+            aExc.Produce_byData(*itExc);
+            for (++itExc; itExc.operator bool(); ++itExc)
+            {
+                rGet
+                    << ",";
+                aExc.Produce_byData(*itExc);
+            }   // end for
+            rGet << ")";
+            if (NOT bSetRaises)
+                rGet << ";";
+        }   // end if (bGetRaises)
+
+        if (bSetRaises)
+        {
+            Xml::Element &
+                rSet = aSub.Produce_Definition();
+            HF_IdlTypeText
+                aExc(Env(), rSet, true);
+            type_list & itExc = *pSetExceptions;
+
+            rSet << "set raises (";
+            aExc.Produce_byData(*itExc);
+            for (++itExc; itExc.operator bool(); ++itExc)
+            {
+                rSet
+                    << ",";
+                aExc.Produce_byData(*itExc);
+            }   // end for
+            rSet << ");";
+        }   // end if (bSetRaises)
+    }
+    else
+    {
+        CurOut() << ";";
+    }
 }
-    
+
 
 
 
@@ -210,14 +278,14 @@ HF_IdlEnumValue::write_Declaration( const client & i_ce ) const
         >> *new Html::Bold
             << i_ce.LocalName();
 
-    const String & 
+    const String &
         rValue = EnumValueAttr::Value(i_ce);
     if ( NOT rValue.empty() )
     {    CurOut() << " " // << " = "    // In the moment this is somehow in the value
                  << rValue;
         // CurOut() << ",";             // In the moment this is somehow in the value
     }
-    else                 
+    else
         CurOut() << ",";
 }
 
@@ -239,7 +307,7 @@ HF_IdlConstant::write_Declaration( const client & i_ce ) const
         << " "
         >> *new Html::Bold
             << i_ce.LocalName();
-    const String & 
+    const String &
         rValue = ConstantAttr::Value(i_ce);
     CurOut() << " "     // << " = "    // In the moment this is somehow in the value
              << rValue;
