@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_typetext.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: vg $ $Date: 2003-06-10 11:34:26 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:34:53 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -72,22 +72,22 @@
 #include <ary/idl/ik_ce.hxx>
 #include "hi_linkhelper.hxx"
 
-        
+
 inline const ary::idl::Module *
 HF_IdlTypeText::referingModule() const
 {
     if (pReferingCe == 0)
-        return Env().Linker().Search_CurModule();   
+        return Env().Linker().Search_CurModule();
     else
         return &Env().Data().Find_Module(pReferingCe->NameRoom());
 }
-                
-inline const HF_IdlTypeText::client *                      
+
+inline const HF_IdlTypeText::client *
 HF_IdlTypeText::referingCe() const
 {
     return pReferingCe;
 }
-        
+
 
 HF_IdlTypeText::HF_IdlTypeText( Environment &       io_rEnv,
                                 Xml::Element &      o_rOut,
@@ -114,7 +114,7 @@ HF_IdlTypeText::~HF_IdlTypeText()
 void
 HF_IdlTypeText::Produce_byData( ary::idl::Type_id i_idType ) const
 {
-    static StringVector aModule_;
+    StringVector        aModule_;
     String              sName;
     ce_id               nCe;
     int                 nSequenceCount = 0;
@@ -123,28 +123,31 @@ HF_IdlTypeText::Produce_byData( ary::idl::Type_id i_idType ) const
     const ary::idl::Type &
         rType = Env().Data().Find_Type(i_idType);
     Env().Data().Get_TypeText(aModule_, sName, nCe, nSequenceCount, rType);
+    ary::idl::Type_id
+        nTemplateType = rType.TemplateParameterType();
 
     if ( Env().Data().IsBuiltInOrRelated(rType) )
     {
-        produce_BuiltIn(sName,nSequenceCount);     
-    }                                       
+        produce_BuiltIn(sName,nSequenceCount);
+    }
     else
     {
-        produce_FromStd( aModule_, 
-                         sName, 
-                         String::Null_(), 
-                         nSequenceCount, 
-                         (nCe.IsValid() ? exists_yes : exists_no) );
+        produce_FromStd( aModule_,
+                         sName,
+                         String::Null_(),
+                         nSequenceCount,
+                         (nCe.IsValid() ? exists_yes : exists_no),
+                         nTemplateType );
     }
 }
 
 void
 HF_IdlTypeText::Produce_byData( ary::idl::Ce_id i_idCe ) const
-{           
-    static StringVector aModule_;
-    String              sCe;              
-    String              sMember;              
-    csv::erase_container(aModule_);                                
+{
+    StringVector        aModule_;
+    String              sCe;
+    String              sMember;
+    csv::erase_container(aModule_);
 
     const ary::idl::CodeEntity &
         rCe = Env().Data().Find_Ce(i_idCe);
@@ -154,15 +157,15 @@ HF_IdlTypeText::Produce_byData( ary::idl::Ce_id i_idCe ) const
 
 void
 HF_IdlTypeText::Produce_byData( const String & i_sFullName ) const
-{                                                                
-    static StringVector aModule_;
-    String              sCe, 
-                        sMember; 
-    int                 nSequence = 0;	
+{
+    StringVector        aModule_;
+    String              sCe,
+                        sMember;
+    int                 nSequence = 0;
     String              sTypeText;
-    csv::erase_container(aModule_);                                
-                  
-    const ary::idl::Module * 
+    csv::erase_container(aModule_);
+
+    const ary::idl::Module *
         pScopeModule = referingModule();
     if (pScopeModule == 0)
     {
@@ -171,20 +174,20 @@ HF_IdlTypeText::Produce_byData( const String & i_sFullName ) const
         errorOut_UnresolvedLink(i_sFullName);
         return;
     }
-    
-    const char * sTypeStart = strrchr(i_sFullName,'<');     
+
+    const char * sTypeStart = strrchr(i_sFullName,'<');
     if ( sTypeStart != 0 )
     {
-        const char * sTypeEnd = strchr(i_sFullName,'>');     
+        const char * sTypeEnd = strchr(i_sFullName,'>');
         if (sTypeEnd == 0)
-        {   // SYNTAX_ERR 
+        {   // SYNTAX_ERR
             CurOut() << i_sFullName;
             errorOut_UnresolvedLink(i_sFullName);
             return;
         }
-                 
+
         nSequence = count_Sequences(i_sFullName);
-        sTypeStart++;            
+        sTypeStart++;
         sTypeText.assign(sTypeStart, sTypeEnd-sTypeStart);
     }
     else
@@ -198,33 +201,31 @@ HF_IdlTypeText::Produce_byData( const String & i_sFullName ) const
                                 sCe,sMember,
                                 sTypeText,
                                 *pScopeModule );
-    if (NOT bFound)       
-    {               
-        if (strchr(sTypeText,':') == 0)        
+    if (NOT bFound)
+    {
+        if (strchr(sTypeText,':') == 0)
         {
-            Produce_LocalLinkInDocu(sTypeText);    
+            Produce_LocalLinkInDocu(sTypeText);
             return;
         }
-        CurOut() << i_sFullName;   
+        CurOut() << i_sFullName;
         errorOut_UnresolvedLink(i_sFullName);
         return;
     }
-  
-    produce_FromStd(aModule_, sCe, sMember, nSequence, exists_yes);
-} 
 
-void                
-HF_IdlTypeText::Produce_LinkInDocu( const String &      i_scope, 
-                                    const String &      i_name, 
+    produce_FromStd(aModule_, sCe, sMember, nSequence, exists_yes);
+}
+
+void
+HF_IdlTypeText::Produce_LinkInDocu( const String &      i_scope,
+                                    const String &      i_name,
                                     const String &      i_member ) const
 {
-    static StringVector aModule_;
-    String              sName;            
-    ce_id               nCe;  
-    int                 nSequenceCount = 0;
-    csv::erase_container(aModule_);                                
+    StringVector        aModule_;
+    String              sName;
+    csv::erase_container(aModule_);
 
-    const ary::idl::Module * 
+    const ary::idl::Module *
         pScopeModule = referingModule();
     if (pScopeModule == 0)
     {
@@ -236,12 +237,12 @@ HF_IdlTypeText::Produce_LinkInDocu( const String &      i_scope,
         return;
     }
 
-    bool 
+    bool
         bFound = Env().Data().Search_CesModule( aModule_,
                                                 i_scope,
                                                 i_name,
                                                 *pScopeModule );
-    if (NOT bFound)       
+    if (NOT bFound)
     {
         CurOut() << i_scope << "::" << i_name;
         if (NOT i_member.empty())
@@ -255,19 +256,19 @@ HF_IdlTypeText::Produce_LinkInDocu( const String &      i_scope,
 void
 HF_IdlTypeText::Produce_LocalLinkInDocu( const String & i_member ) const
 {
-    static StringVector aModule_;
-    String              sName;            
+    StringVector        aModule_;
+    String              sName;
     csv::erase_container(aModule_);
-        
+
     csv_assert(referingCe() != 0);
     if ( referingModule() == Env().Linker().Search_CurModule() )
-    {                              
+    {
         StreamLock slLink(200);
         if (referingCe()->SightLevel() == ary::idl::sl_Member)
-        {                
+        {
             slLink() << "#" << i_member;
         }
-        else                   
+        else
         {
             slLink() << referingCe()->LocalName()
                      << ".html#"
@@ -279,7 +280,7 @@ HF_IdlTypeText::Produce_LocalLinkInDocu( const String & i_member ) const
         return;
     }
 
-    String sDummyMember;    
+    String sDummyMember;
     Env().Data().Get_CeText(aModule_, sName, sDummyMember, *referingCe());
     produce_FromStd(aModule_, sName, i_member, 0, exists_yes);
 }
@@ -288,7 +289,7 @@ void
 HF_IdlTypeText::Produce_IndexLink( Xml::Element &   o_out,
                                    const client &   i_ce ) const
 {
-    static StringVector aModule_;
+    StringVector        aModule_;
     String              sCe;
     String              sMember;
     csv::erase_container(aModule_);
@@ -305,7 +306,7 @@ void
 HF_IdlTypeText::Produce_IndexOwnerLink( Xml::Element &  o_out,
                                         const client &  i_owner ) const
 {
-    static StringVector aModule_;
+    StringVector        aModule_;
     String              sCe;
     String              sMember;
     csv::erase_container(aModule_);
@@ -330,11 +331,11 @@ HF_IdlTypeText::Produce_IndexOwnerLink( Xml::Element &  o_out,
     Out().Leave();
 }
 
-void                
+void
 HF_IdlTypeText::Produce_IndexSecondEntryLink( Xml::Element &      o_out,
                                               const client &      i_ce ) const
 {
-    static StringVector aModule_;
+    StringVector        aModule_;
     String              sCe;
     String              sMember;
     csv::erase_container(aModule_);
@@ -345,14 +346,15 @@ HF_IdlTypeText::Produce_IndexSecondEntryLink( Xml::Element &      o_out,
     produce_IndexLink(aModule_, sCe, sMember, true);
     Out().Leave();
 }
-                                              
+
 
 void
 HF_IdlTypeText::produce_FromStd( const StringVector & i_module,
                                  const String &       i_ce,
                                  const String &       i_member,
                                  int                  i_sequenceCount,
-                                 E_Existence          i_ceExists  ) const
+                                 E_Existence          i_ceExists,
+                                 ary::idl::Type_id    i_nTemplateType ) const
 {
     output::Node &
         rCeNode = Env().OutputTree().Provide_Node(i_module);
@@ -424,8 +426,34 @@ HF_IdlTypeText::produce_FromStd( const StringVector & i_module,
 
     if (bHasCeOrName)
     {
+        if (bLink2Ce)
+        {
+            Env().Linker().Get_Link2Position(rLink, aDestination);
+            CurOut()
+                >> *new Html::Link(rLink.c_str())
+                    << i_ce;
+            rLink.reset();
+        }
+        else
+        {
+            CurOut() << i_ce;
+        }
+
+        if (i_nTemplateType.IsValid())
+        {
+            CurOut() << "< ";
+
+            HF_IdlTypeText
+                aTemplateParamWriter(Env(), CurOut(), true, pReferingCe);
+            aTemplateParamWriter.Produce_byData(i_nTemplateType);
+
+            CurOut() << " >";
+        }
+
         if (bUseMember)
         {
+            CurOut() << "::";
+
             if (bLink2Member)
             {
                 bool bFunction = strstr(i_member,"()") != 0;
@@ -435,38 +463,23 @@ HF_IdlTypeText::produce_FromStd( const StringVector & i_module,
 
                 Env().Linker().Get_Link2Member(rLink, aDestination, sMember);
                 CurOut()
-                    << i_ce << "::"
                     >> *new Html::Link(rLink.c_str())
                         << i_member;
-            }           
+                rLink.reset();
+            }
             else
             {
-                CurOut()       
-                    << i_ce << "::"
+                CurOut()
                     << i_member;
             }
-        }
-        else
-        {
-            if (bLink2Ce)
-            {
-                Env().Linker().Get_Link2Position(rLink, aDestination);
-                CurOut() 
-                    >> *new Html::Link(rLink.c_str())
-                        << i_ce;
-            }
-            else
-            {
-                CurOut() << i_ce;
-            }    
-        }
-    }   // endif (bHasCeOrName)         
-    
-    if (i_sequenceCount > 0)                  
+        }   // endif (bUseMember)
+    }   // endif (bHasCeOrName)
+
+    if (i_sequenceCount > 0)
         finish_Sequence(i_sequenceCount);
 }
-                                 
-void                
+
+void
 HF_IdlTypeText::produce_BuiltIn( const String &      i_type,
                                  int                 i_sequenceCount ) const
 {
@@ -541,6 +554,7 @@ HF_IdlTypeText::produce_IndexLink( const StringVector & i_module,
                 >> *new Html::Link(rLink.c_str())
                     >> *new Html::Bold
                         << i_member;
+            rLink.reset();
         }
         else
         {
@@ -558,15 +572,16 @@ HF_IdlTypeText::produce_IndexLink( const StringVector & i_module,
                            >> *new Html::Bold
                             << i_ce;
             }
+            rLink.reset();
         }
     }   // endif (bHasCeOrName)
 }
 
 int
 HF_IdlTypeText::count_Sequences( const char * i_sFullType ) const
-{          
+{
     int ret = 0;
-    
+
     for ( const char * pCount = i_sFullType;
           *pCount != 0;
            )
@@ -583,15 +598,15 @@ HF_IdlTypeText::count_Sequences( const char * i_sFullType ) const
             ++ret;
         }
     }   // end for
-      
+
     return ret;
 }
-        
-void                
+
+void
 HF_IdlTypeText::start_Sequence( int i_count ) const
-{                                     
+{
     csv_assert( i_count > 0 );
-    for (int i = 0; i < i_count; ++i )    
+    for (int i = 0; i < i_count; ++i )
     {
         CurOut() << "sequence< ";
     }
