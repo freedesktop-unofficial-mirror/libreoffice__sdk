@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_struct.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:14:44 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:34:24 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -70,7 +70,8 @@
     // COMPONENTS
     // PARAMETERS
 
-      
+/** Is used to display ->ary::idl::Exception s as well as ->ary::idl::Struct s.
+*/
 class HF_IdlStruct : public HtmlFactory_Idl
 {
   public:
@@ -81,16 +82,16 @@ class HF_IdlStruct : public HtmlFactory_Idl
                             bool                i_bIsException );
     virtual             ~HF_IdlStruct();
 
-    void                Produce_byData(    
+    void                Produce_byData(
                             const client &      ce ) const;
   private:
     // Interface HtmlFactory_Idl:
-    virtual type_id     inq_BaseOf(               
+    virtual type_id     inq_BaseOf(
                             const client &      i_ce ) const;
     // Locals
     HF_NaviSubRow &     make_Navibar(
                             const client &      ce ) const;
-    virtual void        produce_MemberDetails( 
+    virtual void        produce_MemberDetails(
                             HF_SubTitleTable &  o_table,
                             const client &      ce ) const;
     // DATA
@@ -106,6 +107,6 @@ extern const String
     C_sCePrefix_Struct;
 extern const String
     C_sCePrefix_Exception;
-                          
-                          
+
+
 #endif
