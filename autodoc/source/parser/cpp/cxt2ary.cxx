@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cxt2ary.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: hr $ $Date: 2003-04-15 18:45:56 $
+ *  last change: $Author: obo $ $Date: 2005-01-27 11:22:21 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -232,6 +232,13 @@ ContextForAry::do_Get_CurTemplateParameters()
 }
 
 void
+ContextForAry::do_Close_OpenTemplate()
+{
+    if (pFileScopeInfo->pCurTemplateParameters)
+        delete pFileScopeInfo->pCurTemplateParameters.Release();
+}
+
+void
 ContextForAry::do_Event_Class_FinishedBase( const udmstri & i_sBaseName )
 {
     // KORR_FUTURE
@@ -302,7 +309,7 @@ ContextForAry::do_Event_Store_Variable( ary::cpp::Variable & io_rVariable )
 void
 ContextForAry::do_TakeDocu( DYN ary::Documentation & let_drInfo )
 {
-    let_drInfo.Store2(*pDocuDistributor);  
+    let_drInfo.Store2(*pDocuDistributor);
 }
 
 void
@@ -367,7 +374,7 @@ ContextForAry::do_SetCurFile( ary::cpp::FileGroup & io_rCurFile,
     pRecoveryGuard->Reset();
 }
 
-void                                              
+void
 ContextForAry::do_Event_IncrLineCount()
 {
     ++pFileScopeInfo->nLineCount;
