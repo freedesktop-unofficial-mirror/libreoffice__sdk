@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hi_factory.cxx,v $
  *
- *  $Revision: 1.5 $
+ *  $Revision: 1.6 $
  *
- *  last change: $Author: obo $ $Date: 2004-02-20 09:41:37 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:31:16 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -64,15 +64,15 @@
 #include "hi_factory.hxx"
 
 
-// NOT FULLY DEFINED SERVICES      
-#include <ary/idl/i_ce.hxx>    
+// NOT FULLY DEFINED SERVICES
+#include <ary/idl/i_ce.hxx>
 #include <toolkit/hf_title.hxx>
 #include "hfi_doc.hxx"
 #include "hfi_navibar.hxx"
 #include "hfi_tag.hxx"
 #include "hfi_typetext.hxx"
 #include "hi_linkhelper.hxx"
-                        
+
 
 extern const String
     C_sCellStyle_SummaryLeft("imsum_left");
@@ -81,71 +81,77 @@ extern const String
 extern const String
     C_sCellStyle_MDetail("imdetail");
 extern const String
-    C_sMemberTitle("membertitle");    
+    C_sMemberTitle("membertitle");
 
 
 namespace
 {
-    
-const char C_sSpace[92] = "                              "    
+
+const char C_sSpace[92] = "                              "
                           "                              "
-                          "                               "; 
+                          "                               ";
 }
 
 
-                   
-void                
+void
+HtmlFactory_Idl::produce_SummaryDeclaration( Xml::Element &      o_row,
+                                             const client &      i_ce ) const
+{
+    produce_InternalLink(o_row, i_ce);
+}
+
+void
 HtmlFactory_Idl::produce_InternalLink( Xml::Element &  o_screen,
                                        const client &  i_ce ) const
 {
     StreamLock aLocalLink(100);
     aLocalLink() << "#" << i_ce.LocalName();
-        
+
     o_screen
         >> *new Html::TableCell
             << new Html::ClassAttr( C_sCellStyle_SummaryLeft )
             >> *new Html::Link( aLocalLink().c_str() )
-                << i_ce.LocalName();  
-}   
+                << i_ce.LocalName();
+}
 
-void                
+void
 HtmlFactory_Idl::produce_ShortDoc( Xml::Element &   o_screen,
                                    const client &   i_ce ) const
 {
-    Xml::Element & 
+    Xml::Element &
         rDetailsRowCell = o_screen
-                            >> *new Html::TableCell 
+                            >> *new Html::TableCell
                                 << new Html::ClassAttr( C_sCellStyle_SummaryRight );
     HF_IdlShortDocu
         aLinkDoc(Env(), rDetailsRowCell);
     aLinkDoc.Produce_byData( i_ce );
-}  
- 
-void                
+}
+
+// KORR MI: Does not belong here (implementation inheritance)!
+void
 HtmlFactory_Idl::produce_Bases( Xml::Element &   o_screen,
                                 const client &   i_ce,
                                 const String &   i_sLabel ) const
 {
     ary::idl::Type_id nBaseT = baseOf(i_ce);
-        // ary::idl::ifc_interface::attr::Base(i_ce);        
     if ( nBaseT.IsValid() )
-    {                      
+    {
         HF_DocEntryList
             aDocList( o_screen );
         aDocList.Produce_Term(i_sLabel);
-                             
-        int nDepth = 0;                   
-        Xml::Element &   
+
+        int nDepth = 0;
+        Xml::Element &
             rBaseList = aDocList.Produce_Definition()
                                 >> *new Xml::AnElement("pre")
-                                    << new Xml::AnAttribute("style","font-family:monospace;");                         
+                                    << new Xml::AnAttribute("style","font-family:monospace;");
         recursive_ShowBases( rBaseList,
                              nBaseT,
                              nDepth );
         csv_assert(nDepth > 0);
         if (nDepth > 30)
             nDepth = 30;
-        rBaseList 
+        rBaseList
             << (C_sSpace + 93 - 3*nDepth)
             << "|\n"
             << (C_sSpace + 93 - 3*nDepth)
@@ -154,8 +160,8 @@ HtmlFactory_Idl::produce_Bases( Xml::Element &   o_screen,
                 << i_ce.LocalName();
     }
 }
-                 
-void                
+
+void
 HtmlFactory_Idl::produce_Members( ce_list &           it_list,
                                   const String &      i_summaryTitle,
                                   const String &      i_summaryLabel,
@@ -165,32 +171,33 @@ HtmlFactory_Idl::produce_Members( ce_list &           it_list,
     csv_assert( it_list );
 
     HF_SubTitleTable
-        aSummary(   CurOut(), 
-                    i_summaryLabel, 
+        aSummary(   CurOut(),
+                    i_summaryLabel,
                     i_summaryTitle,
-                    2 );          
+                    2 );
 
     HF_SubTitleTable
-        aDetails(   CurOut(), 
-                    i_detailsLabel, 
+        aDetails(   CurOut(),
+                    i_detailsLabel,
                     i_detailsTitle,
-                    1 );    
-                               
-    for ( ; BOOL_OF(it_list); ++it_list )
-    {                                  
+                    1 );
+
+    for ( ; it_list.operator bool(); ++it_list )
+    {
         const ary::idl::CodeEntity &
             rCe = Env().Data().Find_Ce(*it_list);
-                                     
-        Xml::Element & 
+
+        Xml::Element &
             rSummaryRow = aSummary.Add_Row();
-        produce_InternalLink(rSummaryRow, rCe);                                 
-        produce_ShortDoc(rSummaryRow, rCe);                                 
-                                                  
-        produce_MemberDetails(aDetails, rCe);                                          
-    }                                           
-} 
-  
-void                
+        produce_SummaryDeclaration(rSummaryRow, rCe);
+//        produce_InternalLink(rSummaryRow, rCe);
+        produce_ShortDoc(rSummaryRow, rCe);
+
+        produce_MemberDetails(aDetails, rCe);
+    }
+}
+
+void
 HtmlFactory_Idl::write_Docu( Xml::Element &     o_screen,
                              const client &     i_ce ) const
 {
@@ -202,22 +209,22 @@ HtmlFactory_Idl::write_Docu( Xml::Element &     o_screen,
             aDocu( Env(), aDocuList );
         aDocu.Produce_byData(i_ce);
     }
-    
+
     write_ManualLinks(o_screen, i_ce);
 }
 
-void                
+void
 HtmlFactory_Idl::write_ManualLinks( Xml::Element &  o_screen,
                                     const client &  i_ce ) const
-{              
+{
     const StringVector &
         rLinks2Descrs = i_ce.Secondaries().Links2DescriptionInManual();
     if ( rLinks2Descrs.size() == 0 )
-        return;       
-                
-    o_screen 
+        return;
+
+    o_screen
         >> *new Html::Label(C_sLocalManualLinks.c_str()+1)  // Leave out the leading '#'.
-            << " ";                
+            << " ";
     HF_DocEntryList
         aDocuList( o_screen );
     aDocuList.Produce_Term("Developers Guide");
@@ -229,7 +236,7 @@ HtmlFactory_Idl::write_ManualLinks( Xml::Element &  o_screen,
         Xml::Element &
             rLink = aDocuList.Produce_Definition() >> *new Html::Link( Env().Link2Manual(*it));
         if ( (*(it+1)).empty() )
-            // HACK KORR_FUTURE 
+            // HACK KORR_FUTURE
             // Research what happens with manual links which contain normal characters
             // in non-utf-8 texts. And research, why utfF-8 does not work here.
             rLink << new Xml::XmlCode(*it);
@@ -238,19 +245,19 @@ HtmlFactory_Idl::write_ManualLinks( Xml::Element &  o_screen,
         ++it;
     }   // end for
 }
-                                     
-void        
+
+void
 HtmlFactory_Idl::produce_MemberDetails(  HF_SubTitleTable &  o_table,
                                          const client &      ce ) const
 {
-    // Dummy, which does not need to do anything.    
+    // Dummy, which does not need to do anything.
 }
 
-void                
+void
 HtmlFactory_Idl::recursive_ShowBases( Xml::Element &     o_screen,
                                       type_id            i_baseType,
                                       int &              io_nDepth ) const
-{     
+{
     // go up:
     const ary::idl::CodeEntity *
         pCe = Env().Linker().Search_CeFromType(i_baseType);
@@ -258,22 +265,22 @@ HtmlFactory_Idl::recursive_ShowBases( Xml::Element &     o_screen,
     {
         HF_IdlTypeText
             aText( Env(), o_screen, pCe != 0 );
-        aText.Produce_byData( i_baseType );    
+        aText.Produce_byData( i_baseType );
         o_screen
             << "\n";
         ++io_nDepth;
         return;
-    }         
+    }
     else
     {
         ary::idl::Type_id nBaseT = baseOf(*pCe);
         if (nBaseT.IsValid())
-            recursive_ShowBases(o_screen,nBaseT,io_nDepth); 
+            recursive_ShowBases(o_screen,nBaseT,io_nDepth);
         else
         {
             HF_IdlTypeText
                 aText( Env(), o_screen, true );
-            aText.Produce_byData(pCe->CeId());    
+            aText.Produce_byData(pCe->CeId());
             o_screen
                 << "\n";
             ++io_nDepth;
@@ -281,7 +288,7 @@ HtmlFactory_Idl::recursive_ShowBases( Xml::Element &     o_screen,
         }
     }
 
-    // go back down:     
+    // go back down:
     csv_assert(io_nDepth > 0);
     if (io_nDepth > 30)
         io_nDepth = 30;
@@ -292,7 +299,7 @@ HtmlFactory_Idl::recursive_ShowBases( Xml::Element &     o_screen,
         << "+-";
     HF_IdlTypeText
         aBaseLink( Env(), o_screen, true );
-    aBaseLink.Produce_byData(pCe->CeId()); 
+    aBaseLink.Produce_byData(pCe->CeId());
     o_screen
         << "\n";
     ++io_nDepth;
