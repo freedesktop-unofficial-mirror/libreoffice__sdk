@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_method.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: hr $ $Date: 2003-03-18 14:11:38 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:26:58 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -72,9 +72,9 @@
 #include "hfi_doc.hxx"
 #include "hfi_globalindex.hxx"
 #include "hfi_typetext.hxx"
-    
-    
-    
+
+
+
 
 
 HF_IdlMethod::HF_IdlMethod( Environment &           io_rEnv,
@@ -95,6 +95,7 @@ HF_IdlMethod::Produce_byData( const String &      i_sName,
                               param_list &        i_rParams,
                               type_list &         i_rExceptions,
                               bool                i_bOneway,
+                              bool                i_bEllipse,
                               const client &      i_ce ) const
 {
     CurOut()
@@ -106,7 +107,8 @@ HF_IdlMethod::Produce_byData( const String &      i_sName,
                        i_nReturnType,
                        i_rParams,
                        i_rExceptions,
-                       i_bOneway );
+                       i_bOneway,
+                       i_bEllipse );
     CurOut() << new Html::HorizontalLine;
     write_Docu(CurOut(), i_ce);
     leave_ContentCell();
@@ -117,76 +119,87 @@ HF_IdlMethod::write_Declaration( const String &      i_sName,
                                  type_id             i_nReturnType,
                                  param_list &        i_rParams,
                                  type_list &         i_rExceptions,
-                                 bool                i_bOneway ) const
-{       
+                                 bool                i_bOneway,
+                                 bool				 i_bEllipse ) const
+{
     HF_FunctionDeclaration
         aDecl(CurOut()) ;
-    Xml::Element & 
+    Xml::Element &
         front = aDecl.Add_ReturnLine();
 
     // Front:
-    if (i_bOneway) 
+    if (i_bOneway)
         front << "[oneway] ";
-    HF_IdlTypeText
-        aReturn(Env(), front,true);
-    aReturn.Produce_byData(i_nReturnType);        
-    front 
-        << new Html::LineBreak
+    if (i_nReturnType.IsValid())
+    {   // Normal function, but not constructors:
+        HF_IdlTypeText
+            aReturn(Env(), front,true);
+        aReturn.Produce_byData(i_nReturnType);
+        front
+            << new Html::LineBreak;
+
+    }
+    front
         >> *new Html::Bold
             << i_sName;
-    
-    //  Main line:   
-    Xml::Element & 
+
+    //  Main line:
+    Xml::Element &
         types = aDecl.Types();
-    Xml::Element & 
+    Xml::Element &
         names = aDecl.Names();
-    bool bParams = bool( BOOL_OF(i_rParams) );
+    bool bParams = i_rParams.operator bool();
     if (bParams)
     {
         front
             << "(";
         HF_IdlTypeText
-            aType( Env(), types, true );    
-                      
+            aType( Env(), types, true );
+
         write_Param( aType, names, (*i_rParams) );
-        
+
         for (++i_rParams; i_rParams; ++i_rParams)
         {
-            types 
+            types
                 << new Html::LineBreak;
-            names 
-                << ","                    
+            names
+                << ","
                 << new Html::LineBreak;
             write_Param( aType, names, (*i_rParams) );
         }   // end for
-        
-        names 
-            << " )";        
-    }   
+
+        if (i_bEllipse)
+        {
+            names
+                << " ...";
+        }
+        names
+            << " )";
+    }
     else
-        front 
+        front
             << "()";
-                  
-                           
-    if ( BOOL_OF(i_rExceptions) )
+
+
+    if ( i_rExceptions.operator bool() )
     {
         Xml::Element &
             rExcOut = aDecl.Add_RaisesLine("raises", NOT bParams);
         HF_IdlTypeText
-            aExc(Env(), rExcOut, true);                     
+            aExc(Env(), rExcOut, true);
         aExc.Produce_byData(*i_rExceptions);
-        
+
         for (++i_rExceptions; i_rExceptions; ++i_rExceptions)
         {
             rExcOut
-                << ","                    
+                << ","
                 << new Html::LineBreak;
             aExc.Produce_byData(*i_rExceptions);
         }   // end for
 
         rExcOut << " );";
-    }   
-    else 
+    }
+    else
     {
         if (bParams)
             aDecl.Names() << ";";
@@ -194,15 +207,15 @@ HF_IdlMethod::write_Declaration( const String &      i_sName,
             aDecl.Front() << ";";
     }
 }
-    
-void                
+
+void
 HF_IdlMethod::write_Param( HF_IdlTypeText &             o_type,
-                           Xml::Element &               o_names, 
+                           Xml::Element &               o_names,
                            const ary::idl::Parameter &  i_param ) const
 {
     switch ( i_param.Direction() )
     {
-        case ary::idl::param_in:  
+        case ary::idl::param_in:
                     o_type.CurOut() << "[in] ";
                     break;
         case ary::idl::param_out:
@@ -212,40 +225,40 @@ HF_IdlMethod::write_Param( HF_IdlTypeText &             o_type,
                     o_type.CurOut() << "[inout] ";
                     break;
     }   // end switch
-    
-    o_type.Produce_byData( i_param.Type() );            
+
+    o_type.Produce_byData( i_param.Type() );
     o_names
         << i_param.Name();
 }
-               
-     
+
+
 const String sContentBorder("0");
 const String sContentWidth("96%");
-const String sContentPadding("5");    
-const String sContentSpacing("0"); 
+const String sContentPadding("5");
+const String sContentSpacing("0");
 
-const String sBgWhite("#ffffff"); 
-const String sCenter("center"); 
+const String sBgWhite("#ffffff");
+const String sCenter("center");
 
-void                
+void
 HF_IdlMethod::enter_ContentCell() const
 {
 
     Xml::Element &
-        rContentCell = CurOut() 
+        rContentCell = CurOut()
                         >> *new Html::Table( sContentBorder,
                                              sContentWidth,
                                              sContentPadding,
-                                             sContentSpacing ) 
+                                             sContentSpacing )
                             << new Html::BgColorAttr(sBgWhite)
                             << new Html::AlignAttr(sCenter)
                             >> *new Html::TableRow
                                 >> *new Html::TableCell;
-    Out().Enter(rContentCell);                                
+    Out().Enter(rContentCell);
 }
 
 
-void                
+void
 HF_IdlMethod::leave_ContentCell() const
 {
     Out().Leave();
