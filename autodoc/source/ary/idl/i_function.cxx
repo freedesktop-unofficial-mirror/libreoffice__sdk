@@ -2,9 +2,9 @@
  *
  *  $RCSfile: i_function.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:12:47 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:14:24 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -78,7 +78,6 @@ Function::Function( const String &      i_sName,
                     Ce_id               i_nOwner,
                     Ce_id               i_nNameRoom,
                     Type_id             i_nReturnType,
-                    bool                i_bConst,
                     bool                i_bOneWay )
     :   sName(i_sName),
         nOwner(i_nOwner),
@@ -86,8 +85,22 @@ Function::Function( const String &      i_sName,
         nReturnType(i_nReturnType),
         aParameters(),
         aExceptions(),
-        bConst(i_bConst),
-        bOneWay(i_bOneWay)
+        bOneWay(i_bOneWay),
+        bEllipse(false)
+{
+}
+
+Function::Function( const String &      i_sName,
+                    Ce_id               i_nOwner,
+                    Ce_id               i_nNameRoom )
+    :   sName(i_sName),
+        nOwner(i_nOwner),
+        nNameRoom(i_nNameRoom),
+        nReturnType(0),
+        aParameters(),
+        aExceptions(),
+        bOneWay(false),
+        bEllipse(false)
 {
 }
 
@@ -100,7 +113,6 @@ Function::do_Visit_CeHost( CeHost & o_rHost ) const
 {
     o_rHost.Do_Function( *this );
 }
-
 
 RCid
 Function::inq_ClassId() const
@@ -135,48 +147,48 @@ Function::inq_SightLevel() const
 
 namespace ifc_function
 {
-                    
+
 inline const Function &
 function_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Function::class_id );
     return static_cast< const Function& >(i_ce);
 }
 
-Type_id      
+Type_id
 attr::ReturnType( const CodeEntity & i_ce )
 {
     return function_cast(i_ce).nReturnType;
-}   
+}
 
-bool         
-attr::IsConst( const CodeEntity & i_ce )
-{
-    return function_cast(i_ce).bConst;
-}   
-
-bool         
+bool
 attr::IsOneway( const CodeEntity & i_ce )
 {
     return function_cast(i_ce).bOneWay;
-}   
+}
 
-void         
+bool
+attr::HasEllipse( const CodeEntity & i_ce )
+{
+    return function_cast(i_ce).bEllipse;
+}
+
+void
 attr::Get_Parameters( Dyn_StdConstIterator<ary::idl::Parameter> & o_result,
                       const CodeEntity &						  i_ce )
 {
-    o_result 
+    o_result
         = new SCI_Vector<Parameter>( function_cast(i_ce).aParameters );
-}   
+}
 
-void         
+void
 attr::Get_Exceptions( Dyn_TypeIterator &  o_result,
                       const CodeEntity &  i_ce )
 {
-    o_result 
+    o_result
         = new SCI_Vector<Type_id>( function_cast(i_ce).aExceptions );
 }
-                      
+
 
 
 
