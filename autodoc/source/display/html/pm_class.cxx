@@ -2,9 +2,9 @@
  *
  *  $RCSfile: pm_class.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: hr $ $Date: 2003-06-30 15:26:57 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:32:53 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -666,7 +666,7 @@ HereFind_Class( const ary::cpp::DisplayGate & i_rGate,
                 ary::Tid                      i_nReferingTypeId )
 {
     const ary::CodeEntity * pCe = i_rGate.Search_RelatedCe( i_nReferingTypeId );
-    
+
     if ( pCe != 0 )
     {
         if  (pCe->RC() == ary::cpp::Class::RC_())
@@ -675,12 +675,12 @@ HereFind_Class( const ary::cpp::DisplayGate & i_rGate,
         }
         else if (pCe->RC() == ary::cpp::Typedef::RC_())
         {
-            const ary::cpp::Typedef * 
+            const ary::cpp::Typedef *
                 pTydef = static_cast< const ary::cpp::Typedef* >(pCe);
             return  HereFind_Class( i_rGate, pTydef->DescribingType() );
         }
     }
-    
+
     static const ary::cpp::Class aClassNull_( 0,
                                               "Base class not found",
                                               0,
@@ -788,7 +788,8 @@ Node::Write2( csi::xml::Element &           o_rOut,
         case ary::cpp::PROTECT_private:
                     *pOut << new html::StyleAttr("color:#ff6666;");
                     break;
-        // default: do nothing.
+        default:    // do nothing.
+                    ;
     }   // end switch
 
     if ( bVirtual )
@@ -812,7 +813,8 @@ Node::Write2( csi::xml::Element &           o_rOut,
          case ary::cpp::PROTECT_private:
                     rOut << "private)";
                     break;
-        // default: do nothing.
+        default:    // do nothing.
+                    ;
     }   // end switch
 }
 
