@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cmd_run.cxx,v $
  *
- *  $Revision: 1.6 $
+ *  $Revision: 1.7 $
  *
- *  last change: $Author: hr $ $Date: 2003-03-18 14:11:40 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:35:19 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -84,7 +84,7 @@
 #include "adc_cmd_parse.hxx"
 #include "adc_cmds.hxx"
 
-        
+
 namespace
 {
 ary::idl::Gate * G_pGate = 0;
@@ -96,14 +96,14 @@ GetAryGate()
     return *G_pGate;
 }
 }   // anonymous namespace
-        
+
 
 namespace autodoc
 {
 namespace command
 {
 namespace run
-{                              
+{
 
 Parser::Parser( const Parse & i_command )
     :   rCommand(i_command),
@@ -111,10 +111,10 @@ Parser::Parser( const Parse & i_command )
         pCppDocuInterpreter(),
         pIdlParser()
 {
-}   
+}
 
 Parser::~Parser()
-{   
+{
 }
 
 bool
@@ -125,18 +125,18 @@ Parser::Perform()
               << " ..."
               << Endl();
   try
-  {                    
+  {
     ::ary::n22::Repository &
-        rAry = ::ary::n22::Repository::The_(); 
-    rAry.Set_Name(rCommand.ReposyName());            
-            
-    Dyn< FileCollector_Ifc > 
+        rAry = ::ary::n22::Repository::The_();
+    rAry.Set_Name(rCommand.ReposyName());
+
+    Dyn< FileCollector_Ifc >
         pFiles( ParseToolsFactory().Create_FileCollector(6000) );
 
     bool bIDL = false;
     bool bCpp = false;
 
-    command::Parse::ProjectIterator 
+    command::Parse::ProjectIterator
         itEnd = rCommand.ProjectsEnd();
     for ( command::Parse::ProjectIterator it = rCommand.ProjectsBegin();
           it != itEnd;
@@ -169,18 +169,20 @@ Parser::Perform()
         }
     }	// end for
 
-    if (bCpp)                   
+    if (bCpp)
     {
         rAry.Gate_Cpp().Connect_AllTypes_2_TheirRelated_CodeEntites();
     }
     if (bIDL)
     {
-        ::ary::idl::SecondariesPilot & 
-            rIdl2sPilot = rAry.Gate_Idl().Secondaries();    
-            
+
+        ::ary::idl::SecondariesPilot &
+            rIdl2sPilot = rAry.Gate_Idl().Secondaries();
+
+        rIdl2sPilot.CheckAllInterfaceBases( rAry.Gate_Idl() );
         rIdl2sPilot.Connect_Types2Ces();
         rIdl2sPilot.Gather_CrossReferences();
-                 
+
         if (NOT rCommand.DevelopersManual_RefFilePath().empty())
         {
             csv::File
@@ -192,7 +194,7 @@ Parser::Perform()
             }
         }
     }   // endif (bIDL)
-    
+
     return true;
 
   }   // end try
@@ -200,7 +202,7 @@ Parser::Perform()
   {
     xx.GetInfo(Cerr());
     Cerr() << " program will exit." << Endl();
-    
+
     return false;
   }
 }
@@ -235,7 +237,7 @@ void
 Parser::Create_IdlParser()
 {
     pIdlParser = new IdlParser(ary::n22::Repository::The_());
-}      
+}
 
 const ParseToolsFactory_Ifc &
 Parser::ParseToolsFactory()
@@ -321,8 +323,8 @@ Parser::GatherFiles( FileCollector_Ifc &    o_rFiles,
 
 }   // namespace run
 }   // namespace command
-        
-        
+
+
 #if 0
 inline const ParseToolsFactory_Ifc &
 CommandRunner::ParseToolsFactory()
@@ -369,13 +371,13 @@ CommandRunner::~CommandRunner()
 void
 CommandRunner::Run( const CommandLine & i_rCL )
 {
-    ary::Repository::Destroy_();  
-//  ary::n22::Repository::Destroy_();  
+    ary::Repository::Destroy_();
+//  ary::n22::Repository::Destroy_();
     pReposy = 0;
     pNewReposy = 0;
     nResultCode = 0;
     pCommandLine = &i_rCL;
-  
+
     pCommandLine->Run();
 }
 
