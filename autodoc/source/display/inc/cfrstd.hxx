@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cfrstd.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:01:59 $
+ *  last change: $Author: vg $ $Date: 2005-03-23 09:03:31 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -74,10 +74,10 @@
 
 class StdFrame : public display::CorporateFrame
 {
-  public:                  
+  public:
     // LIFECYCLE
                         StdFrame();
-  
+
     // INQUIRY
     virtual DYN Html_Image *
                         LogoSrc() const;
@@ -88,13 +88,15 @@ class StdFrame : public display::CorporateFrame
     virtual const char *
                         CssStyle() const;
     virtual const char *
+                        CssStylesExplanation() const;
+    virtual const char *
                         DevelopersGuideHtmlRoot() const;
-    virtual bool        SimpleLinks() const;						
-    
+    virtual bool        SimpleLinks() const;
+
     // ACCESS
     virtual void        Set_DevelopersGuideHtmlRoot(
                             const String &      i_directory );
-    virtual void        Set_SimpleLinks();       
+    virtual void        Set_SimpleLinks();
 
   private:
     String  	        sDevelopersGuideHtmlRoot;
