@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_singleton.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: vg $ $Date: 2003-06-10 11:33:51 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:28:39 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -67,24 +67,24 @@
 // NOT FULLY DEFINED SERVICES
 #include <ary/idl/i_ce.hxx>
 #include <ary/idl/ik_singleton.hxx>
+#include <ary/idl/ik_sisingleton.hxx>
 #include <toolkit/hf_docentry.hxx>
 #include <toolkit/hf_linachain.hxx>
 #include <toolkit/hf_title.hxx>
 #include "hfi_navibar.hxx"
 #include "hfi_typetext.hxx"
 #include "hi_linkhelper.hxx"
-   
-   
+
 
 
 extern const String
     C_sCePrefix_Singleton("singleton");
 
-namespace
-{
 const String
     C_sAssociatedService("Associated Service");
-} //anonymous namespace
+const String
+    C_sImplementedInterface("Supported Interface");
+
 
 
 HF_IdlSingleton::HF_IdlSingleton( Environment &         io_rEnv,
@@ -98,20 +98,20 @@ HF_IdlSingleton::~HF_IdlSingleton()
 
 }
 
-typedef ::ary::idl::ifc_singleton::attr    
-    SingletonAttr;
+typedef ::ary::idl::ifc_singleton::attr         SingletonAttr;
+typedef ::ary::idl::ifc_sglifcsingleton::attr   SglIfcSingletonAttr;
 
 void
-HF_IdlSingleton::Produce_byData( const client & i_ce ) const
-{                         
+HF_IdlSingleton::Produce_byData_ServiceBased( const client & i_ce ) const
+{
     make_Navibar(i_ce);
 
     HF_TitleTable
-        aTitle(CurOut());   
+        aTitle(CurOut());
 
     HF_LinkedNameChain
         aNameChain(aTitle.Add_Row());
-        
+
     aNameChain.Produce_CompleteChain(Env().CurPosition(), nameChainLinker);
     aTitle.Produce_Title( StreamLock(200)()
                           << C_sCePrefix_Singleton
@@ -132,7 +132,39 @@ HF_IdlSingleton::Produce_byData( const client & i_ce ) const
     write_Docu(aTitle.Add_Row(), i_ce);
     CurOut() << new Html::HorizontalLine();
 }
-    
+
+void
+HF_IdlSingleton::Produce_byData_InterfaceBased( const client & i_ce ) const
+{
+    make_Navibar(i_ce);
+
+    HF_TitleTable
+        aTitle(CurOut());
+
+    HF_LinkedNameChain
+        aNameChain(aTitle.Add_Row());
+
+    aNameChain.Produce_CompleteChain(Env().CurPosition(), nameChainLinker);
+    aTitle.Produce_Title( StreamLock(200)()
+                          << C_sCePrefix_Singleton
+                          << " "
+                          << i_ce.LocalName()
+                          << c_str );
+
+    HF_DocEntryList
+        aTopList( aTitle.Add_Row() );
+    aTopList.Produce_Term(C_sImplementedInterface);
+
+    HF_IdlTypeText
+        aImplementedInterface( Env(), aTopList.Produce_Definition(), true );
+    aImplementedInterface.Produce_byData( SglIfcSingletonAttr::BaseInterface(i_ce) );
+
+    CurOut() << new Html::HorizontalLine;
+
+    write_Docu(aTitle.Add_Row(), i_ce);
+    CurOut() << new Html::HorizontalLine();
+}
+
 void
 HF_IdlSingleton::make_Navibar( const client & i_ce ) const
 {
