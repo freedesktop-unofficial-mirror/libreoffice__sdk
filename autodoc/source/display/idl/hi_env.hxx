@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hi_env.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:14:54 $
+ *  last change: $Author: np $ $Date: 2002-11-14 18:01:58 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -76,6 +76,7 @@ namespace ary
 namespace idl
 {
     class Gate;
+    class CodeEntity;
 }
 }
 namespace display
@@ -124,14 +125,17 @@ class HtmlEnvironment_Idl
     void                Goto_DirectoryLevelUp();
     void                Set_CurFile(
                             const String &      i_fileName );
-
+    void                Set_CurPageCe(
+                            const ary::idl::CodeEntity *
+                                                i_ce )
+                                                { pCurPageCe = i_ce; }
     // INQUIRY
-    const AryAccess &   Data() const            { return *pData; }  
+    const AryAccess &   Data() const            { return *pData; }
     const char *        Link2Manual(
                             const String &      i_link ) const;
-    
+
     /// This may be reimplemented for removing dead links to members.
-    bool                Is_MemberExistenceCheckRequired() const            
+    bool                Is_MemberExistenceCheckRequired() const
                                                 { return false; }
 
     /// @return Holds only the current directory, not the current file.
@@ -147,7 +151,9 @@ class HtmlEnvironment_Idl
     void                Get_LinkTo(                     
                             StreamStr &         o_result,
                             output::Position    i_destination )
-                                                { CurPosition().Get_LinkTo(o_result, i_destination); } 
+                                                { CurPosition().Get_LinkTo(o_result, i_destination); }
+    String              CurPageCe_AsText() const;
+
     // ACCESS
     output::Tree &      OutputTree()     		{ return *pOutputTree; }
 
@@ -166,6 +172,8 @@ class HtmlEnvironment_Idl
     Dyn<output::Tree>   pOutputTree;
     mutable output::Position    
                         aCurPosition;
+    const ary::idl::CodeEntity *
+                        pCurPageCe;
 
     const display::CorporateFrame *
                         pLayout;        

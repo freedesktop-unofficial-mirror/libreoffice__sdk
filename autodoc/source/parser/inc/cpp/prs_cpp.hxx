@@ -2,9 +2,9 @@
  *
  *  $RCSfile: prs_cpp.hxx,v $
  *
- *  $Revision: 1.1.1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-03-08 14:45:33 $
+ *  last change: $Author: np $ $Date: 2002-11-14 18:02:05 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -89,7 +89,8 @@ class Cpluplus_Parser : public autodoc::CodeParser_Ifc
 
     virtual void		Run(
                             const udmstri &     i_sProjectName,
-                            csv::ploc::Path &   i_rProjectRootDirectory,
+                            const csv::ploc::Path &
+                                                i_rProjectRootDirectory,
                             const autodoc::FileCollector_Ifc &
                                                 i_rFiles );
   private:
