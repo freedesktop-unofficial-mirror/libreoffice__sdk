@@ -2,9 +2,9 @@
  *
  *  $RCSfile: docu_pe.hxx,v $
  *
- *  $Revision: 1.1.1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-03-08 14:45:32 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:38:31 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -138,6 +138,9 @@ class Adoc_PE : public TokenInterpreter
     virtual void		Hdl_at_label(
                             const Tok_at_label &
                                                 i_rTok );
+    virtual void		Hdl_at_since(
+                            const Tok_at_since &
+                                                i_rTok );
     virtual void		Hdl_at_HTML(
                             const Tok_at_HTML &
                                                 i_rTok );
@@ -170,7 +173,7 @@ class Adoc_PE : public TokenInterpreter
     void                InstallAtTag(
                             DYN ary::info::AtTag *
                                                 let_dpTag,
-                            bool                i_bImplicit = false );  /// True for implicit @short and @descr. 
+                            bool                i_bImplicit = false );  /// True for implicit @short and @descr.
     ary::info::CodeInfo &
                         CurDocu();
     ary::info::AtTag &	CurAtTag();
