@@ -2,9 +2,9 @@
  *
  *  $RCSfile: pe_selem.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:15:48 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:44:38 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -94,10 +94,13 @@ class PE_StructElement : public UnoIDL_PE,
     typedef ary::idl::Ce_id       RStructElement;
     typedef ary::idl::Ce_id       RStruct;
 
-                        PE_StructElement(
+                        PE_StructElement(       /// Use for Struct-elements
                             RStructElement &	o_rResult,
                             const RStruct &		i_rCurStruct,
-                            bool                i_IsExceptionElement );
+                            const String &      i_rCurStructTemplateParam );
+                        PE_StructElement(       /// Use for Exception-elements
+                            RStructElement &	o_rResult,
+                            const RStruct &		i_rCurExc );
     virtual void	 	EstablishContacts(
                             UnoIDL_PE *			io_pParentPE,
                             ary::n22::Repository &	io_rRepository,
@@ -129,15 +132,18 @@ class PE_StructElement : public UnoIDL_PE,
     virtual void		TransferData();
     virtual UnoIDL_PE &	MyPE();
 
+    ary::idl::Type_id	lhf_FindTemplateParamType() const;
+
     // DATA
     E_State             eState;
     RStructElement *	pResult;
-    const RStruct *		pCurStruct; 
+    const RStruct *		pCurStruct;
     bool                bIsExceptionElement;
 
     Dyn<PE_Type>		pPE_Type;
     ary::idl::Type_id	nType;
-    udmstri 			sName;
+    String              sName;
+    const String *      pCurStructTemplateParam;
 };
 
 
@@ -147,4 +153,3 @@ class PE_StructElement : public UnoIDL_PE,
 
 
 #endif
-
