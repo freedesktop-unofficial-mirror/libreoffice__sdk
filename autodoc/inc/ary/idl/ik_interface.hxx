@@ -2,9 +2,9 @@
  *
  *  $RCSfile: ik_interface.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-29 10:20:03 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:09:16 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -71,23 +71,23 @@
 
 
 namespace ary
-{                                               
-class InheritanceGraph;
-
+{
 namespace idl
 {
+class CommentedRelation;
 
 namespace ifc_interface
 {
 
 using ifc_ce::Dyn_CeIterator;
-using ifc_ce::Dyn_TypeIterator;
 using ifc_ce::DocText;
 
 
 struct attr: public ifc_ce::attr
 {
-    static Type_id      Base(
+    static void         Get_Bases(
+                            Dyn_StdConstIterator<CommentedRelation> &
+                                                o_result,
                             const CodeEntity &  i_ce );
     static void         Get_Functions(
                             Dyn_CeIterator &    o_result,
@@ -98,14 +98,17 @@ struct attr: public ifc_ce::attr
 };
 
 struct xref : public ifc_ce::xref
-{                   
+{
     static void         Get_Derivations(
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
-    static void         Get_SynonymTypedefs(     /// like: typedef i_ce.LocalName() newName;                           
+    static void         Get_SynonymTypedefs(     /// like: typedef i_ce.LocalName() newName;
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
     static void         Get_ExportingServices(
+                            Dyn_CeIterator &    o_result,
+                            const CodeEntity &  i_ce );
+    static void         Get_ExportingSingletons(
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
     static void         Get_AsReturns(
@@ -117,9 +120,9 @@ struct xref : public ifc_ce::xref
     static void         Get_AsDataTypes(
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
-           
+
 #if 0
-    static void         Get_UsingTypedefs(      /// like: typedef sequence<i_ce.LocalName()> newNameSeq;                           
+    static void         Get_UsingTypedefs(      /// like: typedef sequence<i_ce.LocalName()> newNameSeq;
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
     static void         Get_AsIndirectReturns(
@@ -128,7 +131,7 @@ struct xref : public ifc_ce::xref
     static void         Get_AsIndirectParameters(
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
-#endif // 0                            
+#endif // 0
 };
 
 struct doc : public ifc_ce::doc
