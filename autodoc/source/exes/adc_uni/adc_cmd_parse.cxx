@@ -2,9 +2,9 @@
  *
  *  $RCSfile: adc_cmd_parse.cxx,v $
  *
- *  $Revision: 1.4 $
+ *  $Revision: 1.5 $
  *
- *  last change: $Author: rt $ $Date: 2004-07-12 15:34:00 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:36:49 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -99,7 +99,7 @@ CHECK( bool b, const String & text )
 
 S_LanguageInfo::~S_LanguageInfo()
 {
-}                                                  
+}
 
 void
 S_LanguageInfo::do_Init( opt_iter &          it,
@@ -123,7 +123,7 @@ S_LanguageInfo::do_Init( opt_iter &          it,
          csv_assert(false);
 
     switch (eLanguage)
-    {                   
+    {
         case cpp:   aExtensions.push_back( C_FileEnding_hxx );
                     aExtensions.push_back( C_FileEnding_h );
                     break;
@@ -131,13 +131,14 @@ S_LanguageInfo::do_Init( opt_iter &          it,
                     break;
         case java:  aExtensions.push_back( C_FileEnding_java );
                     break;
-        // default: do nothing.       
+        default:    //  do nothing.
+                    ;
     }
 
     ++it;   // Cur is next option.
 }
-                         
-void                
+
+void
 S_LanguageInfo::InitExtensions( opt_iter &          it,
                                 opt_iter            itEnd )
 {
@@ -159,7 +160,7 @@ S_LanguageInfo::InitExtensions( opt_iter &          it,
         ++it;
     }   while (it != itEnd AND (*it).char_at(0) == '.');
 }
-                                
+
 
 
 //**************************     Parse     ***********************//
@@ -201,7 +202,7 @@ Parse::do_Init( opt_iter &          it,
             break;
     }   // for
 }
-     
+
 void
 Parse::do_clName( opt_iter &    it,
                   opt_iter      itEnd )
@@ -217,13 +218,13 @@ Parse::do_clName( opt_iter &    it,
 void
 Parse::do_clDevManual( opt_iter &    it,
                        opt_iter      itEnd )
-{                      
+{
     ++it;
     CHECKOPT( it != itEnd AND (*it).char_at(0) != '-',
               "link file path",
-              C_opt_DevmanFile ); 
-    sDevelopersManual_RefFilePath = *it;         
-    ++it;                     
+              C_opt_DevmanFile );
+    sDevelopersManual_RefFilePath = *it;
+    ++it;
 }
 
 void
@@ -260,25 +261,25 @@ Parse::do_clDefaultProject( opt_iter &    it,
 bool
 Parse::do_Run() const
 {
-    run::Parser 
-        aParser(*this);    
+    run::Parser
+        aParser(*this);
     return aParser.Perform();
-}   
+}
 
-int         
+int
 Parse::inq_RunningRank() const
 {
-    return static_cast<int>(rank_Parse); 
+    return static_cast<int>(rank_Parse);
 }
 
 
 
 //**************************     S_Sources      ***********************//
-                    
-void        
+
+void
 S_Sources::do_Init( opt_iter &          it,
                     opt_iter            itEnd )
-{                       
+{
     StringVector *
         pList = 0;
     csv_assert((*it)[0] == '-');
@@ -288,19 +289,19 @@ S_Sources::do_Init( opt_iter &          it,
         if ((*it)[0] == '-')
         {
             if (*it == C_opt_SourceTree)
-                pList = &aTrees;   
+                pList = &aTrees;
             else if (*it == C_opt_SourceDir)
-                pList = &aDirectories;   
+                pList = &aDirectories;
             else if (*it == C_opt_SourceFile)
-                pList = &aFiles;   
+                pList = &aFiles;
             else
                 return;
         }
         else
             pList->push_back(*it);
-    }   // end for        
+    }   // end for
 }
-                    
+
 
 
 //**************************     S_ProjectData     ***********************//
@@ -328,21 +329,21 @@ S_ProjectData::S_ProjectData( const S_LanguageInfo & i_globalLanguage,
 S_ProjectData::~S_ProjectData()
 {
 }
-        
-void        
+
+void
 S_ProjectData::do_Init( opt_iter &          it,
                         opt_iter            itEnd )
-{             
+{
     if (NOT IsDefault())
     {
         CHECKOPT( it != itEnd AND (*it).char_at(0) != '-',
-                  "name",  
+                  "name",
                   C_opt_Project );
-        sName = *it;              
+        sName = *it;
         ++it;
-        
+
         CHECKOPT( it != itEnd AND  (*it).char_at(0) != '-',
-                  "root directory",  
+                  "root directory",
                   C_opt_Project );
         aRootDirectory.Set((*it).c_str(), true);
         ++it;
