@@ -2,9 +2,9 @@
  *
  *  $RCSfile: i_service.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:12:55 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:16:06 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -66,6 +66,7 @@
 // NOT FULLY DECLARED SERVICES
 #include <ary/idl/ihost_ce.hxx>
 #include <ary/idl/ik_service.hxx>
+#include <ary_i/codeinf2.hxx>
 #include <sci_impl.hxx>
 #include "ipi_2s.hxx"
 
@@ -87,18 +88,31 @@ Service::Service( const String &      i_sName,
 
 Service::~Service()
 {
+    for ( RelationList::iterator it = aIncludedServices.begin();
+          it != aIncludedServices.end();
+          ++it )
+    {
+        delete (*it).Info();
+    }
+
+    for ( RelationList::iterator it = aSupportedInterfaces.begin();
+          it != aSupportedInterfaces.end();
+          ++it )
+    {
+        delete (*it).Info();
+    }
 }
 
-void                
-Service::Get_SupportedInterfaces( Dyn_StdConstIterator<CommentedReference> & o_rResult ) const
+void
+Service::Get_SupportedInterfaces( Dyn_StdConstIterator<CommentedRelation> & o_rResult ) const
 {
-    o_rResult = new SCI_Vector<CommentedReference>(aSupportedInterfaces);    
+    o_rResult = new SCI_Vector<CommentedRelation>(aSupportedInterfaces);
 }
 
-void                
-Service::Get_IncludedServices( Dyn_StdConstIterator<CommentedReference> & o_rResult ) const
+void
+Service::Get_IncludedServices( Dyn_StdConstIterator<CommentedRelation> & o_rResult ) const
 {
-    o_rResult = new SCI_Vector<CommentedReference>(aIncludedServices);    
+    o_rResult = new SCI_Vector<CommentedRelation>(aIncludedServices);
 }
 
 void
@@ -136,54 +150,54 @@ Service::inq_SightLevel() const
 {
     return sl_File;
 }
-     
-     
+
+
 namespace ifc_service
 {
 
 inline const Service &
 service_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Service::class_id );
     return static_cast< const Service& >(i_ce);
-}     
+}
 
-void         
-attr::Get_IncludedServices( Dyn_StdConstIterator<CommentedReference> & o_result,
+void
+attr::Get_IncludedServices( Dyn_StdConstIterator<CommentedRelation> & o_result,
                             const CodeEntity &						  i_ce )
 {
-    o_result = new SCI_Vector<CommentedReference>( service_cast(i_ce).aIncludedServices );
+    o_result = new SCI_Vector<CommentedRelation>( service_cast(i_ce).aIncludedServices );
 }
-                               
-void         
-attr::Get_ExportedInterfaces( Dyn_StdConstIterator<CommentedReference> & o_result,
+
+void
+attr::Get_ExportedInterfaces( Dyn_StdConstIterator<CommentedRelation> & o_result,
                               const CodeEntity &							i_ce )
 {
-    o_result = new SCI_Vector<CommentedReference>( service_cast(i_ce).aSupportedInterfaces );
+    o_result = new SCI_Vector<CommentedRelation>( service_cast(i_ce).aSupportedInterfaces );
 }
-                                 
-void         
+
+void
 attr::Get_Properties( Dyn_CeIterator &    o_result,
                       const CodeEntity &  i_ce )
 {
     o_result = new SCI_Vector<Ce_id>( service_cast(i_ce).aProperties );
 }
 
-void         
+void
 xref::Get_IncludingServices( Dyn_CeIterator &    o_result,
                              const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(service_2s_IncludingServices));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(service_2s_IncludingServices));
 }
-                             
-void         
+
+void
 xref::Get_InstantiatingSingletons( Dyn_CeIterator &    o_result,
                                    const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(service_2s_InstantiatingSingletons));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(service_2s_InstantiatingSingletons));
 }
 
-                         
+
 } // namespace ifc_service
 
 

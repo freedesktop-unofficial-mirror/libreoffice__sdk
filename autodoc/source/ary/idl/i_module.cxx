@@ -2,9 +2,9 @@
  *
  *  $RCSfile: i_module.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:12:48 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:15:09 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -74,6 +74,8 @@
 #include <ary/idl/i_typedef.hxx>
 #include <ary/idl/i_constgroup.hxx>
 #include <ary/idl/i_singleton.hxx>
+#include <ary/idl/i_siservice.hxx>
+#include <ary/idl/i_sisingleton.hxx>
 #include <ary/idl/ihost_ce.hxx>
 #include <ary/idl/ip_ce.hxx>
 #include <nametreenode.hxx>
@@ -207,14 +209,14 @@ namespace ifc_module
 
 inline const Module &
 module_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Module::class_id );
     return static_cast< const Module& >(i_ce);
-}     
+}
 
 typedef NameTreeNode<Ce_id>::Map_LocalNames NameMap;
 
-void         
+void
 attr::Get_AllChildrenSeparated( std::vector< const CodeEntity* > & o_nestedModules,
                                 std::vector< const CodeEntity* > & o_services,
                                 std::vector< const CodeEntity* > & o_interfaces,
@@ -226,51 +228,53 @@ attr::Get_AllChildrenSeparated( std::vector< const CodeEntity* > & o_nestedModul
                                 std::vector< const CodeEntity* > & o_singletons,
                                 const CePilot &                    i_pilot,
                                 const CodeEntity &                 i_ce )
-{       
+{
     const CodeEntity *
         pCe = 0;
-    NameMap::const_iterator 
-        itEnd = module_cast(i_ce).pImpl->LocalNames().end();                                       
-    for ( NameMap::const_iterator 
+    NameMap::const_iterator
+        itEnd = module_cast(i_ce).pImpl->LocalNames().end();
+    for ( NameMap::const_iterator
             it = module_cast(i_ce).pImpl->LocalNames().begin();
           it != itEnd;
           ++it )
-    {          
+    {
         pCe = &i_pilot.Find_Ce( (*it).second );
         switch (pCe->ClassId())
         {
             case Module::class_id:
                         o_nestedModules.push_back(pCe);
-                        break;                            
+                        break;
+            case SglIfcService::class_id:
             case Service::class_id:
                         o_services.push_back(pCe);
-                        break;                            
+                        break;
             case Interface::class_id:
                         o_interfaces.push_back(pCe);
-                        break;                            
+                        break;
             case Struct::class_id:
                         o_structs.push_back(pCe);
-                        break;                            
+                        break;
             case Exception::class_id:
                         o_exceptions.push_back(pCe);
-                        break;                            
+                        break;
             case Enum::class_id:
                         o_enums.push_back(pCe);
-                        break;                            
+                        break;
             case Typedef::class_id:
                         o_typedefs.push_back(pCe);
-                        break;                            
+                        break;
             case ConstantsGroup::class_id:
                         o_constantGroups.push_back(pCe);
-                        break;                            
+                        break;
+            case SglIfcSingleton::class_id:
             case Singleton::class_id:
                         o_singletons.push_back(pCe);
-                        break;                            
+                        break;
         }
-    }   // end for    
+    }   // end for
 }
-                                      
-                         
+
+
 } // namespace ifc_module
 
 
