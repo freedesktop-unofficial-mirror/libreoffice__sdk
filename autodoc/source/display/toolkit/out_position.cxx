@@ -2,9 +2,9 @@
  *
  *  $RCSfile: out_position.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2003-12-01 16:11:43 $
+ *  last change: $Author: vg $ $Date: 2005-03-23 09:05:20 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -72,21 +72,12 @@ namespace output
 {
 
 
-                                                       
-namespace 
-{                                                       
+
+namespace
+{
 
 const int       C_nAssumedMaxLinkLength = 500;
 
-const int       C_nMaxDepth = 30;
-char            C_sUpLinkArray[3*C_nMaxDepth+1] =
-                        "../../../../../../../../../../"
-                        "../../../../../../../../../../"
-                        "../../../../../../../../../../";
-
-const char *    C_sUpLink = &C_sUpLinkArray[0];
-        
-        
 void				move_ToParent(
                         Node * &		    io_node,
                         intt                i_levels = 1 );
@@ -102,24 +93,24 @@ move_ToParent( Node * &   io_node,
     }
 }
 
-        
-   
+
+
 }   // namepace anonymous
 
 
-                       
+
 Position::Position()
     :   sFile(),
         pDirectory(&Node::Null_())
-{    
+{
 }
-                       
+
 
 Position::Position( Node &              i_directory,
                     const String &      i_file )
     :   sFile(i_file),
         pDirectory(&i_directory)
-{    
+{
 }
 
 Position::Position( Position &      i_directory,
@@ -128,7 +119,7 @@ Position::Position( Position &      i_directory,
         pDirectory(i_directory.pDirectory)
 {
 }
-                    
+
 
 Position::~Position()
 {
@@ -142,26 +133,26 @@ Position::operator=( Node & i_node )
     sFile.clear();
     return *this;
 }
- 
+
 Position &
 Position::operator+=( const String & i_nodeName )
 {
     csv_assert(pDirectory != 0);
-    
-    pDirectory = &pDirectory->Provide_Child(i_nodeName);    
-    sFile.clear();          
-    
-    return *this;
-}   
 
-Position &          
+    pDirectory = &pDirectory->Provide_Child(i_nodeName);
+    sFile.clear();
+
+    return *this;
+}
+
+Position &
 Position::operator-=( intt i_levels )
-{                                     
+{
     csv_assert(pDirectory != 0);
-    
-    pDirectory = pDirectory->Parent();   
+
+    pDirectory = pDirectory->Parent();
     if (pDirectory == 0)
-        pDirectory = &Node::Null_(); 
+        pDirectory = &Node::Null_();
     sFile.clear();
 
     return *this;
@@ -227,34 +218,56 @@ Position::Get_LinkToRoot( StreamStr &         o_result,
     o_result << get_UpLink(Depth());
 }
 
-void                
+void
 Position::Set( Node &           i_node,
                const String &   i_file )
-{ 
-    sFile = i_file; 
-    pDirectory = &i_node; 
-}               
+{
+    sFile = i_file;
+    pDirectory = &i_node;
+}
 
 
 
 
 const char *
-get_UpLink(intt i_depth)
+get_UpLink(uintt i_depth)
 {
-    intt nDepth;
+    static const uintt
+        C_nMaxDepth = 30;
+    static const char
+        C_sUpLinkArray[3*C_nMaxDepth+1] =
+                        "../../../../../../../../../../"
+                        "../../../../../../../../../../"
+                        "../../../../../../../../../../";
+    static const char *
+        C_sUpLink = &C_sUpLinkArray[0];
 
     if ( i_depth <= C_nMaxDepth )
-        return C_sUpLink + 3*(C_nMaxDepth - i_depth);
-
-
-    StreamLock  aRet(i_depth*3 + 1);
-    StreamStr & rRet = aRet();
-    for ( nDepth = i_depth; nDepth > C_nMaxDepth; nDepth -= C_nMaxDepth )
     {
-        rRet << C_sUpLink;
+        return C_sUpLink + 3*(C_nMaxDepth - i_depth);
     }
-    rRet << C_sUpLink + 3*(C_nMaxDepth - nDepth);
-    return rRet.c_str();
+    else
+    {   // not THREAD fast
+        static std::vector<char>
+            aRet;
+        uintt nNeededSize = i_depth * 3 + 1;
+
+        if (aRet.size() < nNeededSize)
+        {
+            aRet.resize(nNeededSize);
+            char * pEnd = &aRet[nNeededSize-1];
+            *pEnd = '\0';
+
+            for ( char * pFill = &(*aRet.begin());
+                  pFill != pEnd;
+                  pFill += 3 )
+            {
+                memcpy(pFill, C_sUpLink, 3);
+            }
+        }   // end if
+
+        return &aRet[aRet.size() - 1 - 3*i_depth];
+    }
 }
 
 
