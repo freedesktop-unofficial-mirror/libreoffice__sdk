@@ -2,9 +2,9 @@
  *
  *  $RCSfile: streamstr.cxx,v $
  *
- *  $Revision: 1.8 $
+ *  $Revision: 1.9 $
  *
- *  last change: $Author: obo $ $Date: 2004-02-20 09:30:06 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:48:01 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -525,7 +525,7 @@ StreamStr::operator_read_line( bstream & i_src )
           nCount = i_src.read(&c, 1) )
     {
         operator<<(c);
-    }   
+    }
 
     bool bEndOfStream = nCount == 0;
     // Check for line-end:
@@ -537,8 +537,62 @@ StreamStr::operator_read_line( bstream & i_src )
             if (c != 13 AND c != 10 OR c == oldc)
                 i_src.seek(-1,::csv::cur);
         }
-    }           
+    }
     return *this;
+}
+
+void
+StreamStr::strip_front(char i_cToRemove)
+{
+    const_iterator it = begin();
+    for ( ;
+          it != end() ? *it == i_cToRemove : false;
+          ++it );
+    pop_front(it - begin());
+}
+
+void
+StreamStr::strip_back(char i_cToRemove)
+{
+    const_iterator it = end();
+    for ( ;
+          it != begin() ? *(it-1) == i_cToRemove : false;
+          --it );
+    pop_back(end() - it);
+}
+
+void
+StreamStr::strip_frontback(char i_cToRemove)
+{
+    strip_front(i_cToRemove);
+    strip_back(i_cToRemove);
+}
+
+void
+StreamStr::strip_front_whitespace()
+{
+    const_iterator it = begin();
+    for ( ;
+          it != end() ? *it < 33 : false;
+          ++it );
+    pop_front(it - begin());
+}
+
+void
+StreamStr::strip_back_whitespace()
+{
+    const_iterator it = end();
+    for ( ;
+          it != begin() ? *(it-1) < 33 : false;
+          --it );
+    pop_back(end() - it);
+}
+
+void
+StreamStr::strip_frontback_whitespace()
+{
+    strip_front_whitespace();
+    strip_back_whitespace();
 }
 
 void
@@ -594,7 +648,7 @@ StreamStr::replace_all( Area                i_aStrToSearch,
     position_type p = 0;
     const char *  pSearch = i_aStrToSearch.sStr;
     size_type     nSearch = i_aStrToSearch.nLength;
-    
+
     while ( p <= length() - nSearch )
     {
         if ( strncmp(dpData+p, pSearch, nSearch) == 0 )
