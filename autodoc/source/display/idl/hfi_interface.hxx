@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_interface.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:14:32 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:26:26 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -74,41 +74,45 @@
 
 class HF_NaviSubRow;
 class HF_SubTitleTable;
-
+class HF_IdlBaseNode;
 
 class HF_IdlInterface : public HtmlFactory_Idl
 {
   public:
                         HF_IdlInterface(
-                            Environment &       io_rEnv,    // The CurDirecory() is the one of the here displayed Module.
+                            Environment &       io_rEnv,
                             Xml::Element &      o_rOut );
     virtual             ~HF_IdlInterface();
 
     void                Produce_byData(
                             const client &      i_ce ) const;
-  private:   
-    // Interface HtmlFactory_Idl:
-    virtual type_id     inq_BaseOf(               
-                            const client &      i_ce ) const;
+    void                Display_BaseNode(
+                            const HF_IdlBaseNode &
+                                                i_rNode ) const;
+  private:
     // Locals
     DYN HF_NaviSubRow & make_Navibar(
                             const client &      i_ce ) const;
-                            
-    virtual void        produce_MemberDetails( 
+
+    virtual void        produce_MemberDetails(
                             HF_SubTitleTable &  o_table,
                             const client &      ce ) const;
-    
+    void                produce_BaseHierarchy(
+                            Xml::Element &      o_screen,
+                            const client &      i_ce,
+                            const String &      i_sLabel ) const;
+
     // Locals
     enum E_CurProducedMembers
-    {    
+    {
         mem_none,
         mem_Functions,
         mem_Attributes
     };
-    
+
     // DATA
     mutable E_CurProducedMembers
-                        eCurProducedMembers;       
+                        eCurProducedMembers;
 };
 
 
