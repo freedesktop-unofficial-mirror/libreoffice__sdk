@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cx_idlco.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:15:35 $
+ *  last change: $Author: obo $ $Date: 2004-06-04 03:07:01 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -134,7 +134,7 @@ const UINT16 nTok_mt_singleton = 300 + TokMetaType::mt_singleton;
 const UINT16 nTok_mt_struct = 300 + TokMetaType::mt_struct;
 const UINT16 nTok_mt_typedef = 300 + TokMetaType::mt_typedef;
 const UINT16 nTok_mt_uik = 300 + TokMetaType::mt_uik;
-                   
+
 const UINT16 nTok_ste_bound = 400 + TokStereotype::ste_bound;
 const UINT16 nTok_ste_constrained = 400 + TokStereotype::ste_constrained;
 const UINT16 nTok_ste_const = 400 + TokStereotype::ste_const;
@@ -147,6 +147,7 @@ const UINT16 nTok_ste_readonly = 400 + TokStereotype::ste_readonly;
 const UINT16 nTok_ste_removable = 400 + TokStereotype::ste_removable;
 const UINT16 nTok_ste_virtual = 400 + TokStereotype::ste_virtual;
 const UINT16 nTok_ste_transient = 400 + TokStereotype::ste_transient;
+const UINT16 nTok_ste_published = 400 + TokStereotype::ste_published;
 
 const UINT16 nTok_raises = 501;
 const UINT16 nTok_needs = 502;
@@ -478,7 +479,7 @@ Context_UidlCode::SetupStateMachine()
     aStateMachine.AddStatus(dpBst_gotoSlc);
     aStateMachine.AddStatus(dpBst_gotoPrp);
     aStateMachine.AddStatus(dpBst_gotoAsg);
-                         
+
     aStateMachine.AddToken("any",		nTok_bty_any,			A_nKeywordDefStatus,	finKeyw);
     aStateMachine.AddToken("attribute", nTok_mt_attribute,      A_nKeywordDefStatus,	finKeyw);
     aStateMachine.AddToken("boolean",   nTok_bty_boolean,       A_nKeywordDefStatus,    finKeyw);
@@ -498,9 +499,9 @@ Context_UidlCode::SetupStateMachine()
     aStateMachine.AddToken("inout",     nTok_ph_inout,          A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("interface", nTok_mt_interface,      A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("long",      nTok_bty_long,          A_nKeywordDefStatus,    finKeyw);
-    aStateMachine.AddToken("maybeambiguous",    
+    aStateMachine.AddToken("maybeambiguous",
                                         nTok_ste_maybeambiguous,A_nKeywordDefStatus,    finKeyw);
-    aStateMachine.AddToken("maybedefault",    
+    aStateMachine.AddToken("maybedefault",
                                         nTok_ste_maybedefault,  A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("maybevoid", nTok_ste_maybevoid,     A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("module",    nTok_mt_module,         A_nKeywordDefStatus,    finKeyw);
@@ -510,6 +511,7 @@ Context_UidlCode::SetupStateMachine()
     aStateMachine.AddToken("optional",  nTok_ste_optional,      A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("out",       nTok_ph_out,            A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("property",  nTok_mt_property,       A_nKeywordDefStatus,    finKeyw);
+    aStateMachine.AddToken("published", nTok_ste_published,     A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("raises",    nTok_raises,            A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("readonly",  nTok_ste_readonly,      A_nKeywordDefStatus,    finKeyw);
     aStateMachine.AddToken("removable", nTok_ste_removable,     A_nKeywordDefStatus,    finKeyw);
