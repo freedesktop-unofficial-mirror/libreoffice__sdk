@@ -2,9 +2,9 @@
  *
  *  $RCSfile: ip_type.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:12:11 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:11:03 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -78,7 +78,6 @@ class QualifiedName;
 namespace idl
 {
 
-class Module;
 class Type;
 class ExplicitNameRoom;
 
@@ -94,19 +93,16 @@ class TypePilot
                             uintt               i_nSequenceCount,
                             Ce_id               i_nModuleOfOccurrence );
     // INQUIRY
-    void                Search_NameAndModuleOfType(
-                            Module &            o_rOwner,
-                            String &            o_rName,
-                            Type_id             i_nType ) const;
-
     const Type &        Find_Type(
+                            Type_id             i_nType ) const;
+    String              Search_LocalNameOf(
                             Type_id             i_nType ) const;
     Ce_id               Search_CeRelatedTo(
                             Type_id             i_nType ) const;
     const ExplicitNameRoom &
                         Find_XNameRoom(
                             Type_id             i_nType ) const;
-    bool                IsBuiltInOrRelated(                            
+    bool                IsBuiltInOrRelated(
                             const Type &        i_rType ) const;
   private:
     // Locals
@@ -118,12 +114,14 @@ class TypePilot
     virtual const Type &
                         inq_Find_Type(
                             Type_id             i_nType ) const = 0;
+    virtual String      inq_Search_LocalNameOf(
+                            Type_id             i_nType ) const = 0;
     virtual Ce_id       inq_Search_CeRelatedTo(
                             Type_id             i_nType ) const = 0;
     virtual const ExplicitNameRoom &
                         inq_Find_XNameRoom(
                             Type_id             i_nType ) const = 0;
-    virtual bool        inq_IsBuiltInOrRelated(                            
+    virtual bool        inq_IsBuiltInOrRelated(
                             const Type &        i_rType ) const = 0;
 };
 
@@ -142,6 +140,10 @@ inline const Type &
 TypePilot::Find_Type( Type_id i_nType ) const
     { return inq_Find_Type(i_nType); }
 
+inline String
+TypePilot::Search_LocalNameOf( Type_id i_nType ) const
+    { return inq_Search_LocalNameOf(i_nType); }
+
 inline Ce_id
 TypePilot::Search_CeRelatedTo( Type_id i_nType ) const
     { return inq_Search_CeRelatedTo(i_nType); }
@@ -150,7 +152,7 @@ inline const ExplicitNameRoom &
 TypePilot::Find_XNameRoom( Type_id i_nType ) const
     { return inq_Find_XNameRoom(i_nType); }
 
-inline bool                
+inline bool
 TypePilot::IsBuiltInOrRelated( const Type & i_rType ) const
     { return inq_IsBuiltInOrRelated( i_rType ); }
 
@@ -161,4 +163,3 @@ TypePilot::IsBuiltInOrRelated( const Type & i_rType ) const
 
 
 #endif
-
