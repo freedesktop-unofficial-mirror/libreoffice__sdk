@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_tag.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: vg $ $Date: 2003-06-10 11:34:03 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:29:59 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -65,16 +65,19 @@
 
 
 // NOT FULLY DEFINED SERVICES
-#include <ary_i/d_token.hxx>
 #include <ary/idl/i_ce.hxx>
 #include <ary/idl/i_module.hxx>
+#include <ary_i/ci_text2.hxx>
+#include <ary_i/d_token.hxx>
 #include <toolkit/out_tree.hxx>
+#include <adc_cl.hxx>
 #include "hfi_typetext.hxx"
 #include "hi_ary.hxx"
 #include "hi_env.hxx"
 #include "hi_linkhelper.hxx"
 
 
+using ary::info::DocuTex2;
 
 
 inline void
@@ -130,7 +133,7 @@ HF_IdlTag::Display_StdAtTag( const csi::dsapi::DT_StdAtTag & i_rTag )
     *pTitleOut << i_rTag.Title();
     PutText_Out( i_rTag.Text() );
 }
-                                           
+
 void
 HF_IdlTag::Display_SeeAlsoAtTag( const csi::dsapi::DT_SeeAlsoAtTag & i_rTag )
 {
@@ -139,8 +142,8 @@ HF_IdlTag::Display_SeeAlsoAtTag( const csi::dsapi::DT_SeeAlsoAtTag & i_rTag )
 
     csv_assert( pTitleOut != 0 );
     *pTitleOut << "See also";
-                                                         
-    HF_IdlTypeText aLinkText(Env(),aTextOut.CurOut(),true, &aTextOut.ScopeGivingCe());  
+
+    HF_IdlTypeText aLinkText(Env(),aTextOut.CurOut(),true, &aTextOut.ScopeGivingCe());
     aLinkText.Produce_byData( i_rTag.LinkText() );
 
     aTextOut.CurOut() << new Html::LineBreak;
@@ -156,17 +159,30 @@ HF_IdlTag::Display_ParameterAtTag( const csi::dsapi::DT_ParameterAtTag & i_rTag 
     PutText_Out( i_rTag.Text() );
 }
 
-void	 	
+void
 HF_IdlTag::Display_SinceAtTag( const csi::dsapi::DT_SinceAtTag & i_rTag )
 {
-    if ( i_rTag.Text().IsEmpty() )
+    csv_assert(pTitleOut != 0);
+
+    if ( i_rTag.Text().IsEmpty()
+         OR
+         NOT autodoc::CommandLine::Get_().Display_SinceTag() )
+    {
+         return;
+    }
+
+    // Transform the value of the @since tag into the text to be displayed.
+    String sDisplay =
+        autodoc::CommandLine::Get_().DisplayOf_SinceTagValue(
+                                        i_rTag.Text().TextOfFirstToken() );
+    if (sDisplay.empty())
         return;
 
-    csv_assert( pTitleOut != 0 );
-    *pTitleOut << "Since version";
-    PutText_Out( i_rTag.Text() );
+    *pTitleOut << "Since ";
+    DocuTex2 aHelp;
+    aHelp.AddToken(* new csi::dsapi::DT_TextToken(sDisplay));
+    PutText_Out(aHelp);
 }
-
 
 
 //********************      HF_IdlShortDocu     *********************/
@@ -186,8 +202,8 @@ HF_IdlShortDocu::Produce_byData( const ary::idl::CodeEntity & i_rCe )
 {
     if (i_rCe.Docu() == 0)
         return;
-                    
-    const ce_info &                    
+
+    const ce_info &
         rDocu = *i_rCe.Docu();
     if ( rDocu.IsDeprecated() )
     {
