@@ -2,9 +2,9 @@
  *
  *  $RCSfile: out_node.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:15:27 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:36:22 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -71,13 +71,13 @@
 namespace output
 {
 
-                                                       
-namespace 
-{                                                       
+
+namespace
+{
 
 struct Less_NodePtr
 {
-    bool                operator()( 
+    bool                operator()(
                             Node *              p1,
                             Node *              p2 ) const
                         { return p1->Name() < p2->Name(); }
@@ -87,8 +87,8 @@ struct Less_NodePtr     C_Less_NodePtr;
 
 
 Node  C_aNullNode(Node::null_object);
-   
-    
+
+
 }   // namepace anonymous
 
 
@@ -131,21 +131,21 @@ Node::~Node()
     {
         delete *it;
     }
-}   
+}
 
-Node &              
-Node::Provide_Child( const String & i_name ) 
+Node &
+Node::Provide_Child( const String & i_name )
 {
     Node * ret = find_Child(i_name);
     if (ret != 0)
         return *ret;
     return add_Child(i_name);
-}   
+}
 
-void                
+void
 Node::Get_Path( StreamStr &         o_result,
                 intt                i_maxDepth ) const
-{   
+{
     // Intentionally 'i_maxDepth != 0', so max_Depth == -1 sets no limit:
     if (i_maxDepth != 0)
     {
@@ -160,49 +160,49 @@ Node::Get_Chain( StringVector & o_result,
                  intt           i_maxDepth ) const
 {
     if (i_maxDepth != 0)
-    {       
-        // This is called also for the toplevel Node, 
+    {
+        // This is called also for the toplevel Node,
         //   but there happens nothing:
-        if (pParent != 0)                                 
-        {   
+        if (pParent != 0)
+        {
             pParent->Get_Chain(o_result, i_maxDepth-1);
             o_result.push_back(sName);
         }
     }
 }
-        
-Node *        
+
+Node *
 Node::find_Child( const String & i_name )
-{   
+{
     // Trying to optimise search in a vector:
-                  
+
     uintt nSize = aChildren.size();
     if ( nSize > 0 AND nSize < 20 )
-    {             
+    {
         List::const_iterator it = aChildren.begin();
         List::const_iterator itMiddle = it + nSize/2;
         int comp = 0;
-        
+
         if ( i_name < (*itMiddle)->Name() )
-        {                          
+        {
             for ( ;
-                  it != itMiddle 
-                        ? (comp = csv::compare(i_name, (*it)->Name())) <= 0 
+                  it != itMiddle
+                        ? (comp = csv::compare(i_name, (*it)->Name())) <= 0
                         : false;
-                  ++it ) 
+                  ++it )
             {
                 if ( comp == 0 )
                     return *it;
             }   // end for
-        }  
-        else 
+        }
+        else
         {
             List::const_iterator itEnd = aChildren.end();
             for ( it = itMiddle;
                   it != itEnd
-                        ? (comp = csv::compare(i_name, (*it)->Name())) <= 0 
+                        ? (comp = csv::compare(i_name, (*it)->Name())) <= 0
                         : false;
-                  ++it ) 
+                  ++it )
             {
                 if ( comp == 0 )
                     return *it;
@@ -227,39 +227,34 @@ Node::find_Child( const String & i_name )
 }
 
 Node &
-Node::add_Child( const String & i_name ) 
+Node::add_Child( const String & i_name )
 {
-    Dyn<Node> pNew( new Node(i_name,*this) );
-    Node * pSearch = pNew.Ptr();    // Necessary, because Release() invalidates pNew.
-
-    List::iterator
-        itNew = aChildren.insert( std::upper_bound( aChildren.begin(),
-                                                    aChildren.end(),
-                                                    pSearch,
-                                                    C_Less_NodePtr ),
-                                  pSearch );
-    return *pNew.Release(); // Release, because it is hold by aChildren now.
+    DYN Node * pNew = new Node(i_name,*this);
+    aChildren.insert( std::upper_bound( aChildren.begin(),
+                                        aChildren.end(),
+                                        pNew,
+                                        C_Less_NodePtr ),
+                      pNew );
+    return *pNew;
 }
 
 Node &
 Node::provide_Child( StringVector::const_iterator i_next,
-                       StringVector::const_iterator i_end ) 
+                       StringVector::const_iterator i_end )
 {
     if (i_next == i_end)
         return *this;
     return Provide_Child(*i_next).provide_Child(i_next+1,i_end);
 }
-        
-    
-    
-        
-Node & 
+
+
+
+
+Node &
 Node::Null_()
 {
-    return C_aNullNode;    
+    return C_aNullNode;
 }
-
-
 
 
 }   // namespace output
