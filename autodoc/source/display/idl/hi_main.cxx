@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hi_main.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:01:58 $
+ *  last change: $Author: np $ $Date: 2002-11-29 10:20:06 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -500,6 +500,11 @@ MainDisplay_Idl::do_Interface2s( const ary::idl::CodeEntity & i_ce )
         "Uses as Parameter",
         "#Parameters",
         *pXrefList );
+    ary::idl::ifc_interface::xref::Get_AsDataTypes(pXrefList,i_ce);
+    aUses.Produce_List(
+        "Uses as Data Type",
+        "#DataTypes",
+        *pXrefList );
     aUses.Write_ManualLinks(i_ce);
 }
 
@@ -566,10 +571,15 @@ MainDisplay_Idl::do_Struct2s( const ary::idl::CodeEntity & i_ce )
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
-    ary::idl::ifc_struct::xref::Get_AsParameters(pXrefList,i_ce);        
+    ary::idl::ifc_struct::xref::Get_AsParameters(pXrefList,i_ce);
     aUses.Produce_List( 
         "Uses as Parameter",
         "#Parameters",
+        *pXrefList );
+    ary::idl::ifc_struct::xref::Get_AsDataTypes(pXrefList,i_ce);
+    aUses.Produce_List(
+        "Uses as Data Type",
+        "#DataTypes",
         *pXrefList );
     aUses.Write_ManualLinks(i_ce);
 }
@@ -631,10 +641,15 @@ MainDisplay_Idl::do_Enum2s( const ary::idl::CodeEntity & i_ce )
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
-    ary::idl::ifc_enum::xref::Get_AsParameters(pXrefList,i_ce);        
+    ary::idl::ifc_enum::xref::Get_AsParameters(pXrefList,i_ce);
     aUses.Produce_List( 
         "Uses as Parameter",
         "#Parameters",
+        *pXrefList );
+    ary::idl::ifc_enum::xref::Get_AsDataTypes(pXrefList,i_ce);
+    aUses.Produce_List(
+        "Uses as Data Type",
+        "#DataTypes",
         *pXrefList );
     aUses.Write_ManualLinks(i_ce);
 }
@@ -643,33 +658,39 @@ void
 MainDisplay_Idl::do_Typedef2s( const ary::idl::CodeEntity & i_ce )
 {
     String sUsesFileName(
-                StreamLock(100)() 
-                    << i_ce.LocalName() 
+                StreamLock(100)()
+                    << i_ce.LocalName()
                     << Env().Linker().XrefsSuffix()
                     << c_str );
     Guard_CurFile   gFile(  *pMyFile,
                             Env(),
                             sUsesFileName,
                             "Uses of Typedef" );
-    HF_IdlXrefs     aUses(  *pEnv, 
+    HF_IdlXrefs     aUses(  *pEnv,
                             pMyFile->Body(),
                             C_sCePrefix_Typedef,
                             i_ce );
-    Dyn_CeIterator  pXrefList;                                                                                
-    ary::idl::ifc_typedef::xref::Get_SynonymTypedefs(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    Dyn_CeIterator  pXrefList;
+    ary::idl::ifc_typedef::xref::Get_SynonymTypedefs(pXrefList,i_ce);
+    aUses.Produce_List(
         "Synonym Typedefs",
         "#Synonyms",
         *pXrefList );
-    ary::idl::ifc_typedef::xref::Get_AsReturns(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_typedef::xref::Get_AsReturns(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Return Type",
         "#Returns",
         *pXrefList );
-    ary::idl::ifc_typedef::xref::Get_AsParameters(pXrefList,i_ce);        
-    aUses.Produce_List( 
+    ary::idl::ifc_typedef::xref::Get_AsParameters(pXrefList,i_ce);
+    aUses.Produce_List(
         "Uses as Parameter",
         "#Parameters",
         *pXrefList );
+    ary::idl::ifc_typedef::xref::Get_AsDataTypes(pXrefList,i_ce);
+    aUses.Produce_List(
+        "Uses as Data Type",
+        "#DataTypes",
+        *pXrefList );
     aUses.Write_ManualLinks(i_ce);
 }
+
