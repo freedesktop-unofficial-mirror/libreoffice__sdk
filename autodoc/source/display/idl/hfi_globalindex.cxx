@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hfi_globalindex.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: hr $ $Date: 2003-06-30 15:27:22 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:25:21 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -80,6 +80,8 @@
 namespace
 {
 
+/**
+*/
 enum E_Types
 {
         t_service           = 0,
@@ -97,6 +99,8 @@ enum E_Types
         t_module            = 12,
         t_singleton         = 13,
         t_attribute         = 14,
+        t_siservice         = 15,
+        t_sisingleton       = 16,
         t_MAX
 };
 
@@ -123,17 +127,21 @@ uintt   G_nDummy;
     Constant            2012
     Singleton           2013
     Attribute           2014
+    SglIfcService       2015
+    SglIfcSingleton     2016
 */
-const int C_nNumberOfIdlTypes = 15;
+const int C_nNumberOfIdlTypes = 17;
 const char *    C_sTypeNames[C_nNumberOfIdlTypes] =
                     { "module ",    "interface ",   "function ",    "service ",     "property ",
                       "enum ",      "value ",       "typedef ",     "struct ",      "field ",
-                      "exception ", "constants group ", "constant ","singleton ",   "attribute "
+                      "exception ", "constants group ", "constant ","singleton ",   "attribute ",
+                      "service",    "singleton"
                     };
 const char *    C_sOwnerNames[C_nNumberOfIdlTypes] =
                     { "module ",    "module ",      "interface ",   "module ",      "service ",
                       "module ",    "enum ",        "module ",      "module ",      "", // could be struct or exception
-                      "module ",    "module ",      "constants group ", "module ",  "interface "
+                      "module ",    "module ",      "constants group ", "module ",  "interface ",
+                      "module",     "module"
                     };
 const intt C_nNamesArrayOffset = intt(ary::idl::Module::class_id);
 const int C_nIxField = 9;
@@ -156,7 +164,7 @@ HF_IdlGlobalIndex::PageData     G_PageData;
 }   // end anonymous namespace
 
 
-inline void                
+inline void
 HF_IdlGlobalIndex::write_EntryItself( Xml::Element &               o_destination,
                                       const ary::idl::CodeEntity & i_ce,
                                       const HF_IdlTypeText &       i_typeLinkWriter ) const
@@ -209,7 +217,7 @@ HF_IdlGlobalIndex::Produce_Page(ary::idl::alphabetical_index::E_Letter i_letter)
     for ( PageData::const_iterator iter = G_PageData.begin();
           iter != itEnd;
           ++iter )
-    {                    
+    {
         produce_Line(iter, aTypeLinkWriter);
     }   // end for
 
@@ -231,46 +239,46 @@ void
 HF_IdlGlobalIndex::produce_Line( PageData::const_iterator i_entry,
                                  const HF_IdlTypeText &   i_typeLinkWriter) const
 {
-    const client & 
+    const client &
         rCe = Env().Data().Find_Ce(*i_entry);
     if (NOT rCe.Owner().IsValid())
         return; // Omit global namespace.
 
     // The destination for the created output:
     Xml::Element & rDT = CurOut() >> *new Html::DefListTerm;
-                               
+
     /** The following code is intended to produce an output that
         will be recognized by the context help system of Forte.
         That is reached by making it similar to the indices, that
         Javadoc produces.
         If the link to the Entry contains a hashmark, the Forte-Help
-        requires following a link to the owner. 
+        requires following a link to the owner.
         But if there is no hashmark, the following link must go to
-        the same Entry again. Doesn't make really sense :-(, but that's 
+        the same Entry again. Doesn't make really sense :-(, but that's
         like it is.
     */
     write_EntryItself(rDT,rCe,i_typeLinkWriter);
     if (rCe.SightLevel() == ary::idl::sl_Member)
-        write_OwnerOfEntry(rDT,rCe,i_typeLinkWriter);   
+        write_OwnerOfEntry(rDT,rCe,i_typeLinkWriter);
     else
-        write_EntrySecondTime(rDT,rCe,i_typeLinkWriter);  
-                                              
-    // This produces an empty "<dd></dd>", which is also needed to reach 
+        write_EntrySecondTime(rDT,rCe,i_typeLinkWriter);
+
+    // This produces an empty "<dd></dd>", which is also needed to reach
     //   similarity to the Javadoc index:
     CurOut() << new Html::DefListDefinition;
 }
 
-void                
+void
 HF_IdlGlobalIndex::write_OwnerOfEntry( Xml::Element &               o_destination,
                                        const ary::idl::CodeEntity & i_ce,
                                        const HF_IdlTypeText &       i_typeLinkWriter ) const
 {
-    const client & 
+    const client &
         rOwner = Env().Data().Find_Ce(i_ce.Owner());
 
     int nIx = int(i_ce.ClassId() - C_nNamesArrayOffset);
-    csv_assert(csv::in_range(0,nIx,C_nNumberOfIdlTypes));           
-    
+    csv_assert(csv::in_range(0,nIx,C_nNumberOfIdlTypes));
+
     o_destination << C_sTypeNames[nIx]
                   << "in ";
     if (nIx != C_nIxField)
@@ -280,19 +288,19 @@ HF_IdlGlobalIndex::write_OwnerOfEntry( Xml::Element &               o_destinatio
     else
     {
         uintt nOwnerIx = rOwner.ClassId() - C_nNamesArrayOffset;
-        csv_assert(0 <= nOwnerIx && nOwnerIx < C_nNumberOfIdlTypes);           
+        csv_assert(0 <= nOwnerIx && nOwnerIx < C_nNumberOfIdlTypes);
         o_destination << C_sTypeNames[nOwnerIx];
     }
     i_typeLinkWriter.Produce_IndexOwnerLink(o_destination, rOwner);
 }
 
-void                
+void
 HF_IdlGlobalIndex::write_EntrySecondTime( Xml::Element &                o_destination,
                                           const ary::idl::CodeEntity &  i_ce,
                                           const HF_IdlTypeText &        i_typeLinkWriter ) const
 {
     int nIx = int(i_ce.ClassId() - C_nNamesArrayOffset);
-    csv_assert(csv::in_range(0,nIx,C_nNumberOfIdlTypes));           
+    csv_assert(csv::in_range(0,nIx,C_nNumberOfIdlTypes));
 
     o_destination << C_sTypeNames[nIx]
                   << " ";
