@@ -2,9 +2,9 @@
  *
  *  $RCSfile: pe_iface.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-05-07 18:32:25 $
+ *  last change: $Author: np $ $Date: 2002-05-14 09:02:20 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -86,7 +86,7 @@ namespace uidl
 #ifdef DF
 #undef DF
 #endif
-#define DF  &PE_Interface::On_Default
+#define DF 	&PE_Interface::On_Default
 
 PE_Interface::F_TOK
 PE_Interface::aDispatcher[PE_Interface::e_STATES_MAX][PE_Interface::tt_MAX] =

@@ -2,9 +2,9 @@
  *
  *  $RCSfile: main.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-03-22 11:25:43 $
+ *  last change: $Author: np $ $Date: 2002-05-14 09:02:17 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -68,16 +68,14 @@
 #include "cmd_run.hxx"
 
 
-
-
 int
 #ifdef WNT
     _cdecl
 #endif
-main( int 		 argc,
-      char * 	 argv[] )
+main( int        argc,
+      char *     argv[] )
 {
-    autodoc::CommandLine    aCL;
+   autodoc::CommandLine    aCL;
     autodoc::CommandRunner  aRunner;
 
     aCL.Init(argc, argv);
@@ -85,9 +83,8 @@ main( int 		 argc,
         return 1;
 
     int ret = aRunner.Run(aCL);
-
     return ret;
 }
 
 
-                                                
+

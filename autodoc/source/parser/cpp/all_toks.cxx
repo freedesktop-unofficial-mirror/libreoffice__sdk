@@ -2,9 +2,9 @@
  *
  *  $RCSfile: all_toks.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-05-07 18:32:24 $
+ *  last change: $Author: np $ $Date: 2002-05-14 09:02:18 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -66,7 +66,7 @@
 
 // NOT FULLY DEFINED SERVICES
 #include <cpp/ctokdeal.hxx>
-#include <c_dealer.hxx>
+#include "c_dealer.hxx"
 #include "tokintpr.hxx"
 
 
@@ -77,13 +77,14 @@ namespace cpp {
 void
 Token::DealOut( ::TokenDealer & o_rDealer )
 {
+    // KORR HACK (casting to derivation cpp::TokenDealer)
     o_rDealer.AsDistributor()->Deal_CppCode(*this);
 }
 
 
 #define DEF_TOKEN_CLASS(name) \
 void \
-Tok_##name::Trigger( TokenInterpreter &	io_rInterpreter ) const \
+Tok_##name::Trigger( TokenInterpreter & io_rInterpreter ) const \
 { io_rInterpreter.Hdl_##name(*this); } \
 INT16 \
 Tok_##name::TypeId() const { return Tid_##name; } \
@@ -92,7 +93,7 @@ Tok_##name::Text() const { return #name; }
 
 #define DEF_TOKEN_CLASS_WITHTEXT(name, text ) \
 void \
-Tok_##name::Trigger( TokenInterpreter &	io_rInterpreter ) const \
+Tok_##name::Trigger( TokenInterpreter & io_rInterpreter ) const \
 { io_rInterpreter.Hdl_##name(*this); } \
 INT16 \
 Tok_##name::TypeId() const { return Tid_##name; } \
@@ -150,7 +151,7 @@ DEF_TOKEN_CLASS_WITHTEXT(MacroParameter,sText)
 // DEF_TOKEN_CLASS_WITHTEXT(PreProDefinition,sText)
 
 void
-Tok_PreProDefinition::Trigger( TokenInterpreter &	io_rInterpreter ) const
+Tok_PreProDefinition::Trigger( TokenInterpreter &   io_rInterpreter ) const
 { io_rInterpreter.Hdl_PreProDefinition(*this); }
 
 INT16
@@ -175,8 +176,9 @@ Tok_UnblockMacro::Text() const
 }
 
 void
-Tok_UnblockMacro::DealOut( ::TokenDealer & o_rDealer ) 
+Tok_UnblockMacro::DealOut( ::TokenDealer & o_rDealer )
 {
+    // KORR HACK (casting to derivation cpp::TokenDealer)
     o_rDealer.AsDistributor()->Deal_Cpp_UnblockMacro(*this);
 }
 
