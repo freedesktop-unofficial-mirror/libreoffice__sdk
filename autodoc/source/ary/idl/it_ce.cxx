@@ -2,9 +2,9 @@
  *
  *  $RCSfile: it_ce.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:13:21 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:30:19 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -79,8 +79,10 @@ namespace idl
 {
 
 
-Ce_Type::Ce_Type( Ce_id i_nRelatedCe )
-    :   nRelatedCe(i_nRelatedCe)
+Ce_Type::Ce_Type( Ce_id     i_nRelatedCe,
+                  Type_id   i_nTemplateType )
+    :   nRelatedCe(i_nRelatedCe),
+        nTemplateType(i_nTemplateType)
 {
 }
 
@@ -106,9 +108,9 @@ Ce_Type::inq_Get_Text( StringVector &      o_module,
                        Ce_id &             o_nRelatedCe,
                        int &               o_nSequemceCount,
                        const Gate &        i_rGate ) const
-{                                                  
+{
     String sDummyMember;
-    
+
     const CodeEntity &
         rCe = i_rGate.Ces().Find_Ce(nRelatedCe);
     i_rGate.Ces().Get_Text( o_module,
@@ -118,10 +120,12 @@ Ce_Type::inq_Get_Text( StringVector &      o_module,
     o_nRelatedCe = nRelatedCe;
 }
 
-
-
+Type_id
+Ce_Type::inq_TemplateParameterType() const
+{
+    return nTemplateType;
+}
 
 
 }   // namespace idl
 }   // namespace ary
-
