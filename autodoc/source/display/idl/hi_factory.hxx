@@ -2,9 +2,9 @@
  *
  *  $RCSfile: hi_factory.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:14:56 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:31:31 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -64,38 +64,42 @@
 
 
 // USED SERVICES
-    // BASE CLASSES               
-#include <toolkit/htmlfactory.hxx>    
+    // BASE CLASSES
+#include <toolkit/htmlfactory.hxx>
     // COMPONENTS
     // PARAMETERS
-#include <ary/stdconstiter.hxx>    
-#include <ary/idl/i_language.hxx>    
+#include <ary/stdconstiter.hxx>
+#include <ary/idl/i_language.hxx>
 #include <toolkit/out_position.hxx>
 
- 
+
 namespace ary
 {
     namespace idl
     {
         class Module;
     }
+    namespace info
+    {
+        class CodeInformation;
+    }
 }
- 
-        
+
+
 class HtmlEnvironment_Idl;
 class LinkHelper;
-class HF_NaviSubRow;        
+class HF_NaviSubRow;
 class HF_SubTitleTable;
 
-                                           
+
 class HtmlFactory_Idl : public HtmlFactory<HtmlEnvironment_Idl>
 {
-  public:           
+  public:
     typedef ary::idl::CodeEntity                client;
     typedef ary::idl::Ce_id                     ce_id;
     typedef ary::idl::Type_id                   type_id;
     typedef ary::info::CodeInformation          ce_info;
-    
+
     typedef ary::Dyn_StdConstIterator<ce_id>    dyn_ce_list;
     typedef ary::Dyn_StdConstIterator<type_id>  dyn_type_list;
     typedef ary::StdConstIterator<ce_id>        ce_list;
@@ -103,21 +107,29 @@ class HtmlFactory_Idl : public HtmlFactory<HtmlEnvironment_Idl>
 
     typedef HtmlEnvironment_Idl                 Environment;
     typedef output::Position                    OutPosition;
-            
+
   protected:
                         HtmlFactory_Idl(
                             Environment &       io_rEnv,
                             Xml::Element *      o_pOut = 0 )
                             :   HtmlFactory<Environment>(io_rEnv, o_pOut)
-                            { }      
-                            
-    void                produce_InternalLink(   
+                            { }
+
+    /** The default version only calls ->produce_InternalLink().
+        This may be overwritten by derived classes.
+    */
+    virtual void        produce_SummaryDeclaration(
                             Xml::Element &      o_row,
-                            const client &      i_ce ) const;                            
-    void                produce_ShortDoc(       
+                            const client &      i_ce ) const;
+    void                produce_InternalLink(
                             Xml::Element &      o_row,
-                            const client &      i_ce ) const;                            
-    void                produce_Bases( 
+                            const client &      i_ce ) const;
+    void                produce_ShortDoc(
+                            Xml::Element &      o_row,
+                            const client &      i_ce ) const;
+
+    // KORR MI: Does not belong here (implementation inheritance)!
+    void                produce_Bases(
                                 Xml::Element &   o_screen,
                                 const client &   i_ce,
                                 const String &   i_sLabel ) const;
@@ -128,31 +140,31 @@ class HtmlFactory_Idl : public HtmlFactory<HtmlEnvironment_Idl>
                             const String &      i_detailsTitle,
                             const String &      i_detailsLabel ) const;
 
-    /// Writes complete docu in standard format.    
+    /// Writes complete docu in standard format.
     void                write_Docu(
                             Xml::Element &      o_screen,
                             const client &      i_ce ) const;
-                            
+
     void                write_ManualLinks(
                             Xml::Element &      o_screen,
                             const client &      i_ce ) const;
   private:
     // Dummy does nothing
-    virtual void        produce_MemberDetails( 
+    virtual void        produce_MemberDetails(
                             HF_SubTitleTable &  o_table,
                             const client &      i_ce ) const;
-    void                recursive_ShowBases( 
+    void                recursive_ShowBases(
                             Xml::Element &      o_screen,
                             type_id             i_baseType,
                             int &               io_nDepth ) const;
-    type_id             baseOf(               
+    type_id             baseOf(
                             const client &      i_ce ) const
                                                 { return inq_BaseOf(i_ce); }
-    virtual type_id     inq_BaseOf(               
+    virtual type_id     inq_BaseOf(
                             const client &      i_ce ) const;
-};                                                     
- 
- 
+};
+
+
 extern const String
     C_sCellStyle_SummaryLeft;
 extern const String
@@ -160,7 +172,7 @@ extern const String
 extern const String
     C_sCellStyle_MDetail;
 extern const String
-    C_sMemberTitle;    
+    C_sMemberTitle;
 
 
-#endif                      
+#endif
