@@ -2,9 +2,9 @@
  *
  *  $RCSfile: i_struct.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-29 10:20:04 $
+ *  last change: $Author: obo $ $Date: 2004-11-15 13:28:45 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -77,10 +77,14 @@ namespace idl
 
 Struct::Struct( const String &      i_sName,
                 Ce_id               i_nOwner,
-                Type_id             i_nBase )
+                Type_id             i_nBase,
+                const String &      i_sTemplateParameter,
+                Type_id             i_nTemplateParameterType )
     :   sName(i_sName),
         nOwner(i_nOwner),
         nBase(i_nBase),
+        sTemplateParameter(i_sTemplateParameter),
+        nTemplateParameterType(i_nTemplateParameterType),
         aElements()
 {
 }
@@ -133,64 +137,63 @@ namespace ifc_struct
 
 inline const Struct &
 struct_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Struct::class_id );
     return static_cast< const Struct& >(i_ce);
-}     
+}
 
 Type_id
 attr::Base( const CodeEntity & i_ce )
 {
     return struct_cast(i_ce).nBase;
 }
-                               
-void         
+
+void
 attr::Get_Elements( Dyn_CeIterator &    o_result,
                     const CodeEntity &  i_ce )
 {
     o_result = new SCI_Vector<Ce_id>( struct_cast(i_ce).aElements );
 }
 
-  
-void         
+
+void
 xref::Get_Derivations( Dyn_CeIterator &    o_result,
                        const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_Derivations));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_Derivations));
 }
-  
-void         
+
+void
 xref::Get_SynonymTypedefs( Dyn_CeIterator &    o_result,
                            const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_SynonymTypedefs));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_SynonymTypedefs));
 }
 
-void         
+void
 xref::Get_AsReturns( Dyn_CeIterator &    o_result,
                      const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsReturns));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsReturns));
 }
 
-void         
+void
 xref::Get_AsParameters( Dyn_CeIterator &    o_result,
                         const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsParameters));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsParameters));
 }
 
-void         
+void
 xref::Get_AsDataTypes( Dyn_CeIterator &    o_result,
                        const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsDataTypes));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(struct_2s_AsDataTypes));
 }
-                                               
+
 } // namespace ifc_struct
 
 
 
 }   //  namespace   idl
 }   //  namespace   ary
-
