@@ -2,9 +2,9 @@
  *
  *  $RCSfile: parsenv2.cxx,v $
  *
- *  $Revision: 1.5 $
+ *  $Revision: 1.6 $
  *
- *  last change: $Author: hr $ $Date: 2003-03-18 14:11:41 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:40:14 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -108,7 +108,7 @@ UnoIDL_PE::Enter( E_EnvStackAction	i_eWayOfEntering )
         case pop_success:
                 ReceiveData();
                 break;
-        case pop_failure: 
+        case pop_failure:
                 throw X_AutodocParser(X_AutodocParser::x_Any);
                 break;
         default:
@@ -136,13 +136,23 @@ UnoIDL_PE::Leave( E_EnvStackAction	i_eWayOfLeaving )
             csv_assert(false);
     }	// end switch
 }
-                     
-void				
+
+void
 UnoIDL_PE::SetDocu( DYN ary::info::CodeInformation * let_dpDocu )
-{ 
-    pDocu = let_dpDocu; 
+{
+    pDocu = let_dpDocu;
 }
-                     
+
+void
+UnoIDL_PE::SetPublished()
+{
+    if (NOT pDocu)
+    {
+        pDocu = new ary::info::CodeInformation;
+    }
+    pDocu->SetPublished();
+}
+
 void
 UnoIDL_PE::SetOptional()
 {
@@ -150,7 +160,6 @@ UnoIDL_PE::SetOptional()
     {
         pDocu = new ary::info::CodeInformation;
     }
-
     pDocu->SetOptional();
 }
 
