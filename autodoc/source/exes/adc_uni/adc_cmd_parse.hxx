@@ -2,9 +2,9 @@
  *
  *  $RCSfile: adc_cmd_parse.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:02:01 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:34:20 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -90,7 +90,7 @@ struct S_LanguageInfo : public Context
     };
                         S_LanguageInfo()
                             :   eLanguage(none),
-                                aExtensions() {}   
+                                aExtensions() {}
                         ~S_LanguageInfo();
 
     void                InitExtensions(
@@ -198,10 +198,10 @@ struct S_Sources : public Context
 };
 
 class S_ProjectData : public Context
-{               
+{
   public:
     enum E_Default { default_prj };
-    
+
                         S_ProjectData(
                             const S_LanguageInfo &
                                                 i_globalLanguage );
@@ -210,7 +210,7 @@ class S_ProjectData : public Context
                                                 i_globalLanguage,
                             E_Default           unused );
                         ~S_ProjectData();
-                        
+
     bool                IsDefault() const       { return bIsDefault; }
     const String &      Name() const            { return sName; }
     const csv::ploc::Path &
@@ -223,14 +223,14 @@ class S_ProjectData : public Context
     // Interface Context:
     virtual void        do_Init(
                             opt_iter &          it,
-                            opt_iter            itEnd );     
+                            opt_iter            itEnd );
     // Locals
-                            
-    // DATA                                      
+
+    // DATA
     String              sName;
     csv::ploc::Path     aRootDirectory;
     S_LanguageInfo      aLanguage;
-    S_Sources           aFiles;                          
+    S_Sources           aFiles;
     bool                bIsDefault;
 };
 
@@ -240,4 +240,3 @@ class S_ProjectData : public Context
 
 
 #endif
-
