@@ -1,10 +1,10 @@
 /*************************************************************************
  *
- *  $RCSfile: stdconstiter.hxx,v $
+ *  $RCSfile: i_namelookup.hxx,v $
  *
  *  $Revision: 1.2 $
  *
- *  last change: $Author: hr $ $Date: 2003-03-18 14:11:28 $
+ *  last change: $Author: hr $ $Date: 2003-03-18 14:11:29 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -59,72 +59,94 @@
  *
  ************************************************************************/
 
-#ifndef ARY_STDCONSTITER_HXX
-#define ARY_STDCONSTITER_HXX
+#ifndef ARY_IDL_I_NAMELOOKUP_HXX
+#define ARY_IDL_I_NAMELOOKUP_HXX
 
 
 // USED SERVICES
     // BASE CLASSES
+#include <ary/idl/i_language.hxx>
     // COMPONENTS
     // PARAMETERS
+#include <ary/stdconstiter.hxx>
+#include <ary/itrange.hxx>
+#include <vector>
+#include <map>
 
 
 namespace ary
 {
-            
-template <class ELEM>
 
-class StdConstIterator
+namespace idl
+{
+
+
+/*  OPEN?
+*/
+
+/** @resp
+    This class finds all occurrences in the current language of a 
+    name in the repository.
+
+    @descr
+*/
+class NameLookup
 {
   public:
-    virtual             ~StdConstIterator() {}
-
-    void                operator++()            { do_Advance(); }
-    const ELEM &        operator*() const       { return *inq_CurElement(); }
-                        operator bool() const   { return inq_CurElement() != 0; }
-                           
-    /// Needed as replacement for operator bool() in gcc 2.95.
-    bool                IsValid() const         { return operator bool(); }
-    bool                IsSorted() const        { return inq_IsSorted(); }
+    struct NameProperties
+    {                    
+                            NameProperties()
+                                :   nId(0),
+                                    nClass(0),
+                                    nOwner(0) {}
+                            NameProperties(
+                                Ce_id               i_id,
+                                RCid                i_class,
+                                Ce_id               i_owner )
+                                :   nId(i_id),
+                                    nClass(i_class),
+                                    nOwner(i_owner) {}
+        Ce_id               nId;
+        RCid                nClass;
+        Ce_id               nOwner;
+    };
     
-  protected:
-                        StdConstIterator() {}
-    
-  private:              
-    //Locals
-    virtual void        do_Advance() = 0;
-    virtual const ELEM *
-                        inq_CurElement() const = 0;
-    virtual bool        inq_IsSorted() const = 0;
+    /// Map from Name to NameProperties.
+    typedef std::multimap<String, NameProperties>   Map_Names;
 
-    // Forbidden:
-    StdConstIterator(const StdConstIterator<ELEM>&);
-    StdConstIterator<ELEM> & operator=(const StdConstIterator<ELEM>&);
+    // LIFECYCLE
+                        NameLookup();
+                        ~NameLookup();
+    // OPERATIONS
+    void                Add_Name(
+                            const String &      i_name,
+                            Ce_id               i_id,
+                            RCid                i_class,
+                            Ce_id               i_owner );
+    // INQUIRY                  
+    /** 
+    */
+    bool                Has_Name(
+                            const String &      i_name,
+                            RCid                i_class,
+                            Ce_id               i_owner ) const;
+    void                Get_Names(
+                            Dyn_StdConstIterator<Map_Names::value_type> &
+                                                o_rResult,
+                            const String &      i_name ) const;
+  private:                              
+    // DATA
+    Map_Names           aNames;
 };
 
 
-template <class ELEM>
-class Dyn_StdConstIterator
-{
-  public:
-    typedef StdConstIterator<ELEM> client_type;
 
-                        Dyn_StdConstIterator(
-                            DYN client_type *   pass_dpIterator = 0 )
-                                                : pClient(pass_dpIterator) {}
-    Dyn_StdConstIterator<ELEM> &
-                        operator=(
-                            DYN client_type *   pass_dpIterator )
-                                                { pClient = pass_dpIterator;
-                                                  return *this; }
-    client_type &       operator*() const       { return *pClient.MutablePtr(); }
-
-  private:
-    Dyn<client_type>    pClient;
-};
+// IMPLEMENTATION
 
 
+}   // namespace idl
 }   // namespace ary
 
 
 #endif
+

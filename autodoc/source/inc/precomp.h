@@ -2,9 +2,9 @@
  *
  *  $RCSfile: precomp.h,v $
  *
- *  $Revision: 1.1.1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-03-08 14:45:27 $
+ *  last change: $Author: hr $ $Date: 2003-03-18 14:11:40 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -117,13 +117,9 @@ inline csv::F_FLUSHING_FUNC
 Flush() { return csv::Flush; }
 
 
-// Backwardscompatibility:
-template <class DELI>
-inline void Delete_dyn( DELI * & pObj )
-    { delete pObj; pObj = 0; }
-
-
-
+// Hack for GCC 2.95:
+template <class XY>
+inline bool BOOL_OF(const XY & x) { return x.operator bool(); }
 
 #endif
 

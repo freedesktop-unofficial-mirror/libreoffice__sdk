@@ -2,9 +2,9 @@
  *
  *  $RCSfile: adc_cmd_parse.cxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:02:00 $
+ *  last change: $Author: hr $ $Date: 2003-03-18 14:11:39 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -99,7 +99,7 @@ CHECK( bool b, const String & text )
 
 S_LanguageInfo::~S_LanguageInfo()
 {
-}
+}                                                  
 
 void
 S_LanguageInfo::do_Init( opt_iter &          it,
@@ -285,9 +285,9 @@ S_Sources::do_Init( opt_iter &          it,
         pList = 0;
     csv_assert((*it)[0] == '-');
 
-    for ( ; it != itEnd; ++it) 
+    for ( ; it != itEnd; ++it)
     {
-        if ((*it)[0] == '-') 
+        if ((*it)[0] == '-')
         {
             if (*it == C_opt_SourceTree)
                 pList = &aTrees;   
