@@ -2,9 +2,9 @@
  *
  *  $RCSfile: i_interface.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: np $ $Date: 2002-11-29 10:20:04 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:14:53 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -66,6 +66,7 @@
 // NOT FULLY DECLARED SERVICES
 #include <ary/idl/ihost_ce.hxx>
 #include <ary/idl/ik_interface.hxx>
+#include <ary_i/codeinf2.hxx>
 #include <sci_impl.hxx>
 #include "ipi_2s.hxx"
 
@@ -74,25 +75,32 @@ namespace ary
 {
 namespace idl
 {
-               
-               
-class Interface_2s 
+
+
+class Interface_2s
 {
-};               
-               
-               
+};
+
+
 Interface::Interface( const String &      i_sName,
-                      Ce_id               i_nOwner,
-                      Type_id             i_nBase )
+                      Ce_id               i_nOwner )
     :   sName(i_sName),
         nOwner(i_nOwner),
-        nBase(i_nBase),
-        aFunctions()
+        aBases(),
+        aFunctions(),
+        aAttributes(),
+        p2s()
 {
 }
 
 Interface::~Interface()
 {
+    for ( RelationList::iterator it = aBases.begin();
+          it != aBases.end();
+          ++it )
+    {
+        delete (*it).Info();
+    }
 }
 
 void
@@ -137,79 +145,85 @@ namespace ifc_interface
 
 inline const Interface &
 interface_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Interface::class_id );
     return static_cast< const Interface& >(i_ce);
 }
 
-
-Type_id      
-attr::Base( const CodeEntity &  i_ce )
+void
+attr::Get_Bases( Dyn_StdConstIterator<CommentedRelation> &     o_result,
+                 const CodeEntity &                             i_ce )
 {
-    return interface_cast(i_ce).nBase;    
+    o_result = new SCI_Vector<CommentedRelation>(interface_cast(i_ce).aBases);
 }
 
-    
-void         
+void
 attr::Get_Functions( Dyn_CeIterator &    o_result,
                      const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(interface_cast(i_ce).aFunctions);    
+    o_result = new SCI_Vector<Ce_id>(interface_cast(i_ce).aFunctions);
 }
-                     
-void         
+
+void
 attr::Get_Attributes( Dyn_CeIterator &    o_result,
                       const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(interface_cast(i_ce).aAttributes);    
+    o_result = new SCI_Vector<Ce_id>(interface_cast(i_ce).aAttributes);
 }
 
-void         
+void
 xref::Get_Derivations( Dyn_CeIterator &    o_result,
                         const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_Derivations));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_Derivations));
 }
 
-void         
+void
 xref::Get_SynonymTypedefs( Dyn_CeIterator &    o_result,
                            const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_SynonymTypedefs));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_SynonymTypedefs));
 }
-                           
-void         
+
+void
 xref::Get_ExportingServices( Dyn_CeIterator &    o_result,
                              const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_ExportingServices));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_ExportingServices));
 }
 
-void         
+void
+xref::Get_ExportingSingletons( Dyn_CeIterator &    o_result,
+                               const CodeEntity &  i_ce )
+{
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_ExportingSingletons));
+}
+
+void
 xref::Get_AsReturns( Dyn_CeIterator &    o_result,
                      const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsReturns));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsReturns));
 }
 
-void         
+void
 xref::Get_AsParameters( Dyn_CeIterator &    o_result,
                         const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsParameters));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsParameters));
 }
 
-void         
+void
 xref::Get_AsDataTypes( Dyn_CeIterator &    o_result,
                        const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsDataTypes));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(interface_2s_AsDataTypes));
 }
-                       
 
-                        
+
+
 #if 0
-    static void         Get_UsingTypedefs(    /// like: typedef sequence<i_ce.LocalName()> newNameSeq;                           
+    static void         Get_UsingTypedefs(    /// like: typedef sequence<i_ce.LocalName()> newNameSeq;
                             Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
     static void         Get_AsIndirectReturns(
@@ -220,8 +234,8 @@ xref::Get_AsDataTypes( Dyn_CeIterator &    o_result,
                             const CodeEntity &  i_ce );
 #endif // 0
 
-                      
-    
+
+
 }   // namespace ifc_interface
 
 
