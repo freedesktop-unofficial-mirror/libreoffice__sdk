@@ -2,9 +2,9 @@
  *
  *  $RCSfile: tk_attag.hxx,v $
  *
- *  $Revision: 1.1.1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-03-08 14:45:33 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:38:50 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -103,7 +103,7 @@ class Tok_##name : public Token \
 
 DECL_TOKEN_CLASS(at_base);
 DECL_TOKEN_CLASS(at_exception);
-DECL_TOKEN_CLASS(at_impl);                   
+DECL_TOKEN_CLASS(at_impl);
 DECL_TOKEN_CLASS(at_key);
 DECL_TOKEN_CLASS(at_param);
 DECL_TOKEN_CLASS(at_see);
@@ -119,6 +119,7 @@ DECL_TOKEN_CLASS(at_include);
 DECL_TOKEN_CLASS(at_label);
 DECL_TOKEN_CLASS(at_HTML);
 DECL_TOKEN_CLASS(at_NOHTML);
+DECL_TOKEN_CLASS(at_since);
 
 
 #undef DECL_TOKEN_CLASS
