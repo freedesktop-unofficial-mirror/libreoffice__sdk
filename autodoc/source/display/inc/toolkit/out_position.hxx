@@ -2,9 +2,9 @@
  *
  *  $RCSfile: out_position.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:15:19 $
+ *  last change: $Author: vg $ $Date: 2005-03-23 09:04:47 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -74,7 +74,7 @@
 namespace output
 {
 
-            
+
 
 class Position
 {
@@ -96,13 +96,13 @@ class Position
                             const String &      i_nodeName );
     Position &          operator-=(
                             intt                i_levels );
-    
-    // INQUIRY                
-    bool                IsValid() const         { return pDirectory->Depth() >= 0; }       
+
+    // INQUIRY
+    bool                IsValid() const         { return pDirectory->Depth() >= 0; }
     const String &      Name() const            { return pDirectory->Name(); }
     const String &      File() const            { return sFile; }
     intt                Depth() const           { return pDirectory->Depth(); }
-    
+
     void                Get_Chain(
                             StringVector &      o_result ) const
                                                 { pDirectory->Get_Chain(o_result); }
@@ -137,17 +137,17 @@ class Position
     Node *              pDirectory;
 };
 
- 
+
 /// @return No delimiter at start, with delimiter at end.
 const char *        get_UpLink(
-                        intt                i_depth );
- 
- 
+                        uintt                   i_depth );
+
+
 // IMPLEMENTATION
 
-inline void                
+inline void
 Position::Set_File( const String & i_file )
-    { sFile = i_file; }               
+    { sFile = i_file; }
 
 }   // namespace output
 
