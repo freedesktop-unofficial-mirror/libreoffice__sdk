@@ -2,9 +2,9 @@
  *
  *  $RCSfile: ik_function.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:11:55 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:08:57 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -80,28 +80,28 @@ namespace idl
 
 
 namespace ifc_function
-{         
+{
 
 using ::ary::idl::ifc_ce::Dyn_CeIterator;
 using ::ary::idl::ifc_ce::Dyn_TypeIterator;
 using ::ary::idl::ifc_ce::DocText;
 
-    
+
 struct attr: public ifc_ce::attr
 {
     static Type_id      ReturnType(
-                            const CodeEntity &  i_ce );                                        
-    static bool         IsConst(
-                            const CodeEntity &  i_ce );                                        
+                            const CodeEntity &  i_ce );
     static bool         IsOneway(
-                            const CodeEntity &  i_ce );                                        
+                            const CodeEntity &  i_ce );
+    static bool         HasEllipse(
+                            const CodeEntity &  i_ce );
     static void         Get_Parameters(
                             Dyn_StdConstIterator<ary::idl::Parameter> &
                                                 o_result,
-                            const CodeEntity &  i_ce );                                        
+                            const CodeEntity &  i_ce );
     static void         Get_Exceptions(
                             Dyn_TypeIterator &  o_result,
-                            const CodeEntity &  i_ce );                                        
+                            const CodeEntity &  i_ce );
 };
 
 struct xref : public ifc_ce::xref
@@ -117,7 +117,7 @@ struct doc : public ifc_ce::doc
 //	aStateMachine.AddToken( "@returns", nTok_at_return,      A_nAtTagDefStatus, finAtTag );
 };
 
-    
+
 }   // namespace ifc_function
 
 
