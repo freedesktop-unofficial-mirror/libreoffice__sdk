@@ -2,9 +2,9 @@
  *
  *  $RCSfile: comfunc.hxx,v $
  *
- *  $Revision: 1.4 $
+ *  $Revision: 1.5 $
  *
- *  last change: $Author: np $ $Date: 2002-05-14 08:08:45 $
+ *  last change: $Author: np $ $Date: 2002-05-15 11:24:44 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -62,6 +62,8 @@
 #ifndef CSV_COMFUNC_HXX
 #define CSV_COMFUNC_HXX
 
+#include <stdlib.h>
+
 namespace csv
 {
 
@@ -69,16 +71,16 @@ class String;
 
 // min, max and range functions
 template <class E>
-inline E		   	max(E in1, E in2);
+inline E            max(E in1, E in2);
 template <class E>
-inline E		   	min(E in1, E in2);
+inline E            min(E in1, E in2);
 template <class E>
-inline bool		   	in_range(E low, E val, E high);    // return low <= val < high;
+inline bool         in_range(E low, E val, E high);    // return low <= val < high;
 
 
 // string functions
 inline const char * valid_str(const char * str);
-inline bool 		no_str(const char * str);       // return !str || !strlen(str)
+inline bool         no_str(const char * str);       // return !str || !strlen(str)
 intt                count_chars(const char * str, char c);
 
 
@@ -97,10 +99,10 @@ void  time2str(String       & out_Str, int hour, int min, int sec);
 
 template <class E>
 inline E
-max(E in1, E in2) 	{ return in1 < in2 ? in2 : in1; }
+max(E in1, E in2)   { return in1 < in2 ? in2 : in1; }
 template <class E>
 inline E
-min(E in1, E in2) 	{ return in1 < in2 ? in1 : in2; }
+min(E in1, E in2)   { return in1 < in2 ? in1 : in2; }
 template <class E>
 inline bool
 in_range(E low, E val, E high) { return low <= val AND val < high; }
@@ -119,7 +121,7 @@ switch_endian( NUMTYPE &       o_rNumber,
     char *          pFront = reinterpret_cast< char* >(&o_rNumber);
     const char *    pBack  = reinterpret_cast< const char* >(&i_rNumber) + sizeof(NUMTYPE);
 
-     for ( size_t p = 0; p < sizeof(NUMTYPE); --p )
+    for ( size_t p = 0; p < sizeof(NUMTYPE); --p )
     {
         *pFront++ = *(--pBack);
     }
