@@ -2,9 +2,9 @@
  *
  *  $RCSfile: is_type.hxx,v $
  *
- *  $Revision: 1.1 $
+ *  $Revision: 1.2 $
  *
- *  last change: $Author: np $ $Date: 2002-11-01 17:13:16 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:19:16 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -102,7 +102,7 @@ class Type_Storage : public ::ary::store22::Storage
                             key                 i_nId ) const
                                                 { return aContainer[i_nId]; }
     unit &              operator[](
-                            key                 i_nId ) 
+                            key                 i_nId )
                                                 { return aContainer[i_nId]; }
     // OPERATIONS
     void                EraseAll();
@@ -146,6 +146,7 @@ enum E_Type
     type_u_hyper,
     type_u_long,
     type_u_short,
+    type_ellipse,    // ...
     type_MAX
 };
 
