@@ -2,9 +2,9 @@
  *
  *  $RCSfile: cmd_run.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: np $ $Date: 2002-11-14 18:02:02 $
+ *  last change: $Author: rt $ $Date: 2004-07-12 15:35:36 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  either of the following licenses
@@ -81,14 +81,14 @@ namespace ary
 }
 
 namespace autodoc
-{      
+{
     class FileCollector_Ifc;
     class ParseToolsFactory_Ifc;
     class CodeParser_Ifc;
     class DocumentationParser_Ifc;
     class IdlParser;
 
-                 
+
 namespace command
 {
     class Parse;
@@ -96,7 +96,7 @@ namespace command
      struct S_LanguageInfo;
 
 namespace run
-{                 
+{
 
 /** Performs an ::autodoc::command::Parse .
 */
@@ -108,7 +108,7 @@ class Parser
                         ~Parser();
 
     bool                Perform();
-    
+
   private:
     // Locals
     CodeParser_Ifc &    Get_CppParser();
@@ -130,8 +130,8 @@ class Parser
     Dyn<IdlParser>      pIdlParser;
 };
 
-                              
-                                 
+
+
 
 // IMPLEMENTATION
 
@@ -141,4 +141,3 @@ class Parser
 }   // namespace autodoc
 
 #endif
-
