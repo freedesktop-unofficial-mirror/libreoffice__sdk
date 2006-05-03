@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hfi_enum.cxx,v $
  *
- *  $Revision: 1.4 $
+ *  $Revision: 1.5 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:39:59 $
+ *  last change: $Author: rt $ $Date: 2006-05-03 16:50:57 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -48,13 +48,13 @@
 #include "hfi_property.hxx"
 #include "hi_linkhelper.hxx"
 
- 
+
 extern const String
     C_sCePrefix_Enum("enum");
-                          
-namespace 
+
+namespace
 {
-                          
+
 const String
     C_sList_Values("Values");
 const String
@@ -63,14 +63,14 @@ const String
     C_sList_ValueDetails("Values' Details");
 const String
     C_sList_ValueDetails_Label("ValueDetails");
-        
+
 enum E_SubListIndices
 {
     sli_ValuesSummary = 0,
     sli_ValueDetails = 1
 };
 
-}   // anonymous namespace        
+}   // anonymous namespace
 
 HF_IdlEnum::HF_IdlEnum( Environment &       io_rEnv,
                         Xml::Element &      o_rOut )
@@ -89,26 +89,22 @@ HF_IdlEnum::Produce_byData( const client & i_ce ) const
         pNaviSubRow( &make_Navibar(i_ce) );
 
     HF_TitleTable
-        aTitle(CurOut());   
+        aTitle(CurOut());
 
     HF_LinkedNameChain
         aNameChain(aTitle.Add_Row());
-        
+
     aNameChain.Produce_CompleteChain(Env().CurPosition(), nameChainLinker);
-    aTitle.Produce_Title( StreamLock(200)()
-                          << C_sCePrefix_Enum
-                          << " "
-                          << i_ce.LocalName()
-                          << c_str );
+    produce_Title(aTitle, C_sCePrefix_Enum, i_ce);
 
     write_Docu(aTitle.Add_Row(), i_ce);
     CurOut() << new Html::HorizontalLine();
-                      
-    dyn_ce_list 
+
+    dyn_ce_list
         dpValues;
     ary::idl::ifc_enum::attr::Get_Values(dpValues, i_ce);
     if ( (*dpValues).operator bool() )
-    {               
+    {
         produce_Members( *dpValues,
                          C_sList_Values,
                          C_sList_Values_Label,
@@ -131,12 +127,12 @@ HF_IdlEnum::make_Navibar( const client & i_ce ) const
         ret = aNaviBar.Add_SubRow();
     ret.AddItem(C_sList_Values, C_sList_Values_Label, false);
     ret.AddItem(C_sList_ValueDetails, C_sList_ValueDetails_Label, false);
-    
+
     CurOut() << new Html::HorizontalLine();
     return ret;
 }
 
-void                
+void
 HF_IdlEnum::produce_MemberDetails( HF_SubTitleTable &  o_table,
                                    const client &      i_ce) const
 {
