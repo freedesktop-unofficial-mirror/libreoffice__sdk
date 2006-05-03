@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hfi_module.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:43:38 $
+ *  last change: $Author: rt $ $Date: 2006-05-03 16:53:29 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -109,36 +109,37 @@ HF_IdlModule::HF_IdlModule( Environment &         io_rEnv,
 HF_IdlModule::~HF_IdlModule()
 {
 }
-         
+
 typedef ary::idl::ifc_module::attr  ModuleAttr;
-    
-    
+
+
 void
 HF_IdlModule::Produce_byData( const client & i_ce ) const
-{   
+{
     Dyn<HF_NaviSubRow>
         pNaviSubRow( &make_Navibar(i_ce) );
 
     HF_TitleTable
-        aTitle(CurOut());   
+        aTitle(CurOut());
     HF_LinkedNameChain
         aNameChain(aTitle.Add_Row());
-                                                               
+
     if ( Env().CurPosition().Depth() > 0 )
     {
         aNameChain.Produce_CompleteChain_forModule(Env().CurPosition(), nameChainLinker);
-
-        aTitle.Produce_Title( StreamLock(200)() 
+        StreamLock
+            sl(200);
+        aTitle.Produce_Title( sl()
                                 << C_sCePrefix_Module
-                                  << " " 
-                                << i_ce.LocalName() 
-                                << c_str );  
+                                  << " "
+                                << i_ce.LocalName()
+                                << c_str );
     }
     else
     {
-        aTitle.Produce_Title( "Global Module" );  
+        aTitle.Produce_Title( "Global Module" );
     }
-    
+
     write_Docu(aTitle.Add_Row(), i_ce);
     CurOut() << new Html::HorizontalLine();
 
@@ -166,8 +167,8 @@ HF_IdlModule::Produce_byData( const client & i_ce ) const
                                 aSingletons,
                                 Env().Data().Ces(),
                                 i_ce );
-                                            
-    // Has this to be in the order of enum E_SubListIndices ???                                           
+
+    // Has this to be in the order of enum E_SubListIndices ???
     if (produce_ChildList(C_sList_NestedModules, C_sList_NestedModules_Label, aNestedModules ))
         pNaviSubRow->SwitchOn(sli_NestedModules);
     if (produce_ChildList(C_sList_Services, C_sList_Services, aServices))
@@ -211,7 +212,7 @@ HF_IdlModule::make_Navibar( const client & i_ce ) const
     ret.AddItem(C_sList_ConstGroups, C_sList_ConstGroups_Label, false);
 
     CurOut() << new Html::HorizontalLine();
-    return ret;  
+    return ret;
 }
 
 bool
@@ -221,36 +222,36 @@ HF_IdlModule::produce_ChildList( const String &      i_sName,
 {
     if ( i_list.size() == 0 )
         return false;
-                
+
     HF_SubTitleTable
-        aTable( CurOut(), 
-                i_sLabel, 
+        aTable( CurOut(),
+                i_sLabel,
                 i_sName,
-                2 );          
-                
-    ce_ptr_list::const_iterator 
-        itEnd = i_list.end();                 
-    for ( ce_ptr_list::const_iterator it = i_list.begin(); 
-          it != itEnd; 
+                2 );
+
+    ce_ptr_list::const_iterator
+        itEnd = i_list.end();
+    for ( ce_ptr_list::const_iterator it = i_list.begin();
+          it != itEnd;
           ++it )
-    {                        
-        Xml::Element & 
+    {
+        Xml::Element &
             rRow = aTable.Add_Row();
-        produce_Link(rRow, *it);                                 
-        produce_LinkDoc(rRow, *it);                                 
-    }   // end for                                         
+        produce_Link(rRow, *it);
+        produce_LinkDoc(rRow, *it);
+    }   // end for
 
     return true;
 }
 
-void                
+void
 HF_IdlModule::produce_Link( Xml::Element &      o_row,
                             const client *      i_ce ) const
 {
-    csv_assert(i_ce != 0);  
-    Xml::Element & 
-        rCell = o_row 
-                >> *new Html::TableCell    
+    csv_assert(i_ce != 0);
+    Xml::Element &
+        rCell = o_row
+                >> *new Html::TableCell
                     << new Html::ClassAttr(C_sCellStyle_SummaryLeft);
 
     if (i_ce->ClassId() != ary::idl::Module::class_id)
@@ -269,29 +270,29 @@ HF_IdlModule::produce_Link( Xml::Element &      o_row,
                 << i_ce->LocalName();
     }
 }
-                            
-void                
+
+void
 HF_IdlModule::produce_LinkDoc( Xml::Element &      o_row,
                                const client *      i_ce ) const
-{                   
-    csv_assert(i_ce != 0);  
+{
+    csv_assert(i_ce != 0);
 
     // We need the cell in any case, because, the rendering may be hurt else.
-    Xml::Element & 
-        rCell = o_row 
-                    >> *new Html::TableCell    
+    Xml::Element &
+        rCell = o_row
+                    >> *new Html::TableCell
                         << new Html::ClassAttr(C_sCellStyle_SummaryRight);
 
-    const client & 
+    const client &
         rCe = *i_ce;
     const ce_info *
         pShort = rCe.Docu();
     if ( pShort == 0 )
         return;
-       
+
 
     if (pShort->IsDeprecated())
-    {   
+    {
         rCell << "[ DEPRECATED ]" << new Html::LineBreak;
     }
     if (pShort->IsOptional())
@@ -300,6 +301,6 @@ HF_IdlModule::produce_LinkDoc( Xml::Element &      o_row,
     }
 
     HF_IdlDocuTextDisplay
-        aShortDisplay(Env(), &rCell, *i_ce);        
-    pShort->Short().DisplayAt(aShortDisplay);   
+        aShortDisplay(Env(), &rCell, *i_ce);
+    pShort->Short().DisplayAt(aShortDisplay);
 }
