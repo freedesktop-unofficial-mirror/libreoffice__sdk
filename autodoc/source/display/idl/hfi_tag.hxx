@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hfi_tag.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:48:12 $
+ *  last change: $Author: rt $ $Date: 2006-05-03 16:56:03 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -55,7 +55,7 @@ namespace ary
 {
 namespace idl
 {
-    class Module;   
+    class Module;
 }
 }
 
@@ -107,11 +107,11 @@ class HF_IdlDocuTextDisplay : public HtmlFactory_Idl,
     */
     void                CreateMemberLink();
 
-    // DATA                         
+    // DATA
     String              sScope;
     String              sLinkToken;
-    bool                bGatherLink;     
-    const ary::idl::CodeEntity *    
+    bool                bGatherLink;
+    const ary::idl::CodeEntity *
                         pScopeGivingCe;
 };
 
@@ -126,7 +126,7 @@ class HF_IdlShortDocu : public HtmlFactory_Idl
     virtual             ~HF_IdlShortDocu();
 
     void                Produce_byData(
-                            const ary::idl::CodeEntity &     
+                            const ary::idl::CodeEntity &
                                                 i_rCe );
 };
 
@@ -147,6 +147,11 @@ class HF_IdlTag : public HtmlFactory_Idl,
                             Xml::Element &      o_rText,
                             const ary::info::AtTag2 &
                                                 i_rTag ) const;
+    void                Produce_byData(
+                            Xml::Element &      o_rTitle,
+                            Xml::Element &      o_rText,
+                            const std::vector< csi::dsapi::DT_SeeAlsoAtTag* > &
+                                                i_seeAlsoVector ) const;
   private:
     virtual void        Display_StdAtTag(
                             const csi::dsapi::DT_StdAtTag &
