@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hfi_constgroup.cxx,v $
  *
- *  $Revision: 1.5 $
+ *  $Revision: 1.6 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:38:50 $
+ *  last change: $Author: rt $ $Date: 2006-05-03 16:50:16 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -48,10 +48,10 @@
 #include "hfi_property.hxx"
 #include "hi_linkhelper.hxx"
 
-        
+
 extern const String
     C_sCePrefix_Constants("constants group");
-        
+
 
 namespace
 {
@@ -73,9 +73,9 @@ enum E_SubListIndices
 
 
 }   // anonymous namespace
-                         
-                         
-                         
+
+
+
 HF_IdlConstGroup::HF_IdlConstGroup( Environment &   io_rEnv,
                                     Xml::Element &  o_rOut )
     :   HtmlFactory_Idl(io_rEnv, &o_rOut)
@@ -88,30 +88,26 @@ HF_IdlConstGroup::~HF_IdlConstGroup()
 
 void
 HF_IdlConstGroup::Produce_byData( const client & i_ce ) const
-{       
+{
     Dyn<HF_NaviSubRow>
         pNaviSubRow( &make_Navibar(i_ce) );
 
     HF_TitleTable
-        aTitle(CurOut());   
+        aTitle(CurOut());
     HF_LinkedNameChain
         aNameChain(aTitle.Add_Row());
 
     aNameChain.Produce_CompleteChain(Env().CurPosition(), nameChainLinker);
-    aTitle.Produce_Title( StreamLock(200)()
-                          << C_sCePrefix_Constants
-                          << " "
-                          << i_ce.LocalName()
-                          << c_str );
+    produce_Title(aTitle, C_sCePrefix_Constants, i_ce);
     write_Docu(aTitle.Add_Row(), i_ce);
     CurOut() << new Html::HorizontalLine();
-                      
-    dyn_ce_list 
+
+    dyn_ce_list
         dpConstants;
     ary::idl::ifc_constgroup::attr::Get_Constants(dpConstants, i_ce);
-    
+
     if ( (*dpConstants).operator bool() )
-    {               
+    {
         produce_Members( *dpConstants,
                          C_sList_Constants,
                          C_sList_Constants_Label,
@@ -134,12 +130,12 @@ HF_IdlConstGroup::make_Navibar( const client & i_ce ) const
         ret = aNaviBar.Add_SubRow();
     ret.AddItem(C_sList_Constants, C_sList_Constants_Label, false);
     ret.AddItem(C_sList_ConstantDetails, C_sList_ConstantDetails_Label, false);
-    
+
     CurOut() << new Html::HorizontalLine();
     return ret;
 }
 
-void                
+void
 HF_IdlConstGroup::produce_MemberDetails( HF_SubTitleTable &  o_table,
                                          const client &      i_ce ) const
 {
