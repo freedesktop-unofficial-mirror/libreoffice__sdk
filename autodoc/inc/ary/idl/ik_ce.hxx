@@ -4,9 +4,9 @@
  *
  *  $RCSfile: ik_ce.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:14:03 $
+ *  last change: $Author: hr $ $Date: 2006-06-19 11:48:55 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -35,7 +35,7 @@
 
 #ifndef ARY_IDL_IK_CE_HXX
 #define ARY_IDL_IK_CE_HXX
-                      
+
 
 
 // USED SERVICES
@@ -58,7 +58,7 @@ namespace idl
 namespace ifc_ce
 {
 
-          
+
 typedef ::ary::Dyn_StdConstIterator<Ce_id>      Dyn_CeIterator;
 typedef ::ary::Dyn_StdConstIterator<Type_id>    Dyn_TypeIterator;
 typedef ::ary::info::Text                       DocText;
@@ -67,58 +67,58 @@ typedef ::ary::info::Text                       DocText;
 
 struct attr
 {
-    static Ce_id        CeId( 
+    static Ce_id        CeId(
                             const CodeEntity &  i_ce );
-    static const String &      
+    static const String &
                         LocalName(
                             const CodeEntity &  i_ce );
-    static Ce_id        NameRoom( 
+    static Ce_id        NameRoom(
                             const CodeEntity &  i_ce );
-    static Rid          Owner( 
+    static Rid          Owner(
                             const CodeEntity &  i_ce );
     static E_SightLevel SightLevel(
                             const CodeEntity &  i_ce );
     static bool         Search_Member(
-                            const CodeEntity &  i_ce,
-                            const String &      i_memberName )
+                            const CodeEntity &  ,
+                            const String &      )
                             { return true; }    // KORR_FUTURE
 };
 
 struct xref
-{   
+{
 };
-    
-struct doc                
-{                            
-    static const DocText & 
+
+struct doc
+{
+    static const DocText &
                         ShortInfo(          /// @return a short description of the CodeEntity
                             const CodeEntity &  i_ce );
 
-    static const DocText & 
+    static const DocText &
                         TagAuthor(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagExample(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagDescr(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagGuarantees(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagKey(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagMissing(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagSee(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagShort(
                             const CodeEntity &  i_ce );
-    static const DocText & 
+    static const DocText &
                         TagVersion(
                             const CodeEntity &  i_ce );
 
@@ -141,9 +141,9 @@ struct doc
 
 };
 
-    
+
 }   // namespace ifc_ce
-                     
+
 
 }   // namspace idl
 }   // namspace ary
