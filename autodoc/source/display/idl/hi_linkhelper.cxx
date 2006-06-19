@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hi_linkhelper.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:52:33 $
+ *  last change: $Author: hr $ $Date: 2006-06-19 12:00:04 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -38,19 +38,19 @@
 #include "hi_linkhelper.hxx"
 
 
-// NOT FULLY DEFINED SERVICES      
+// NOT FULLY DEFINED SERVICES
 #include <ary/idl/i_module.hxx>
 
 
 
-                   
-const ary::idl::Module *  
+
+const ary::idl::Module *
 LinkHelper::Search_CurModule() const
-{           
-    return Search_Module( rEnv.CurPosition().RelatedNode() );               
+{
+    return Search_Module( rEnv.CurPosition().RelatedNode() );
 }
 
-const ary::idl::Module *  
+const ary::idl::Module *
 LinkHelper::Search_Module( output::Node & i_node ) const
 {
     static StringVector aNames_;
@@ -58,7 +58,7 @@ LinkHelper::Search_Module( output::Node & i_node ) const
     output::Node::relative_id
         nId = i_node.RelatedNameRoom();
     if (nId == 0)
-    {                          
+    {
         csv::erase_container(aNames_);
         i_node.Get_Chain(aNames_);
         const ary::idl::Module *  pModule =
@@ -67,52 +67,53 @@ LinkHelper::Search_Module( output::Node & i_node ) const
             return 0;
         nId = static_cast<output::Node::relative_id>(pModule->Id());
         rEnv.CurPosition().RelatedNode().Set_RelatedNameRoom(nId);
-    }                     
-    
+    }
+
     return & rEnv.Data().Find_Module( ary::idl::Ce_id(nId) );
 }
 
-LinkHelper::OutPosition         
+LinkHelper::OutPosition
 LinkHelper::PositionOf_Ce(const CE & i_ce) const
 {
     static StringVector aModule_;
     csv::erase_container(aModule_);
     String sCe;
     String sMember;
-    rEnv.Data().Get_CeText(aModule_, sCe, sMember, i_ce); 
-    output::Node & 
+    rEnv.Data().Get_CeText(aModule_, sCe, sMember, i_ce);
+    output::Node &
         rNode = rEnv.OutputTree().RootNode().Provide_Child(aModule_);
     return OutPosition(rNode,sCe);
 }
-                
-                              
+
+
 namespace
 {
-    const String C_sXrefsSuffix("-xref");                
+    const String C_sXrefsSuffix("-xref");
 }
 
-                
-LinkHelper::OutPosition         
+
+LinkHelper::OutPosition
 LinkHelper::PositionOf_CurXRefs( const String & i_ceName ) const
-{                                                       
+{
+    StreamLock sl(100);
     return OutPosition( rEnv.CurPosition(),
-                        StreamLock(100)() << i_ceName 
-                                              << C_sXrefsSuffix        
-                                              << ".html"
-                                              << c_str );
+                        sl()    << i_ceName
+                                << C_sXrefsSuffix
+                                << ".html"
+                                << c_str );
 }
 
-const String &      
+const String &
 LinkHelper::XrefsSuffix() const
 {
     return C_sXrefsSuffix;
 }
 
-      
-String 
+
+String
 nameChainLinker( const char * )
-{           
-    static const String 
-        sModuleFileName_( output::ModuleFileName() );   
-    return sModuleFileName_;    
+{
+    static const String
+        sModuleFileName_( output::ModuleFileName() );
+    return sModuleFileName_;
 }
