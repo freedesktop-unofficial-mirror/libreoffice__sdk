@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_property.cxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:44:33 $
+ *  last change: $Author: hr $ $Date: 2006-06-19 11:50:44 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -107,12 +107,12 @@ namespace ifc_property
 
 inline const Property &
 property_cast( const CodeEntity &  i_ce )
-{ 
+{
     csv_assert( i_ce.ClassId() == Property::class_id );
     return static_cast< const Property& >(i_ce);
-}     
+}
 
-bool         
+bool
 attr::HasAnyStereotype( const CodeEntity &  i_ce )
 {
     return property_cast(i_ce).aStereotypes.HasAny();
@@ -120,67 +120,60 @@ attr::HasAnyStereotype( const CodeEntity &  i_ce )
 
 bool
 attr::IsReadOnly( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsReadOnly();
 }
 
 bool
 attr::IsBound( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsBound();
 }
 
 bool
 attr::IsConstrained( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsConstrained();
 }
 
 bool
 attr::IsMayBeAmbiguous( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsMayBeAmbiguous();
 }
 
 bool
 attr::IsMayBeDefault( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsMayBeDefault();
 }
 
 bool
 attr::IsMayBeVoid( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsMayBeVoid();
 }
 
 bool
 attr::IsRemovable( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsRemovable();
 }
 
 bool
 attr::IsTransient( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).aStereotypes.IsTransient();
 }
 
 Type_id
 attr::Type( const CodeEntity & i_ce )
-{                            
+{
     return property_cast(i_ce).nType;
 }
-                                                        
+
 } // namespace ifc_property
 
 
 }   //  namespace   idl
 }   //  namespace   ary
-
-
-
-
-#if ENABLE_UDM
-IMPL_UDM_GET_TRAITS( ary::idl::Property );
-#endif // ENABLE_UDM
