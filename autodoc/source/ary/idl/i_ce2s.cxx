@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_ce2s.cxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:40:29 $
+ *  last change: $Author: hr $ $Date: 2006-06-19 11:50:18 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -48,42 +48,42 @@
 namespace ary
 {
 namespace idl
-{                  
-    
+{
+
 namespace
 {
 const std::vector<Ce_id> C_sNullVector_Ce_ids;
 }
-    
+
 
 Ce_2s::~Ce_2s()
-{               
+{
     csv::erase_container_of_heap_ptrs(aXrefLists);
 }
 
 DYN Ce_2s *
-Ce_2s::Create_( RCid i_nCeClass)
+Ce_2s::Create_( RCid )
 {
-    return new Ce_2s;        
+    return new Ce_2s;
 }
 
-                    
+
 std::vector<Ce_id> &
 Ce_2s::Access_List( int i_indexOfList )
-{                        
+{
     csv_assert(i_indexOfList >= 0 AND i_indexOfList < 1000);
-    
+
     while (i_indexOfList >= (int) aXrefLists.size())
     {
         aXrefLists.push_back(new std::vector<Ce_id>);
     }
     return *aXrefLists[i_indexOfList];
 }
-   
+
 const std::vector<Ce_id> &
 Ce_2s::List( int i_indexOfList ) const
 {
-    if (uintt(i_indexOfList) < aXrefLists.size())   
+    if (uintt(i_indexOfList) < aXrefLists.size())
         return *aXrefLists[i_indexOfList];
     else
         return C_sNullVector_Ce_ids;
