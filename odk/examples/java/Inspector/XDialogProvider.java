@@ -2,9 +2,9 @@
  *
  *  $RCSfile: XDialogProvider.java,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: hr $ $Date: 2007-01-02 15:03:24 $
+ *  last change: $Author: rt $ $Date: 2007-04-04 09:23:42 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
@@ -40,13 +40,19 @@
 
 public interface XDialogProvider {
     
-    public void enableInvokeMenuItem(boolean _bdoEnable);
+    public static String SINVOKE = "Invoke";    
+    
+    public static String SADDTOSOURCECODE = "Add to Sourcecode";
+    
+    public void enablePopupMenuItem(String _sMenuTitle, boolean _bdoEnable);    
     
     public void showPopUpMenu(Object invoker, int x, int y) throws java.lang.ClassCastException;
     
     public InspectorPane getSelectedInspectorPage();
 
     public void addInspectorPage(String _sTitle, Object _oContainer);
+    
+    public InspectorPane getInspectorPage(int _nIndex);
 
     public int getInspectorPageCount();
     
@@ -54,5 +60,12 @@ public interface XDialogProvider {
     
     public void show(int _nPageIndex) throws java.lang.ClassCastException;
     
+    public void selectSourceCodeLanguage(int _nLanguage);
+    
     public void paint();
+    
+    // returns one of the constants defined in XLanguageSourceCodeGenerator
+    public int getLanguage();
+    
+    public String getIDLPath();
 }
