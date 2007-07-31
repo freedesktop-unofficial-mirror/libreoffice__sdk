@@ -2,9 +2,9 @@
  *
  *  $RCSfile: ChartInDraw.java,v $
  *
- *  $Revision: 1.4 $
+ *  $Revision: 1.5 $
  *
- *  last change: $Author: rt $ $Date: 2005-01-31 16:10:09 $
+ *  last change: $Author: hr $ $Date: 2007-07-31 13:54:09 $
  *
  *  The Contents of this file are made available subject to the terms of
  *  the BSD license.
@@ -190,6 +190,10 @@ public class ChartInDraw
                com.sun.star.lang.IllegalArgumentException, WrappedTargetException
     {
         // change main title
+        XPropertySet aDocProp = (XPropertySet) UnoRuntime.queryInterface(
+            XPropertySet.class, maChartDocument );
+        aDocProp.setPropertyValue( "HasMainTitle", new Boolean( true ));
+
         XShape aTitle = maChartDocument.getTitle();
         XPropertySet aTitleProp = (XPropertySet) UnoRuntime.queryInterface( XPropertySet.class, aTitle );
 
@@ -228,7 +232,7 @@ public class ChartInDraw
         aDiaProp.setPropertyValue( "Deep", aTrue );
         // from Chart3DBarProperties:
         aDiaProp.setPropertyValue( "SolidType", new Integer( ChartSolidType.CYLINDER ));
-
+        
         // change floor color to Magenta6
         XPropertySet aFloor = ((X3DDisplay) UnoRuntime.queryInterface(
                                    X3DDisplay.class, maDiagram )).getFloor();
@@ -283,7 +287,6 @@ public class ChartInDraw
 
         aDiaProp.setPropertyValue( "D3DTransformMatrix", aMatrix );
 
-
         // add a red light source
 
         // in a chart by default only the second (non-specular) light source is switched on
@@ -298,7 +301,7 @@ public class ChartInDraw
         aDirection.DirectionZ =  0.5;
 
         aDiaProp.setPropertyValue( "D3DSceneLightDirection1", aDirection );
-        aDiaProp.setPropertyValue( "D3DSceneLightOn1", new Boolean( true ));
+        aDiaProp.setPropertyValue( "D3DSceneLightOn1", new Boolean( true ));        
     }
 
     // ______________________________
