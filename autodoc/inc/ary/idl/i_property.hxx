@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_property.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:11:01 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 15:09:42 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -36,30 +36,23 @@
 #ifndef ARY_IDL_I_PROPERTY_HXX
 #define ARY_IDL_I_PROPERTY_HXX
 
-
-
-// USED SERVICES
-    // BASE CLASSES
+// BASE CLASSES
 #include <ary/idl/i_ce.hxx>
-    // COMPONENTS
-    // PARAMETERS
+
+
 
 
 namespace ary
 {
 namespace idl
 {
-
 namespace ifc_property
 {
     struct attr;
 }
 
-/*  OPEN?
-*/
 
-/** @resp
-    Represents an IDL property.
+/** Represents an IDL property.
 */
 class Property : public CodeEntity
 {
@@ -67,8 +60,8 @@ class Property : public CodeEntity
     enum E_ClassId { class_id = 2004 };
 
     class Stereotypes
-    {     
-      public:           
+    {
+      public:
         enum E_Flags
         {
             readonly = 1,
@@ -80,17 +73,17 @@ class Property : public CodeEntity
             removable = 64,
             transient = 128,
             s_MAX
-        };                    
+        };
                             Stereotypes()       : nFlags(0) {}
-        
+
         bool                HasAny() const      { return nFlags != 0; }
         bool                IsReadOnly() const  { return (nFlags & UINT32(readonly)) != 0; }
         bool                IsBound() const     { return (nFlags & UINT32(bound)) != 0; }
-        bool                IsConstrained() const  
+        bool                IsConstrained() const
                                                 { return (nFlags & UINT32(constrained)) != 0; }
-        bool                IsMayBeAmbiguous() const  
+        bool                IsMayBeAmbiguous() const
                                                 { return (nFlags & UINT32(maybeambiguous)) != 0; }
-        bool                IsMayBeDefault() const  
+        bool                IsMayBeDefault() const
                                                 { return (nFlags & UINT32(maybedefault)) != 0; }
         bool                IsMayBeVoid() const { return (nFlags & UINT32(maybevoid)) != 0; }
         bool                IsRemovable() const { return (nFlags & UINT32(removable)) != 0; }
@@ -103,7 +96,7 @@ class Property : public CodeEntity
         // DATA
         UINT32              nFlags;
     };
-    
+
 
     // LIFECYCLE
                         Property(
@@ -114,14 +107,16 @@ class Property : public CodeEntity
                             Stereotypes         i_stereotypes );
                         ~Property();
     // INQUIRY
-    Type_id             Type() const; 
+    Type_id             Type() const;
 
   private:
-    // Interface ary::RepositoryEntity
-    virtual RCid        inq_ClassId() const;
+    // Interface csv::ConstProcessorClient:
+    virtual void        do_Accept(
+                            csv::ProcessorIfc & io_processor ) const;
+    // Interface ary::Object:
+    virtual ClassId     get_AryClass() const;
 
     // Interface CodeEntity
-    virtual void            do_Visit_CeHost(CeHost & o_rHost) const;
     virtual const String &  inq_LocalName() const;
     virtual Ce_id           inq_NameRoom() const;
     virtual Ce_id           inq_Owner() const;
@@ -140,15 +135,17 @@ class Property : public CodeEntity
 
 
 
-// IMPLEMENTATION
 
+// IMPLEMENTATION
 inline Type_id
 Property::Type() const
-    { return nType; }
+{
+    return nType;
+}
+
+
+
 
 }   // namespace idl
 }   // namespace ary
-
-
 #endif
-

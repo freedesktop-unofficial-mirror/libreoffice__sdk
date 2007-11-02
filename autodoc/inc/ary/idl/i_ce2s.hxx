@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_ce2s.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:06:33 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 15:05:49 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -41,7 +41,7 @@
     // BASE CLASSES
     // COMPONENTS
     // PARAMETERS
-#include <ary/idl/i_language.hxx>
+#include <ary/idl/i_types4idl.hxx>
 
 
 namespace ary
@@ -56,13 +56,13 @@ namespace idl
 */
 class Ce_2s
 {
-  public:                   
+  public:
     // LIFECYCLE
     virtual             ~Ce_2s();
 
     static DYN Ce_2s *  Create_(
-                            RCid                i_nCeClass );
-    // OPERATIONS                        
+                            ClassId             i_nCeClass );
+    // OPERATIONS
     void                Add_Link2DescriptionInManual(
                             const String &      i_link,
                             const String &      i_linkUI )
@@ -74,23 +74,23 @@ class Ce_2s
     std::vector<Ce_id> &
                         Access_List(
                             int                 i_indexOfList );
-    // INQUIRY                                               
+    // INQUIRY
     const StringVector &
                         Links2DescriptionInManual() const
                                                 { return aDescriptionsInManual; }
     const StringVector &
                         Links2RefsInManual() const
                                                 { return aRefsInManual; }
-    int                 CountXrefLists() const  { return aXrefLists.size(); }                                                
+    int                 CountXrefLists() const  { return aXrefLists.size(); }
     const std::vector<Ce_id> &
                         List(
                             int                 i_indexOfList ) const;
-  private: 
+  private:
     typedef DYN std::vector<Ce_id> * ListPtr;
-  
+
     // DATA
     StringVector        aDescriptionsInManual;
-    StringVector        aRefsInManual;  
+    StringVector        aRefsInManual;
     std::vector<ListPtr>
                         aXrefLists;
 };
