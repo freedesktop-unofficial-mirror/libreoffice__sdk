@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_namelookup.cxx,v $
  *
- *  $Revision: 1.6 $
+ *  $Revision: 1.7 $
  *
- *  last change: $Author: vg $ $Date: 2007-09-18 13:33:34 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 15:45:45 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -46,57 +46,53 @@ namespace idl
 
 NameLookup::NameLookup()
     :   aNames()
-{    
-}   
+{
+}
 
 NameLookup::~NameLookup()
-{    
-}   
+{
+}
 
-void                
+void
 NameLookup::Add_Name( const String &      i_name,
                       Ce_id               i_id,
-                      RCid                i_class,
+                      ClassId             i_class,
                       Ce_id               i_owner )
 {
-    aNames.insert( std::pair< const String, NameProperties>( 
-                                   i_name, 
+    aNames.insert( std::pair< const String, NameProperties>(
+                                   i_name,
                                    NameProperties( i_id,
                                                    i_class,
-                                                   i_owner )));    
-//    aNames.insert( std::make_pair( i_name, 
-//                                   NameProperties( i_id,
-//                                                   i_class,
-//                                                   i_owner )));    
-}   
+                                                   i_owner )));
+}
 
-bool                
+bool
 NameLookup::Has_Name( const String &      i_name,
-                      RCid                i_class,
+                      ClassId             i_class,
                       Ce_id               i_owner ) const
-{          
-    IteratorRange<Map_Names::const_iterator> 
+{
+    IteratorRange<Map_Names::const_iterator>
         aResult( aNames.equal_range(i_name) );
-            
+
     for ( ; aResult.operator bool(); ++aResult )
     {
         if ( (i_class == 0
                 OR (*aResult.cur()).second.nClass == i_class)
-             AND                
+             AND
              ((*aResult.cur()).second.nOwner == i_owner
                 OR NOT i_owner.IsValid()) )
         {
             return true;
         }
-    }   // end for  
+    }   // end for
     return false;
-}   
+}
 
-void                
+void
 NameLookup::Get_Names( Dyn_StdConstIterator<Map_Names::value_type> & o_rResult,
                        const String &                         i_name ) const
 {
-    IteratorRange<Map_Names::const_iterator> 
+    IteratorRange<Map_Names::const_iterator>
         aResult( aNames.equal_range(i_name) );
     o_rResult = new SCI_MultiMap<String, NameProperties>(aResult.cur(), aResult.end());
 }
