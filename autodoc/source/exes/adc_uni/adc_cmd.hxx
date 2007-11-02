@@ -4,9 +4,9 @@
  *
  *  $RCSfile: adc_cmd.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 18:04:01 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 16:43:04 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -49,11 +49,11 @@ namespace autodoc
 {
 namespace command
 {
- 
+
 /** Context for a command, which can be read from the command line.
 */
 class Context
-{                          
+{
   public:
     typedef StringVector::const_iterator opt_iter;
 
@@ -67,7 +67,7 @@ class Context
                             opt_iter &          it,
                             opt_iter            itEnd ) = 0;
 };
-       
+
 // IMPLEMENTATION
 inline void
 Context::Init( opt_iter &          i_nCurArgsBegin,
@@ -84,14 +84,14 @@ class Command : public Context
   public:
     /** Running ranks of the commands are to be maintained at one location:
         Here!
-    */     
+    */
     enum E_Ranks
     {
         rank_Load       = 10,
         rank_Parse      = 20,
         rank_Save       = 30,
         rank_CreateHtml = 40,
-        rank_CreateXml  = 50 
+        rank_CreateXml  = 50
     };
 
 
@@ -124,7 +124,7 @@ class X_CommandLine
                             :   sExplanation(i_sExplanation) {}
 
     void                Report(
-                            ostream &           o_rOut )
+                            std::ostream &      o_rOut )
                             { o_rOut << "Error in command line: "
                                      << sExplanation << Endl(); }
   private:
@@ -134,10 +134,6 @@ class X_CommandLine
 
 
 
-
 }   // namespace command
 }   // namespace autodoc
-
-
 #endif
-
