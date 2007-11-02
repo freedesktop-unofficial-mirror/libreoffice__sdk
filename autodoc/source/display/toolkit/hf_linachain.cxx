@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hf_linachain.cxx,v $
  *
- *  $Revision: 1.4 $
+ *  $Revision: 1.5 $
  *
- *  last change: $Author: vg $ $Date: 2007-09-18 14:02:55 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 16:41:40 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -43,7 +43,7 @@
 
 
 HF_LinkedNameChain::HF_LinkedNameChain( Xml::Element & o_rOut )
-    :   HtmlMaker( o_rOut 
+    :   HtmlMaker( o_rOut
                         >> *new Html::Paragraph
                             << new Html::ClassAttr("namechain") )
 {
@@ -51,68 +51,68 @@ HF_LinkedNameChain::HF_LinkedNameChain( Xml::Element & o_rOut )
 
 HF_LinkedNameChain::~HF_LinkedNameChain()
 {
-}       
+}
 
-void                
-HF_LinkedNameChain::Produce_CompleteChain( output::Position &  i_curPosition,
-                                           F_LinkMaker         i_linkMaker ) const
+void
+HF_LinkedNameChain::Produce_CompleteChain( const output::Position & i_curPosition,
+                                           F_LinkMaker              i_linkMaker ) const
 {
     produce_Level(i_curPosition.RelatedNode(), i_curPosition, i_linkMaker);
 }
-                                           
-void                
-HF_LinkedNameChain::Produce_CompleteChain_forModule( output::Position &  i_curPosition,
-                                                     F_LinkMaker         i_linkMaker ) const
+
+void
+HF_LinkedNameChain::Produce_CompleteChain_forModule( const output::Position &  i_curPosition,
+                                                     F_LinkMaker               i_linkMaker ) const
 {
     if (i_curPosition.Depth() == 0)
         return;
     produce_Level(*i_curPosition.RelatedNode().Parent(), i_curPosition, i_linkMaker);
 }
-                                           
 
-                 
+
+
 namespace
 {
-    
-StreamStr aLinkBuf(200);
-    
-}  
 
-void                
-HF_LinkedNameChain::produce_Level( output::Node &      i_levelNode,
-                                   output::Position &  i_startPosition,
-                                   F_LinkMaker         i_linkMaker ) const
+StreamStr aLinkBuf(200);
+
+}
+
+void
+HF_LinkedNameChain::produce_Level( output::Node &           i_levelNode,
+                                   const output::Position & i_startPosition,
+                                   F_LinkMaker              i_linkMaker ) const
 {
     if ( i_levelNode.Depth() > 0 )
     {
         produce_Level( *i_levelNode.Parent(),
-                       i_startPosition, 
+                       i_startPosition,
                        i_linkMaker );
     }
-    
-    aLinkBuf.reset();   
-    
-    String 
+
+    aLinkBuf.reset();
+
+    String
         sFileName = (*i_linkMaker)(i_levelNode.Name());
     output::Position
         aLevelPos(i_levelNode, sFileName);
-                        
+
     i_startPosition.Get_LinkTo(aLinkBuf, aLevelPos);
 
     if ( i_levelNode.Depth() > 0 )
     {
-        CurOut() 
+        CurOut()
         >> *new Html::Link(aLinkBuf.c_str())
             << new Html::ClassAttr("namechain")
             << i_levelNode.Name();
         CurOut() << " :: ";
     }
     else
-    {                                                    
-        CurOut()  
+    {
+        CurOut()
         >> *new Html::Link(aLinkBuf.c_str())
             << new Html::ClassAttr("namechain")
             << "::";
         CurOut() << " ";
-    }        
+    }
 }
