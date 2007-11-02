@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_enum.cxx,v $
  *
- *  $Revision: 1.5 $
+ *  $Revision: 1.6 $
  *
- *  last change: $Author: vg $ $Date: 2007-09-18 13:32:04 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 15:44:14 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -39,9 +39,9 @@
 
 
 // NOT FULLY DECLARED SERVICES
-#include <ary/idl/ihost_ce.hxx>
+#include <cosv/tpl/processor.hxx>
 #include <sci_impl.hxx>
-#include "ipi_2s.hxx"
+#include "i2s_calculator.hxx"
 
 
 namespace ary
@@ -62,13 +62,13 @@ Enum::~Enum()
 }
 
 void
-Enum::do_Visit_CeHost( CeHost & o_rHost ) const
+Enum::do_Accept( csv::ProcessorIfc & io_processor ) const
 {
-    o_rHost.Do_Enum(*this);
+    csv::CheckedCall(io_processor, *this);
 }
 
-RCid
-Enum::inq_ClassId() const
+ClassId
+Enum::get_AryClass() const
 {
     return class_id;
 }
@@ -103,10 +103,10 @@ namespace ifc_enum
 
 inline const Enum &
 enum_cast( const CodeEntity & i_ce )
-{ 
-    csv_assert( i_ce.ClassId() == Enum::class_id );
+{
+    csv_assert( i_ce.AryClass() == Enum::class_id );
     return static_cast< const Enum& >(i_ce);
-}     
+}
 
 void
 attr::Get_Values( Dyn_CeIterator &    o_result,
@@ -116,21 +116,21 @@ attr::Get_Values( Dyn_CeIterator &    o_result,
 }
 
 
-void         
+void
 xref::Get_SynonymTypedefs( Dyn_CeIterator &    o_result,
                            const CodeEntity &  i_ce )
-{                                                            
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(enum_2s_SynonymTypedefs));    
+{
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(enum_2s_SynonymTypedefs));
 }
 
-void         
+void
 xref::Get_AsReturns( Dyn_CeIterator &    o_result,
                      const CodeEntity &  i_ce )
 {
-    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(enum_2s_AsReturns));    
+    o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(enum_2s_AsReturns));
 }
 
-void         
+void
 xref::Get_AsParameters( Dyn_CeIterator &    o_result,
                         const CodeEntity &  i_ce )
 {
@@ -143,10 +143,9 @@ xref::Get_AsDataTypes( Dyn_CeIterator &    o_result,
 {
     o_result = new SCI_Vector<Ce_id>(i_ce.Secondaries().List(enum_2s_AsDataTypes));
 }
-                                                        
+
 } // namespace ifc_enum
 
 
 }   //  namespace   idl
 }   //  namespace   ary
-
