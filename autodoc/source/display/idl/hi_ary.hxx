@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hi_ary.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:50:40 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 16:38:59 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -40,9 +40,11 @@
 // USED SERVICES
     // BASE CLASSES
     // COMPONENTS
-#include <ary/idl/i_language.hxx>
+#include <ary/idl/i_types4idl.hxx>
     // PARAMETERS
-#include <ary/idl/ip_2s.hxx>
+#include <ary/idl/i_gate.hxx>
+#include <ary/doc/d_docu.hxx>
+#include <ary/doc/d_oldidldocu.hxx>
 
 
 namespace ary
@@ -50,7 +52,7 @@ namespace ary
 namespace idl
 {
     class Module;
-    class Gate;             
+    class Gate;
     class CePilot;
     class TypePilot;
 }
@@ -59,6 +61,19 @@ namespace output
 {
     class Position;
 }
+
+
+
+
+inline const ary::doc::OldIdlDocu *
+Get_IdlDocu(const ary::doc::Documentation & i_doc)
+{
+    return dynamic_cast< const ary::doc::OldIdlDocu* >(i_doc.Data());
+}
+
+
+
+
 
 /** A helper class to wrap the access to data in the Autodoc Repository.
 */
@@ -70,7 +85,7 @@ class AryAccess
                             const ary::idl::Gate &
                                                 i_rGate );
     // INQUIRY
-    const ary::idl::Module &  
+    const ary::idl::Module &
                         GlobalNamespace() const;
     const ary::idl::Module &
                         Find_Module(
@@ -86,24 +101,24 @@ class AryAccess
     bool                IsBuiltInOrRelated(
                             const ary::idl::Type &
                                                 i_type ) const;
-    bool                Search_Ce(                             
+    bool                Search_Ce(
                             StringVector &      o_module,
                             String &            o_mainEntity,
                             String &            o_memberEntity,
                             const char *        i_sText,
                             const ary::idl::Module &
                                                 i_referingScope ) const;
-    bool                Search_CesModule(                             
+    bool                Search_CesModule(
                             StringVector &      o_module,
                             const String &      i_scope,
                             const String &      i_ce,
                             const ary::idl::Module &
                                                 i_referingScope ) const;
-    const ary::idl::Module * 
-                        Search_Module(                             
-                            const StringVector &      
+    const ary::idl::Module *
+                        Search_Module(
+                            const StringVector &
                                                 i_nameChain ) const;
-                                
+
     void                Get_CeText(
                             StringVector &      o_module,
                             String &            o_ce,
@@ -118,25 +133,25 @@ class AryAccess
                             const ary::idl::Type &
                                                 i_type ) const;
     void                Get_IndexData(
-                            std::vector<ary::idl::Ce_id> &      
+                            std::vector<ary::idl::Ce_id> &
                                                 o_data,
                             ary::idl::alphabetical_index::E_Letter
-                                                i_letter ) const;                                                
+                                                i_letter ) const;
 
     const ary::idl::CePilot &
-                        Ces() const;            // KORR
+                        Ces() const;            
   private:
-    const ary::idl::Module *  
+    const ary::idl::Module *
                         find_SubModule(
                             const ary::idl::Module &
                                                 i_parent,
                             const String &      i_name ) const;
-                            
+
     /// Gets "::"-separated names out of a string.
-    bool                nextName(                      
+    bool                nextName(
                             const char * &      io_TextPtr,
                             String &            o_name ) const;
-                            
+
 
     const ary::idl::Gate &
                         gate() const;
