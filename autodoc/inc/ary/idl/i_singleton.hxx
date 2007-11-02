@@ -4,9 +4,9 @@
  *
  *  $RCSfile: i_singleton.hxx,v $
  *
- *  $Revision: 1.2 $
+ *  $Revision: 1.3 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 16:11:33 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 15:10:19 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -36,13 +36,11 @@
 #ifndef ARY_IDL_I_SINGLETON_HXX
 #define ARY_IDL_I_SINGLETON_HXX
 
-
-
-// USED SERVICES
-    // BASE CLASSES
+// BASE CLASSES
 #include <ary/idl/i_ce.hxx>
-    // COMPONENTS
-    // PARAMETERS
+
+
+
 
 namespace ary
 {
@@ -54,11 +52,7 @@ namespace ifc_singleton
 }
 
 
-/*  OPEN?
-*/
-
-/** @resp
-    Represents an IDL singleton.
+/** Represents an IDL singleton.
 */
 class Singleton : public CodeEntity
 {
@@ -70,19 +64,21 @@ class Singleton : public CodeEntity
                             const String &      i_sName,
                             Ce_id               i_nOwner );
                         ~Singleton();
-    // INQUIRY                    
-    Type_id             AssociatedService() const   
+    // INQUIRY
+    Type_id             AssociatedService() const
                                                 { return nService; }
 
     // ACCESS
     void                Set_Service(
                             Type_id             i_nService );
   private:
-    // Interface ary::RepositoryEntity
-    virtual RCid        inq_ClassId() const;
+    // Interface csv::ConstProcessorClient:
+    virtual void        do_Accept(
+                            csv::ProcessorIfc & io_processor ) const;
+    // Interface ary::Object:
+    virtual ClassId     get_AryClass() const;
 
     // Interface CodeEntity
-    virtual void            do_Visit_CeHost(CeHost & o_rHost) const;
     virtual const String &  inq_LocalName() const;
     virtual Ce_id           inq_NameRoom() const;
     virtual Ce_id           inq_Owner() const;
@@ -94,21 +90,24 @@ class Singleton : public CodeEntity
     // DATA
     String              sName;
     Ce_id               nOwner;
-                        
+
     Type_id             nService;
 };
 
 
 
+
+
 // IMPLEMENTATION
-
-
 inline void
 Singleton::Set_Service( Type_id i_nService )
-    { nService = i_nService; }
+{
+    nService = i_nService;
+}
+
+
+
 
 }   // namespace idl
 }   // namespace ary
-
-
 #endif
