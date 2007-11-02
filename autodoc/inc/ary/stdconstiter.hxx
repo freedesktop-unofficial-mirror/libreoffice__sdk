@@ -4,9 +4,9 @@
  *
  *  $RCSfile: stdconstiter.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 15:55:48 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 14:43:44 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -35,6 +35,7 @@
 
 #ifndef ARY_STDCONSTITER_HXX
 #define ARY_STDCONSTITER_HXX
+//  KORR_DEPRECATED_3.0
 
 
 // USED SERVICES
@@ -45,7 +46,7 @@
 
 namespace ary
 {
-            
+
 template <class ELEM>
 
 class StdConstIterator
@@ -56,15 +57,15 @@ class StdConstIterator
     void                operator++()            { do_Advance(); }
     const ELEM &        operator*() const       { return *inq_CurElement(); }
                         operator bool() const   { return inq_CurElement() != 0; }
-                           
+
     /// Needed as replacement for operator bool() in gcc 2.95.
     bool                IsValid() const         { return operator bool(); }
     bool                IsSorted() const        { return inq_IsSorted(); }
-    
+
   protected:
                         StdConstIterator() {}
-    
-  private:              
+
+  private:
     //Locals
     virtual void        do_Advance() = 0;
     virtual const ELEM *
@@ -98,7 +99,8 @@ class Dyn_StdConstIterator
 };
 
 
+
+
+
 }   // namespace ary
-
-
 #endif
