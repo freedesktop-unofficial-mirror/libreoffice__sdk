@@ -4,9 +4,9 @@
  *
  *  $RCSfile: hfi_globalindex.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 17:40:48 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 16:34:57 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -43,7 +43,7 @@
 #include "hi_factory.hxx"
     // COMPONENTS
     // PARAMETERS
-#include <ary/idl/ip_2s.hxx>
+#include <ary/idl/i_gate.hxx>
 
 
 class HF_IdlTypeText;
@@ -66,28 +66,28 @@ class HF_IdlGlobalIndex : public HtmlFactory_Idl
     void                produce_Line(           /// Called by @->Produce_Page()
                             PageData::const_iterator
                                                 i_entry,
-                            const HF_IdlTypeText &    
+                            const HF_IdlTypeText &
                                                 i_typeLinkWriter ) const;
-                                                
+
     void                write_EntryItself(      /// Called by @->produceLine()
                             Xml::Element &      o_destination,
                             const ary::idl::CodeEntity &
                                                 i_entry,
-                            const HF_IdlTypeText &    
+                            const HF_IdlTypeText &
                                                 i_typeLinkWriter ) const;
-                                                
+
     void                write_OwnerOfEntry(     /// Called by @->produceLine()
                             Xml::Element &      o_destination,
                             const ary::idl::CodeEntity &
                                                 i_entry,
-                            const HF_IdlTypeText &    
-                                                i_typeLinkWriter ) const;    
-                                                
+                            const HF_IdlTypeText &
+                                                i_typeLinkWriter ) const;
+
     void                write_EntrySecondTime(  /// Called by @->produceLine()
                             Xml::Element &      o_destination,
                             const ary::idl::CodeEntity &
                                                 i_entry,
-                            const HF_IdlTypeText &    
+                            const HF_IdlTypeText &
                                                 i_typeLinkWriter ) const;
 };
 
