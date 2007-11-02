@@ -4,9 +4,9 @@
  *
  *  $RCSfile: itrange.hxx,v $
  *
- *  $Revision: 1.3 $
+ *  $Revision: 1.4 $
  *
- *  last change: $Author: rt $ $Date: 2005-09-07 15:53:58 $
+ *  last change: $Author: hr $ $Date: 2007-11-02 14:41:03 $
  *
  *  The Contents of this file are made available subject to
  *  the terms of GNU Lesser General Public License Version 2.1.
@@ -35,6 +35,7 @@
 
 #ifndef ARY_ITRANGE_HXX
 #define ARY_ITRANGE_HXX
+//  KORR_DEPRECATED_3.0
 
 
 // USED SERVICES
@@ -43,13 +44,16 @@
     // PARAMETERS
 #include <utility>
 
+
+
+
 namespace ary
 {
 
 template <typename ITER>
 class IteratorRange
 {
-  public:                   
+  public:
                         IteratorRange(
                             ITER                i_begin,
                             ITER                i_end )
@@ -62,12 +66,12 @@ class IteratorRange
                                                 :   itCurrent(i_range.first),
                                                     itEnd(i_range.second)
                                                 {}
-                                                
-                        operator bool() const   { return itCurrent != itEnd; }                                       
-    IteratorRange &     operator++()            { ++itCurrent; return *this; }                                  
-                                       
+
+                        operator bool() const   { return itCurrent != itEnd; }
+    IteratorRange &     operator++()            { ++itCurrent; return *this; }
+
     ITER                cur() const             { return itCurrent; }
-    ITER                end() const             { return itEnd; }                            
+    ITER                end() const             { return itEnd; }
 
 
   private:
@@ -81,6 +85,4 @@ class IteratorRange
 
 
 }   // namespace ary
-
-
 #endif
