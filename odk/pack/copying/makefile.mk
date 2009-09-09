@@ -53,67 +53,68 @@ IDL_CHAPTER_REFS=idl_chapter_refs.txt
 IDL_SINCE_TAGS=apiref-autodoc.since
 
 EXELIST = \
-    $(DESTDIRBIN)$/cppumaker$(EXEPOSTFIX) 	\
-    $(DESTDIRBIN)$/regcompare$(EXEPOSTFIX) 	\
-    $(DESTDIRBIN)$/idlcpp$(EXEPOSTFIX) 	\
-    $(DESTDIRBIN)$/idlc$(EXEPOSTFIX) 	\
-    $(DESTDIRBIN)$/javamaker$(EXEPOSTFIX) 	\
-    $(DESTDIRBIN)$/autodoc$(EXEPOSTFIX) \
-    $(DESTDIRBIN)$/unoapploader$(EXEPOSTFIX) \
-    $(DESTDIRBIN)$/uno-skeletonmaker$(EXEPOSTFIX)
+	$(DESTDIRBIN)$/cppumaker$(EXEPOSTFIX) 	\
+	$(DESTDIRBIN)$/regcompare$(EXEPOSTFIX) 	\
+	$(DESTDIRBIN)$/idlcpp$(EXEPOSTFIX) 	\
+	$(DESTDIRBIN)$/idlc$(EXEPOSTFIX) 	\
+	$(DESTDIRBIN)$/javamaker$(EXEPOSTFIX) 	\
+	$(DESTDIRBIN)$/autodoc$(EXEPOSTFIX) \
+	$(DESTDIRBIN)$/unoapploader$(EXEPOSTFIX) \
+	$(DESTDIRBIN)$/uno-skeletonmaker$(EXEPOSTFIX)
 
 .IF "$(GUI)"=="WNT"
 EXELIST += \
-    $(DESTDIRBIN)$/climaker$(EXEPOSTFIX)
+	$(DESTDIRBIN)$/climaker$(EXEPOSTFIX)
 .ENDIF
 
 .IF "$(GUI)"=="WNT"
 CLILIST = \
-    $(DESTDIRCLI)$/cli_basetypes.dll 	\
-    $(DESTDIRCLI)$/cli_uretypes.dll 	\
-    $(DESTDIRCLI)$/cli_oootypes.dll 	\
-    $(DESTDIRCLI)$/cli_ure.dll 	\
-    $(DESTDIRCLI)$/cli_cppuhelper.dll
+	$(DESTDIRCLI)$/cli_basetypes.dll 	\
+	$(DESTDIRCLI)$/cli_uretypes.dll 	\
+	$(DESTDIRCLI)$/cli_oootypes.dll 	\
+	$(DESTDIRCLI)$/cli_ure.dll 	\
+	$(DESTDIRCLI)$/cli_cppuhelper.dll
 .ENDIF
 
 
 .IF "$(GUI)"=="WNT"
 LIBLIST = \
-    $(DESTDIRLIB)$/istore.lib 	\
-    $(DESTDIRLIB)$/ireg.lib 	\
-    $(DESTDIRLIB)$/isal.lib 	\
-    $(DESTDIRLIB)$/isalhelper.lib 	\
-    $(DESTDIRLIB)$/icppu.lib 	\
-    $(DESTDIRLIB)$/icppuhelper.lib 	\
-    $(DESTDIRLIB)$/irmcxt.lib
+	$(DESTDIRLIB)$/istore.lib 	\
+	$(DESTDIRLIB)$/ireg.lib 	\
+	$(DESTDIRLIB)$/isal.lib 	\
+	$(DESTDIRLIB)$/isalhelper.lib 	\
+	$(DESTDIRLIB)$/icppu.lib 	\
+	$(DESTDIRLIB)$/icppuhelper.lib 	\
+	$(DESTDIRLIB)$/irmcxt.lib \
+	$(DESTDIRLIB)$/ipurpenvhelper3MSC.lib
 
 .IF "$(COMEX)"=="8"
-    LIBLIST += $(DESTDIRLIB)$/stlport_vc7.lib
+	LIBLIST += $(DESTDIRLIB)$/stlport_vc7.lib
 .ELIF "$(COMEX)"=="10" || "$(COMEX)"=="11" || "$(COMEX)"=="12" 
-    LIBLIST += $(DESTDIRLIB)$/stlport_vc71.lib
+	LIBLIST += $(DESTDIRLIB)$/stlport_vc71.lib
 .ELSE
-    LIBLIST += $(DESTDIRLIB)$/stlport_vc6.lib
+	LIBLIST += $(DESTDIRLIB)$/stlport_vc6.lib
 .ENDIF
 .ENDIF
 
 .IF "$(OS)"=="LINUX"
-    LIBLIST = $(DESTDIRLIB)$/libsalcpprt.a
+	LIBLIST = $(DESTDIRLIB)$/libsalcpprt.a
 .ENDIF
 
 # note, that inner class files are copied implicitly
 DESTCLASSESLIST= \
-    $(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/Loader.class \
-    $(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/InstallationFinder.class \
-    $(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/WinRegKey.class \
-    $(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/WinRegKeyException.class
+	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/Loader.class \
+	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/InstallationFinder.class \
+	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/WinRegKey.class \
+	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/WinRegKeyException.class
 #	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/Loader$$CustomURLClassLoader.class \
 #	$(DESTDIRJAR)$/com$/sun$/star$/lib$/loader$/InstallationFinder$$StreamGobbler.class \
 
 SETTINGSLIST= \
-    $(DESTDIRSETTINGS)$/settings.mk \
-    $(DESTDIRSETTINGS)$/std.mk \
-    $(DESTDIRSETTINGS)$/stdtarget.mk \
-    $(DESTDIRSETTINGS)$/dk.mk
+	$(DESTDIRSETTINGS)$/settings.mk \
+	$(DESTDIRSETTINGS)$/std.mk \
+	$(DESTDIRSETTINGS)$/stdtarget.mk \
+	$(DESTDIRSETTINGS)$/dk.mk
 
 
 .IF "$(GUI)"=="WNT"
@@ -126,64 +127,64 @@ SETTINGSLIST+=$(DESTDIRSETTINGS)$/component.uno.map
 
 
 DOCUHTMLFILES+= \
-    $(DESTDIR)$/index.html \
-    $(DESTDIRDOCU)$/tools.html \
-    $(DESTDIRDOCU)$/notsupported.html \
-    $(DESTDIRDOCU)$/install.html \
-    $(DESTDIREXAMPLES)$/examples.html \
-    $(DESTDIREXAMPLES)$/DevelopersGuide$/examples.html
+	$(DESTDIR)$/index.html \
+	$(DESTDIRDOCU)$/tools.html \
+	$(DESTDIRDOCU)$/notsupported.html \
+	$(DESTDIRDOCU)$/install.html \
+	$(DESTDIREXAMPLES)$/examples.html \
+	$(DESTDIREXAMPLES)$/DevelopersGuide$/examples.html
 
 DOCUFILES= \
-    $(DOCUHTMLFILES) \
-    $(DESTDIRDOCU)$/sdk_styles.css \
-    $(DESTDIRGENIDLREF)$/idl.css \
-    $(DESTDIRDOCUIMAGES)$/nada.gif \
-    $(DESTDIRDOCUIMAGES)$/arrow-2.gif \
-    $(DESTDIRDOCUIMAGES)$/bluball.gif \
-    $(DESTDIRDOCUIMAGES)$/so-main-app_32.png \
-    $(DESTDIRDOCUIMAGES)$/ooo-main-app_32.png \
-    $(DESTDIRDOCUIMAGES)$/arrow-1.gif \
-    $(DESTDIRDOCUIMAGES)$/arrow-3.gif \
-    $(DESTDIRDOCUIMAGES)$/bg_table.gif \
-    $(DESTDIRDOCUIMAGES)$/bg_table2.gif \
-    $(DESTDIRDOCUIMAGES)$/bg_table3.gif \
-    $(DESTDIRDOCUIMAGES)$/nav_down.png \
-    $(DESTDIRDOCUIMAGES)$/nav_home.png \
-    $(DESTDIRDOCUIMAGES)$/nav_left.png \
-    $(DESTDIRDOCUIMAGES)$/nav_right.png \
-    $(DESTDIRDOCUIMAGES)$/nav_up.png \
-    $(DESTDIRDOCUIMAGES)$/sdk_head-1.gif \
-    $(DESTDIRDOCUIMAGES)$/sdk_head-2.gif \
-    $(DESTDIRDOCUIMAGES)$/sdk_head-3.gif \
-    $(DESTDIRDOCUIMAGES)$/sdk_line-1.gif \
-    $(DESTDIRDOCUIMAGES)$/sdk_line-2.gif
+	$(DOCUHTMLFILES) \
+	$(DESTDIRDOCU)$/sdk_styles.css \
+	$(DESTDIRGENIDLREF)$/idl.css \
+	$(DESTDIRDOCUIMAGES)$/nada.gif \
+	$(DESTDIRDOCUIMAGES)$/arrow-2.gif \
+	$(DESTDIRDOCUIMAGES)$/bluball.gif \
+	$(DESTDIRDOCUIMAGES)$/so-main-app_32.png \
+	$(DESTDIRDOCUIMAGES)$/ooo-main-app_32.png \
+	$(DESTDIRDOCUIMAGES)$/arrow-1.gif \
+	$(DESTDIRDOCUIMAGES)$/arrow-3.gif \
+	$(DESTDIRDOCUIMAGES)$/bg_table.gif \
+	$(DESTDIRDOCUIMAGES)$/bg_table2.gif \
+	$(DESTDIRDOCUIMAGES)$/bg_table3.gif \
+	$(DESTDIRDOCUIMAGES)$/nav_down.png \
+	$(DESTDIRDOCUIMAGES)$/nav_home.png \
+	$(DESTDIRDOCUIMAGES)$/nav_left.png \
+	$(DESTDIRDOCUIMAGES)$/nav_right.png \
+	$(DESTDIRDOCUIMAGES)$/nav_up.png \
+	$(DESTDIRDOCUIMAGES)$/sdk_head-1.gif \
+	$(DESTDIRDOCUIMAGES)$/sdk_head-2.gif \
+	$(DESTDIRDOCUIMAGES)$/sdk_head-3.gif \
+	$(DESTDIRDOCUIMAGES)$/sdk_line-1.gif \
+	$(DESTDIRDOCUIMAGES)$/sdk_line-2.gif
 
 .IF "$(GUI)"=="UNX"
 INSTALLSCRIPT= \
-    $(DESTDIR)$/config.guess \
-    $(DESTDIR)$/config.sub \
-    $(DESTDIR)$/configure.pl \
-    $(DESTDIR)$/setsdkenv_unix \
-    $(DESTDIR)$/setsdkenv_unix.sh.in \
-    $(DESTDIR)$/setsdkenv_unix.csh.in
+	$(DESTDIR)$/config.guess \
+	$(DESTDIR)$/config.sub \
+	$(DESTDIR)$/configure.pl \
+	$(DESTDIR)$/setsdkenv_unix \
+	$(DESTDIR)$/setsdkenv_unix.sh.in \
+	$(DESTDIR)$/setsdkenv_unix.csh.in
 .ELSE
 INSTALLSCRIPT= \
-    $(DESTDIR)$/setsdkenv_windows.bat \
-    $(DESTDIR)$/setsdkenv_windows.template \
-    $(DESTDIR)$/setsdkname.bat \
-    $(DESTDIR)$/cfgWin.js
+	$(DESTDIR)$/setsdkenv_windows.bat \
+	$(DESTDIR)$/setsdkenv_windows.template \
+	$(DESTDIR)$/setsdkname.bat \
+	$(DESTDIR)$/cfgWin.js
 .ENDIF
 
 DIR_FILE_LIST=\
-    $(EXELIST) \
-    $(CLILIST) \
-    $(LIBLIST) \
-    $(SETTINGSLIST) \
-    $(DOCUFILES) \
-    $(INSTALLSCRIPT) \
-    $(DESTIDLLIST)  \
-    $(DESTINCLUDELIST) \
-    $(DESTCLASSESLIST) \
+	$(EXELIST) \
+	$(CLILIST) \
+	$(LIBLIST) \
+	$(SETTINGSLIST) \
+	$(DOCUFILES) \
+	$(INSTALLSCRIPT) \
+	$(DESTIDLLIST)  \
+	$(DESTINCLUDELIST) \
+	$(DESTCLASSESLIST) \
     $(IDL_DOCU_INDEX_FILE) \
     $(CONVERTTAGFLAG) 
 
@@ -214,8 +215,8 @@ MYZIPLIST=com$/* win$/*
 # TARGETS
 #--------------------------------------------------
 all : CLEAN_DKVERSION_CHECK \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG) \
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG) \
 
 #--------------------------------------------------
 # use global rules
@@ -227,32 +228,32 @@ CLEANUP_DKVERSION_FILE=$(DESTDIRSETTINGS)$/dk.mk
 
     
 CLEAN_DKVERSION_CHECK:
-    @@-rm -f $(CLEANUP_DKVERSION_FILE)
+	@@-rm -f $(CLEANUP_DKVERSION_FILE)
 
 $(DESTDIRBIN)$/addsym-macosx.sh : addsym-macosx.sh
-    @@-rm -f $@
-    $(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $< $(MY_TEXTCOPY_TARGETPRE) $@
-    -chmod 755 $@
+	@@-rm -f $@
+	$(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $< $(MY_TEXTCOPY_TARGETPRE) $@
+	-chmod 755 $@
 
 $(DESTDIRSETTINGS)$/dk.mk : dk.mk
-    @@-rm -f $@
-    -$(MKDIRHIER) $(@:d)
-    tr -d "\015" < dk.mk | sed -e 's/@@RELEASE@@/$(PRODUCT_RELEASE)/' -e 's/@@BUILDID@@/$(RSCREVISION)/'> $@
+	@@-rm -f $@
+	-$(MKDIRHIER) $(@:d)
+	tr -d "\015" < dk.mk | sed -e 's/@@RELEASE@@/$(PRODUCT_RELEASE)/' -e 's/@@BUILDID@@/$(RSCREVISION)/'> $@
 
 $(CONVERTTAGFLAG) : $(DOCUHTMLFILES)
     $(PERL) $(CONVERTTAGSCRIPT) 1 "$(TITLE)" "$(OFFICEPRODUCTNAME)" $(DOCUHTMLFILES)
     @echo "tags converted" > $@
 
 $(IDL_DOCU_CLEANUP_FLAG) : $(IDL_CHAPTER_REFS) $(IDL_SINCE_TAGS) $(PRJ)$/docs$/common$/ref$/idl.css
-    @@-$(MY_DELETE_RECURSIVE) $(DESTDIRGENIDLREF)
-    $(TOUCH) $@
+	@@-$(MY_DELETE_RECURSIVE) $(DESTDIRGENIDLREF)
+	$(TOUCH) $@
 
 $(IDL_DOCU_INDEX_FILE) : $(IDL_DOCU_CLEANUP_FLAG) 
-    -$(MKDIRHIER) $(@:d) 
-    $(MY_AUTODOC) -html $(DESTDIRGENIDLREF) -dvgroot "http://wiki.services.openoffice.org/wiki" -sincefile $(IDL_SINCE_TAGS)  -name $(IDLDOCREFNAME) -lg \
-    idl -dvgfile $(IDL_CHAPTER_REFS) -t $(DESTDIRIDL)
-    -rm $(@:d)$/idl.css
-    $(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $(PRJ)$/docs$/common$/ref$/idl.css $(MY_TEXTCOPY_TARGETPRE) $(@:d:d)$/idl.css
+	-$(MKDIRHIER) $(@:d) 
+	$(MY_AUTODOC) -html $(DESTDIRGENIDLREF) -dvgroot "http://wiki.services.openoffice.org/wiki" -sincefile $(IDL_SINCE_TAGS)  -name $(IDLDOCREFNAME) -lg \
+	idl -dvgfile $(IDL_CHAPTER_REFS) -t $(DESTDIRIDL)
+	-rm $(@:d)$/idl.css
+	$(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $(PRJ)$/docs$/common$/ref$/idl.css $(MY_TEXTCOPY_TARGETPRE) $(@:d:d)$/idl.css
 
  
 .IF "$(SOLAR_JAVA)" != ""
