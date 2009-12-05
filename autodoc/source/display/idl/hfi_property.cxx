@@ -1,7 +1,7 @@
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- * 
+ *
  * Copyright 2008 by Sun Microsystems, Inc.
  *
  * OpenOffice.org - a multi-platform office productivity suite
@@ -378,7 +378,7 @@ HF_IdlCommentedRelationElement::produce_LinkDoc( Environment &   io_env,
             HF_DocEntryList aDocList(io_context);
             HF_IdlDocu aDocuDisplay(io_env, aDocList);
 
-            aDocuDisplay.Produce_byDocu4Reference(*i_commentedRef.Info(), i_ce);
+            aDocuDisplay.Produce_fromReference(*i_commentedRef.Info(), i_ce);
         }
         else
         {
