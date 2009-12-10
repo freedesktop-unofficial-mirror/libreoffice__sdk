@@ -1,7 +1,7 @@
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- * 
+ *
  * Copyright 2008 by Sun Microsystems, Inc.
  *
  * OpenOffice.org - a multi-platform office productivity suite
@@ -90,6 +90,28 @@ HF_IdlTag::Produce_byData( Xml::Element &              o_rTitle,
     Enter_TextOut(o_rText);
     i_rTag.DisplayAt( const_cast< HF_IdlTag& >(*this) );
     Leave_TextOut();
+}
+
+void
+HF_IdlTag::Produce_byData( Xml::Element &      o_rTitle,
+                           Xml::Element &      o_rText,
+                           const std::vector< csi::dsapi::DT_SeeAlsoAtTag* > &
+                                                i_seeAlsoVector ) const
+{
+    o_rTitle << "See also";
+    for ( std::vector< csi::dsapi::DT_SeeAlsoAtTag* >::const_iterator
+            it = i_seeAlsoVector.begin();
+          it != i_seeAlsoVector.end();
+          ++it )
+    {
+        if (it != i_seeAlsoVector.begin())
+        {
+            o_rText << ", ";
+        }
+        HF_IdlTypeText
+            aLinkText(Env(), o_rText, true, &aTextOut.ScopeGivingCe());
+        aLinkText.Produce_byData( (*it)->LinkText() );
+    }
 }
 
 void
