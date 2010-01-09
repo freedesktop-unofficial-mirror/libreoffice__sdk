@@ -55,14 +55,12 @@ JAVA_INCLUDES+= -I$(JAVA_HOME)/include/bsd
 JAVA_INCLUDES+= -I$(JAVA_HOME)/include/linux
 .ELIF "$(OS)" == "NETBSD"
 JAVA_INCLUDES+= -I$(JAVA_HOME)/include/netbsd
-.ELIF "$(OS)" == "IRIX"
-JAVA_INCLUDES+= -I$(JAVA_HOME)/include/solaris
 .ENDIF
 .ENDIF
 
 .IF "$(SOLAR_JAVA)"==""
 nojava:
-    @echo "Not building javaunohelper because Java is disabled"
+	@echo "Not building javaunohelper because Java is disabled"
 .ENDIF
 
 .IF "$(OS)" != "WNT"
@@ -70,16 +68,16 @@ nojava:
 .IF "$(BUILD_UNOWINREG)" == "YES"
 
 $(BIN)$/unowinreg.dll : unowinreg.cxx
-    $(MINGWCXX) -Wall -D_JNI_IMPLEMENTATION_ $(JAVA_INCLUDES) \
-        -I$(PRJ)/inc/pch -shared -o $(BIN)$/unowinreg.dll unowinreg.cxx \
-            -Wl,--kill-at -lkernel32 -ladvapi32
-    $(MINGWSTRIP) $(BIN)$/unowinreg.dll
+	$(MINGWCXX) -Wall -D_JNI_IMPLEMENTATION_ $(JAVA_INCLUDES) \
+		-I$(PRJ)/inc/pch -shared -o $(BIN)$/unowinreg.dll unowinreg.cxx \
+	        -Wl,--kill-at -lkernel32 -ladvapi32
+	$(MINGWSTRIP) $(BIN)$/unowinreg.dll
 
 .ELSE
 
 $(BIN)$/unowinreg.dll : $(SOLARVERSION)$/$(INPATH)$/bin$(UPDMINOREXT)$/unowinreg.dll
-    @@-rm -f $@
-    $(GNUCOPY) $< $@
+	@@-rm -f $@
+	$(GNUCOPY) $< $@
 
 .ENDIF
 
@@ -90,7 +88,7 @@ $(BIN)$/unowinreg.dll : $(SOLARVERSION)$/$(INPATH)$/bin$(UPDMINOREXT)$/unowinreg
 
 LINKFLAGS+=-MANIFEST:NO
 SLOFILES = \
-    $(SLO)$/unowinreg.obj
+	$(SLO)$/unowinreg.obj
 SHL1TARGET=$(TARGET)
 SHL1LIBS=$(SLB)$/$(TARGET).lib
 
@@ -105,8 +103,8 @@ SHL1STDLIBS += -lgcc -lmingw32 -lmoldname -lmsvcrt
 .ENDIF
 
 SHL1STDLIBS +=\
-        $(KERNEL32LIB)\
-        $(ADVAPI32LIB)
+		$(KERNEL32LIB)\
+		$(ADVAPI32LIB)
 
 SHL1DEF=$(MISC)$/$(SHL1TARGET).def
 
