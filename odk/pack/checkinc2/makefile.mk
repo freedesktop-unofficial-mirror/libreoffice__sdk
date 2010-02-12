@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.11 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -42,16 +38,16 @@ ODKCHECKFILE=$(MISC)$/$(TARGET).txt
 all : $(ODKCHECKFILE)
 
 $(ODKCHECKFILE) : $(SDK_CONTENT_CHECK_FILES)
-    @echo "" > $(ODKCHECKFILE)
+	@echo "" > $(ODKCHECKFILE)
 # THE PERL SCRIPT DELETES THE CHECK FILE, WHEN AN ERROR OCCURS
-    -diff -br $(DESTDIRINC)$/typelib  $(SOLARINCDIR)$/typelib 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/uno   	$(SOLARINCDIR)$/uno 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/bridges  $(SOLARINCDIR)$/bridges 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/cppu   	$(SOLARINCDIR)$/cppu 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/com$/sun$/star$/uno   	$(SOLARINCDIR)$/com$/sun$/star$/uno 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/cppuhelper 		$(SOLARINCDIR)$/cppuhelper 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/typelib  $(SOLARINCDIR)$/typelib 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/uno   	$(SOLARINCDIR)$/uno 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/bridges  $(SOLARINCDIR)$/bridges 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/cppu   	$(SOLARINCDIR)$/cppu 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/com$/sun$/star$/uno   	$(SOLARINCDIR)$/com$/sun$/star$/uno 	$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/cppuhelper 		$(SOLARINCDIR)$/cppuhelper 		$(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
 # RAISE AN ERROR WHEN TAG FILE IS NOT THERE ANYMORE
-    cat $(ODKCHECKFILE)
+	cat $(ODKCHECKFILE)
 .ELSE
 pseudo:
 

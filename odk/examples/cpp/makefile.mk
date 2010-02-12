@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.7 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,26 +40,26 @@ TARGET=copying
 #----------------------------------------------------
 
 COUNTER_FILES=\
-    $(DESTDIRCPPEXAMPLES)$/counter$/counter.cxx \
-    $(DESTDIRCPPEXAMPLES)$/counter$/counter.uno.xml \
-    $(DESTDIRCPPEXAMPLES)$/counter$/countermain.cxx \
-    $(DESTDIRCPPEXAMPLES)$/counter$/Makefile \
-    $(DESTDIRCPPEXAMPLES)$/counter$/XCountable.idl
+	$(DESTDIRCPPEXAMPLES)$/counter$/counter.cxx \
+	$(DESTDIRCPPEXAMPLES)$/counter$/counter.uno.xml \
+	$(DESTDIRCPPEXAMPLES)$/counter$/countermain.cxx \
+	$(DESTDIRCPPEXAMPLES)$/counter$/Makefile \
+	$(DESTDIRCPPEXAMPLES)$/counter$/XCountable.idl
 
 DOUCMENTLOADER_FILES=\
-    $(DESTDIRCPPEXAMPLES)$/DocumentLoader$/DocumentLoader.cxx \
-    $(DESTDIRCPPEXAMPLES)$/DocumentLoader$/Makefile \
-    $(DESTDIRCPPEXAMPLES)$/DocumentLoader$/test.odt
+	$(DESTDIRCPPEXAMPLES)$/DocumentLoader$/DocumentLoader.cxx \
+	$(DESTDIRCPPEXAMPLES)$/DocumentLoader$/Makefile \
+	$(DESTDIRCPPEXAMPLES)$/DocumentLoader$/test.odt
 
 REMOTECLIENT_FILES=\
-    $(DESTDIRCPPEXAMPLES)$/remoteclient$/Makefile \
-    $(DESTDIRCPPEXAMPLES)$/remoteclient$/remoteclient.cxx \
-    $(DESTDIRCPPEXAMPLES)$/remoteclient$/remoteclientsample.uno.xml
+	$(DESTDIRCPPEXAMPLES)$/remoteclient$/Makefile \
+	$(DESTDIRCPPEXAMPLES)$/remoteclient$/remoteclient.cxx \
+	$(DESTDIRCPPEXAMPLES)$/remoteclient$/remoteclientsample.uno.xml
 
 DIR_FILE_LIST= \
-    $(COUNTER_FILES) \
-    $(DOUCMENTLOADER_FILES) \
-    $(REMOTECLIENT_FILES)
+	$(COUNTER_FILES) \
+	$(DOUCMENTLOADER_FILES) \
+	$(REMOTECLIENT_FILES)
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/ex_cpp_dirs_created.txt
@@ -73,8 +69,8 @@ DIR_FILE_FLAG=$(MISC)$/ex_cpp_files.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

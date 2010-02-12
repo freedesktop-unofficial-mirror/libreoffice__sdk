@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.5 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,22 +40,22 @@ TARGET=copying
 #----------------------------------------------------
 
 UCB_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/data$/data.txt \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ChildrenRetriever.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/DataStreamComposer.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/DataStreamRetriever.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/Helper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/MyActiveDataSink.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/MyInputStream.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/PropertiesComposer.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/PropertiesRetriever.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceCreator.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceManager.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceRemover.java
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/data$/data.txt \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ChildrenRetriever.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/DataStreamComposer.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/DataStreamRetriever.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/Helper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/MyActiveDataSink.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/MyInputStream.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/PropertiesComposer.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/PropertiesRetriever.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceCreator.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceManager.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/UCB$/ResourceRemover.java
 
 DIR_FILE_LIST= \
-    $(UCB_FILES) \
+	$(UCB_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_ucb_dirs_created.txt
@@ -69,8 +65,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_ucb.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules
