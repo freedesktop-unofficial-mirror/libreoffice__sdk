@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.5 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -49,34 +45,34 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/cx_idlco.obj		\
-    $(OBJ)$/cx_sub.obj		    \
-    $(OBJ)$/distrib.obj		    \
-    $(OBJ)$/parsenv2.obj		\
-    $(OBJ)$/pe_attri.obj	    \
-    $(OBJ)$/pe_const.obj	    \
-    $(OBJ)$/pe_enum2.obj    	\
-    $(OBJ)$/pe_evalu.obj	    \
-    $(OBJ)$/pe_excp.obj		    \
-    $(OBJ)$/pe_file2.obj	    \
-    $(OBJ)$/pe_func2.obj	    \
-    $(OBJ)$/pe_iface.obj	    \
-    $(OBJ)$/pe_property.obj	    \
-    $(OBJ)$/pe_selem.obj	    \
-    $(OBJ)$/pe_servi.obj	    \
-    $(OBJ)$/pe_singl.obj	    \
-    $(OBJ)$/pe_struc.obj 	    \
-    $(OBJ)$/pe_tydf2.obj 	    \
-    $(OBJ)$/pe_type2.obj 	    \
-    $(OBJ)$/pe_vari2.obj 	    \
-    $(OBJ)$/pestate.obj 	    \
-    $(OBJ)$/semnode.obj		    \
-    $(OBJ)$/tk_const.obj		\
-    $(OBJ)$/tk_ident.obj		\
-    $(OBJ)$/tk_keyw.obj			\
-    $(OBJ)$/tk_punct.obj		\
-    $(OBJ)$/tkp_uidl.obj		\
-    $(OBJ)$/unoidl.obj
+	$(OBJ)$/cx_idlco.obj		\
+	$(OBJ)$/cx_sub.obj		    \
+	$(OBJ)$/distrib.obj		    \
+	$(OBJ)$/parsenv2.obj		\
+	$(OBJ)$/pe_attri.obj	    \
+	$(OBJ)$/pe_const.obj	    \
+	$(OBJ)$/pe_enum2.obj    	\
+	$(OBJ)$/pe_evalu.obj	    \
+	$(OBJ)$/pe_excp.obj		    \
+	$(OBJ)$/pe_file2.obj	    \
+	$(OBJ)$/pe_func2.obj	    \
+	$(OBJ)$/pe_iface.obj	    \
+	$(OBJ)$/pe_property.obj	    \
+	$(OBJ)$/pe_selem.obj	    \
+	$(OBJ)$/pe_servi.obj	    \
+	$(OBJ)$/pe_singl.obj	    \
+	$(OBJ)$/pe_struc.obj 	    \
+	$(OBJ)$/pe_tydf2.obj 	    \
+	$(OBJ)$/pe_type2.obj 	    \
+	$(OBJ)$/pe_vari2.obj 	    \
+	$(OBJ)$/pestate.obj 	    \
+	$(OBJ)$/semnode.obj		    \
+	$(OBJ)$/tk_const.obj		\
+	$(OBJ)$/tk_ident.obj		\
+	$(OBJ)$/tk_keyw.obj			\
+	$(OBJ)$/tk_punct.obj		\
+	$(OBJ)$/tkp_uidl.obj		\
+	$(OBJ)$/unoidl.obj
 
 
 

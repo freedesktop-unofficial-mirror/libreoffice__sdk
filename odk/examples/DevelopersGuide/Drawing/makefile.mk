@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.7 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,28 +40,28 @@ TARGET=copying
 #----------------------------------------------------
 
 DRAWING_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ChangeOrderDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ControlAndSelectDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/CustomShowDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/DrawingDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/DrawViewDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/FillAndLineStyleDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/GluePointDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/GraphicExportDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Helper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/LayerDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ObjectTransformationDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Organigram.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/PageHelper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/PresentationDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ShapeHelper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/SimplePresentation.odp \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/StyleDemo.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/TextDemo.java
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ChangeOrderDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ControlAndSelectDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/CustomShowDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/DrawingDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/DrawViewDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/FillAndLineStyleDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/GluePointDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/GraphicExportDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Helper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/LayerDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ObjectTransformationDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/Organigram.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/PageHelper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/PresentationDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/ShapeHelper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/SimplePresentation.odp \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/StyleDemo.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Drawing$/TextDemo.java
 
 DIR_FILE_LIST= \
-    $(DRAWING_FILES) \
+	$(DRAWING_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_drawing_dirs_created.txt
@@ -75,8 +71,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_drawing.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules
