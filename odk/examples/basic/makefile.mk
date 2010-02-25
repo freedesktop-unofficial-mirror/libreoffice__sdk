@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.6 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,37 +40,37 @@ TARGET=copying
 #----------------------------------------------------
 
 DRAWING_FILES=\
-    $(DESTDIRBASICEXAMPLES)$/drawing$/dirtree.txt \
-    $(DESTDIRBASICEXAMPLES)$/drawing$/importexportofasciifiles.odg
+	$(DESTDIRBASICEXAMPLES)$/drawing$/dirtree.txt \
+	$(DESTDIRBASICEXAMPLES)$/drawing$/importexportofasciifiles.odg
 
 FORMSANDCONTROLS_FILES=\
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/beef.wmf \
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/burger.wmf \
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/burger_factory.odt \
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/chicken.wmf \
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/fish.wmf \
-    $(DESTDIRBASICEXAMPLES)$/forms_and_controls$/vegetable.wmf
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/beef.wmf \
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/burger.wmf \
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/burger_factory.odt \
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/chicken.wmf \
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/fish.wmf \
+	$(DESTDIRBASICEXAMPLES)$/forms_and_controls$/vegetable.wmf
 
 SHEET_FILES=\
-    $(DESTDIRBASICEXAMPLES)$/sheet$/adapting_to_euroland.ods
+	$(DESTDIRBASICEXAMPLES)$/sheet$/adapting_to_euroland.ods
 
 STOCKQUOTEUPDATER_FILES=\
-    $(DESTDIRBASICEXAMPLES)$/stock_quotes_updater$/stock.ods
+	$(DESTDIRBASICEXAMPLES)$/stock_quotes_updater$/stock.ods
 
 TEXT_FILES=\
-    $(DESTDIRBASICEXAMPLES)$/text$/creating_an_index$/index.odt \
-    $(DESTDIRBASICEXAMPLES)$/text$/creating_an_index$/indexlist.txt \
-    $(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/changing_appearance.odt \
-    $(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/inserting_bookmarks.odt \
-    $(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/replacing_text.odt \
-    $(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/using_regular_expressions.odt
+	$(DESTDIRBASICEXAMPLES)$/text$/creating_an_index$/index.odt \
+	$(DESTDIRBASICEXAMPLES)$/text$/creating_an_index$/indexlist.txt \
+	$(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/changing_appearance.odt \
+	$(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/inserting_bookmarks.odt \
+	$(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/replacing_text.odt \
+	$(DESTDIRBASICEXAMPLES)$/text$/modifying_text_automatically$/using_regular_expressions.odt
 
 DIR_FILE_LIST= \
-    $(DRAWING_FILES) \
-    $(FORMSANDCONTROLS_FILES) \
-    $(SHEET_FILES) \
-    $(STOCKQUOTEUPDATER_FILES) \
-    $(TEXT_FILES) \
+	$(DRAWING_FILES) \
+	$(FORMSANDCONTROLS_FILES) \
+	$(SHEET_FILES) \
+	$(STOCKQUOTEUPDATER_FILES) \
+	$(TEXT_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/ex_basic_dirs_created.txt
@@ -84,8 +80,8 @@ DIR_FILE_FLAG=$(MISC)$/ex_basic_files.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

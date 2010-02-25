@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.6 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -45,16 +41,16 @@ APP1TARGET = $(TARGET)
 APP1RPATH=SDK
 
 APP1OBJS = $(OBJ)$/skeletonmaker.obj \
-    $(OBJ)$/skeletoncommon.obj \
-    $(OBJ)$/javatypemaker.obj \
-    $(OBJ)$/cpptypemaker.obj \
-    $(OBJ)$/javacompskeleton.obj \
-    $(OBJ)$/cppcompskeleton.obj
+	$(OBJ)$/skeletoncommon.obj \
+	$(OBJ)$/javatypemaker.obj \
+	$(OBJ)$/cpptypemaker.obj \
+	$(OBJ)$/javacompskeleton.obj \
+	$(OBJ)$/cppcompskeleton.obj
 
 APP1DEPN= $(OUT)$/lib$/$(UNODEVTOOLSLIBDEPN) $(SOLARLIBDIR)$/$(CODEMAKERLIBDEPN) \
-    $(SOLARLIBDIR)$/$(COMMONCPPLIBDEPN) $(SOLARLIBDIR)$/$(COMMONJAVALIBDEPN)
+	$(SOLARLIBDIR)$/$(COMMONCPPLIBDEPN) $(SOLARLIBDIR)$/$(COMMONJAVALIBDEPN)
 APP1STDLIBS = $(REGLIB) $(SALLIB) $(SALHELPERLIB) $(CPPULIB) $(CPPUHELPERLIB) \
-    $(UNODEVTOOLSLIBST) $(CODEMAKERLIBST) $(COMMONCPPLIBST) $(COMMONJAVALIBST)
+	$(UNODEVTOOLSLIBST) $(CODEMAKERLIBST) $(COMMONCPPLIBST) $(COMMONJAVALIBST)
 
 OBJFILES = $(APP1OBJS)
 

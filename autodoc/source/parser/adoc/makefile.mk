@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.3 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -47,14 +43,14 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/adoc_tok.obj   	\
-    $(OBJ)$/a_rdocu.obj		\
-    $(OBJ)$/cx_a_std.obj	\
-    $(OBJ)$/cx_a_sub.obj	\
-    $(OBJ)$/docu_pe.obj		\
-    $(OBJ)$/prs_adoc.obj	\
-    $(OBJ)$/tk_attag.obj  	\
-    $(OBJ)$/tk_docw.obj
+	$(OBJ)$/adoc_tok.obj   	\
+	$(OBJ)$/a_rdocu.obj		\
+	$(OBJ)$/cx_a_std.obj	\
+	$(OBJ)$/cx_a_sub.obj	\
+	$(OBJ)$/docu_pe.obj		\
+	$(OBJ)$/prs_adoc.obj	\
+	$(OBJ)$/tk_attag.obj  	\
+	$(OBJ)$/tk_docw.obj
 
 
 

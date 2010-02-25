@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.4 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -62,7 +58,7 @@ SF_FILES=\
     $(DESTSF)$/ScriptSelector$/ScriptSelector$/parcel-descriptor.xml
 
 DIR_FILE_LIST= \
-    $(SF_FILES) \
+	$(SF_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_sf_dirs_created.txt
@@ -72,8 +68,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_sf.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

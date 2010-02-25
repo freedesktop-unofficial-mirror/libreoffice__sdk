@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.11 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -42,16 +38,16 @@ ODKCHECKFILE=$(MISC)$/$(TARGET).txt
 all : $(ODKCHECKFILE)
 
 $(ODKCHECKFILE) : $(SDK_CONTENT_CHECK_FILES)
-    @echo "" > $(ODKCHECKFILE)
+	@echo "" > $(ODKCHECKFILE)
 # THE PERL SCRIPT DELETES THE CHECK FILE, WHEN AN ERROR OCCURS
-    -diff -br $(DESTDIRINC)$/osl   $(SOLARINCDIR)$/osl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/rtl   $(SOLARINCDIR)$/rtl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/sal   $(SOLARINCDIR)$/sal $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/stl   $(SOLARINCDIR)$/stl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/store $(SOLARINCDIR)$/store $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
-    -diff -br $(DESTDIRINC)$/vos   $(SOLARINCDIR)$/vos $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/osl   $(SOLARINCDIR)$/osl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/rtl   $(SOLARINCDIR)$/rtl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/sal   $(SOLARINCDIR)$/sal $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/stl   $(SOLARINCDIR)$/stl $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/store $(SOLARINCDIR)$/store $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
+	-diff -br $(DESTDIRINC)$/vos   $(SOLARINCDIR)$/vos $(PIPEERROR) $(PERL) $(PRJ)$/util$/checkdiff.pl $(ODKCHECKFILE)
 # RAISE AN ERROR WHEN TAG FILE IS NOT THERE ANYMORE
-    cat $(ODKCHECKFILE)
+	cat $(ODKCHECKFILE)
 .ELSE
 pseudo:
 
