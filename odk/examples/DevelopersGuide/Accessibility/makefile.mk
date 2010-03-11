@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.5 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -44,20 +40,20 @@ TARGET=copying
 #----------------------------------------------------
 
 ACCESSIBILITY_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/ConnectionTask.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/EventHandler.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/EventListenerProxy.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/GraphicalDisplay.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/IAccessibleObjectDisplay.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/MessageArea.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/NameProvider.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/RegistrationThread.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/SSR.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/TextualDisplay.java
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/ConnectionTask.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/EventHandler.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/EventListenerProxy.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/GraphicalDisplay.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/IAccessibleObjectDisplay.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/MessageArea.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/NameProvider.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/RegistrationThread.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/SSR.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Accessibility$/TextualDisplay.java
 
 DIR_FILE_LIST= \
-    $(ACCESSIBILITY_FILES)
+	$(ACCESSIBILITY_FILES)
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_accessibility_dirs_created.txt
@@ -67,8 +63,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_accessibility.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

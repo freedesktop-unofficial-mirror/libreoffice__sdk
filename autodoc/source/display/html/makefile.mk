@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.3 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -47,31 +43,31 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/aryattrs.obj    \
-    $(OBJ)$/cfrstd.obj	    \
-    $(OBJ)$/chd_udk2.obj	\
-    $(OBJ)$/cre_link.obj	\
-    $(OBJ)$/dsply_cl.obj	\
-    $(OBJ)$/dsply_da.obj    \
-    $(OBJ)$/dsply_op.obj	\
-    $(OBJ)$/easywri.obj	    \
-    $(OBJ)$/hd_chlst.obj  	\
-    $(OBJ)$/hd_docu.obj  	\
-    $(OBJ)$/hdimpl.obj  	\
-    $(OBJ)$/html_kit.obj  	\
-    $(OBJ)$/nav_main.obj  	\
-    $(OBJ)$/navibar.obj  	\
-    $(OBJ)$/outfile.obj     \
-    $(OBJ)$/opageenv.obj    \
-    $(OBJ)$/pagemake.obj    \
-    $(OBJ)$/pm_aldef.obj    \
-    $(OBJ)$/pm_base.obj     \
-    $(OBJ)$/pm_class.obj    \
-    $(OBJ)$/pm_help.obj     \
-    $(OBJ)$/pm_index.obj    \
-    $(OBJ)$/pm_namsp.obj    \
-    $(OBJ)$/pm_start.obj    \
-    $(OBJ)$/protarea.obj
+	$(OBJ)$/aryattrs.obj    \
+	$(OBJ)$/cfrstd.obj	    \
+	$(OBJ)$/chd_udk2.obj	\
+	$(OBJ)$/cre_link.obj	\
+	$(OBJ)$/dsply_cl.obj	\
+	$(OBJ)$/dsply_da.obj    \
+	$(OBJ)$/dsply_op.obj	\
+	$(OBJ)$/easywri.obj	    \
+	$(OBJ)$/hd_chlst.obj  	\
+	$(OBJ)$/hd_docu.obj  	\
+	$(OBJ)$/hdimpl.obj  	\
+	$(OBJ)$/html_kit.obj  	\
+	$(OBJ)$/nav_main.obj  	\
+	$(OBJ)$/navibar.obj  	\
+	$(OBJ)$/outfile.obj     \
+	$(OBJ)$/opageenv.obj    \
+	$(OBJ)$/pagemake.obj    \
+	$(OBJ)$/pm_aldef.obj    \
+	$(OBJ)$/pm_base.obj     \
+	$(OBJ)$/pm_class.obj    \
+	$(OBJ)$/pm_help.obj     \
+	$(OBJ)$/pm_index.obj    \
+	$(OBJ)$/pm_namsp.obj    \
+	$(OBJ)$/pm_start.obj    \
+	$(OBJ)$/protarea.obj
 
 
 # --- Targets ------------------------------------------------------
