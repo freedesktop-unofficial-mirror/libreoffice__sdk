@@ -2,13 +2,9 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 # 
-# Copyright 2008 by Sun Microsystems, Inc.
+# Copyright 2000, 2010 Oracle and/or its affiliates.
 #
 # OpenOffice.org - a multi-platform office productivity suite
-#
-# $RCSfile: makefile.mk,v $
-#
-# $Revision: 1.4 $
 #
 # This file is part of OpenOffice.org.
 #
@@ -49,30 +45,30 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/c_builtintype.obj   \
-    $(OBJ)$/c_class.obj		    \
-    $(OBJ)$/c_de.obj	        \
-    $(OBJ)$/c_define.obj	    \
-    $(OBJ)$/c_enum.obj		    \
-    $(OBJ)$/c_enuval.obj	    \
-    $(OBJ)$/c_funct.obj		    \
-    $(OBJ)$/c_macro.obj	        \
-    $(OBJ)$/c_namesp.obj	    \
-    $(OBJ)$/c_osigna.obj	    \
-    $(OBJ)$/c_reposypart.obj	\
-    $(OBJ)$/c_slots.obj		    \
-    $(OBJ)$/c_traits.obj        \
-    $(OBJ)$/c_tydef.obj		    \
-    $(OBJ)$/c_vari.obj		    \
-    $(OBJ)$/ca_ce.obj           \
-    $(OBJ)$/ca_def.obj          \
-    $(OBJ)$/ca_type.obj         \
-    $(OBJ)$/cs_ce.obj           \
-    $(OBJ)$/cs_def.obj          \
-    $(OBJ)$/cs_type.obj         \
-    $(OBJ)$/namechain.obj	    \
-    $(OBJ)$/tplparam.obj	    \
-    $(OBJ)$/usedtype.obj
+	$(OBJ)$/c_builtintype.obj   \
+	$(OBJ)$/c_class.obj		    \
+	$(OBJ)$/c_de.obj	        \
+	$(OBJ)$/c_define.obj	    \
+	$(OBJ)$/c_enum.obj		    \
+	$(OBJ)$/c_enuval.obj	    \
+	$(OBJ)$/c_funct.obj		    \
+	$(OBJ)$/c_macro.obj	        \
+	$(OBJ)$/c_namesp.obj	    \
+	$(OBJ)$/c_osigna.obj	    \
+	$(OBJ)$/c_reposypart.obj	\
+	$(OBJ)$/c_slots.obj		    \
+	$(OBJ)$/c_traits.obj        \
+	$(OBJ)$/c_tydef.obj		    \
+	$(OBJ)$/c_vari.obj		    \
+	$(OBJ)$/ca_ce.obj           \
+	$(OBJ)$/ca_def.obj          \
+	$(OBJ)$/ca_type.obj         \
+	$(OBJ)$/cs_ce.obj           \
+	$(OBJ)$/cs_def.obj          \
+	$(OBJ)$/cs_type.obj         \
+	$(OBJ)$/namechain.obj	    \
+	$(OBJ)$/tplparam.obj	    \
+	$(OBJ)$/usedtype.obj
 
 
 
