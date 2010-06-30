@@ -32,8 +32,16 @@ OFFICE_SERVICES=$(subst \\,\,$(OFFICE_BASE_PROGRAM_PATH)$(PS)services.rdb)
 
 OFFICE_TYPE_LIBRARY="$(OFFICE_TYPES)"
 
+JAVA_OPTIONS=
+ifneq "$(OO_SDK_JAVA_HOME)" ""
+JAVA_BITS := $(shell $(OO_SDK_JAVA_HOME)/$(JAVABIN)/java -version 2>&1 | tail -1 | cut -d " " -f3)
+ifeq "$(JAVA_BITS)" "64-Bit"
+JAVA_OPTIONS=-d32
+endif
+endif
+
 DEPLOYTOOL="$(OFFICE_PROGRAM_PATH)$(PS)unopkg" add -f
-SDK_JAVA="$(OO_SDK_JAVA_HOME)/$(JAVABIN)/java"
+SDK_JAVA="$(OO_SDK_JAVA_HOME)/$(JAVABIN)/java" $(JAVA_OPTIONS)
 SDK_JAVAC="$(OO_SDK_JAVA_HOME)/$(JAVABIN)/javac"
 SDK_JAR="$(OO_SDK_JAVA_HOME)/$(JAVABIN)/jar"
 SDK_ZIP="$(OO_SDK_ZIP_HOME)/zip"
@@ -44,12 +52,12 @@ REGMERGE="$(OO_SDK_URE_HOME)/bin/regmerge"
 REGCOMP="$(OO_SDK_URE_HOME)/bin/regcomp"
 
 SDK_JAVA_UNO_BOOTSTRAP_FILES=\
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$Drain.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$CustomURLClassLoader.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$Drain.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/InstallationFinder.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/InstallationFinder$$StreamGobbler.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/WinRegKey.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/WinRegKeyException.class$(SQM) \
-    -C $(CLASSES_DIR) $(SQM)win/unowinreg.dll$(SQM)
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$Drain.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$CustomURLClassLoader.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/Loader$$Drain.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/InstallationFinder.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/InstallationFinder$$StreamGobbler.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/WinRegKey.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)com/sun/star/lib/loader/WinRegKeyException.class$(SQM) \
+	-C $(CLASSES_DIR) $(SQM)win/unowinreg.dll$(SQM)
