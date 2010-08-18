@@ -2,12 +2,9 @@
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
- * Copyright 2008 by Sun Microsystems, Inc.
+ * Copyright 2000, 2010 Oracle and/or its affiliates.
  *
  * OpenOffice.org - a multi-platform office productivity suite
- *
- * $RCSfile: dht_html.hxx,v $
- * $Revision: 1.3 $
  *
  * This file is part of OpenOffice.org.
  *
@@ -28,48 +25,34 @@
  *
  ************************************************************************/
 
-#ifndef ARY_DHT_HTML_HXX
-#define ARY_DHT_HTML_HXX
-//  KORR_DEPRECATED_3.0
-//      There will be only one kind of documentation in the future
-//      that gracefully recognizes HTML, but also does simple formatting
-//      without it.
+#ifndef ADC_X_DOCU_HXX
+#define ADC_X_DOCU_HXX
 
 // BASE CLASSES
-#include <ary/doc/ht/dht_interpreter.hxx>
+#include <autodoc/x_parsing.hxx>
 
 
 
 
-namespace ary
-{
-namespace doc
-{
-namespace ht
-{
-    class Component;
-
-
-/** Documentation text in HTML format.
-*/
-class HtmlText : public Interpreter
+class X_Docu : public autodoc::X_Parser_Ifc
 {
   public:
-    virtual				~HtmlText();
+    // LIFECYCLE
+                        X_Docu(
+                            const char *        i_tag,
+                            const char *        i_explanation );
+                        ~X_Docu();
+    // INQUIRY
+    virtual E_Event	   	GetEvent() const;
+    virtual void	   	GetInfo(
+                            std::ostream &      o_rOutputMedium ) const;
 
-    static Component    Create_Component_(
-                            const String &      i_text );
   private:
-    // Interface Interpreter:
-    virtual	void		do_Accept(
-                            Processor &         io_processor,
-                            const String &      i_data ) const;
+    String 				sTagName;
+    String 				sExplanation;
 };
 
 
 
 
-}   // namespace ht
-}   // namespace doc
-}   // namespace ary
 #endif

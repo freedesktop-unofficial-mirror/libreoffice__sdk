@@ -2,12 +2,9 @@
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  * 
- * Copyright 2008 by Sun Microsystems, Inc.
+ * Copyright 2000, 2010 Oracle and/or its affiliates.
  *
  * OpenOffice.org - a multi-platform office productivity suite
- *
- * $RCSfile: dht_plain.hxx,v $
- * $Revision: 1.3 $
  *
  * This file is part of OpenOffice.org.
  *
@@ -28,44 +25,37 @@
  *
  ************************************************************************/
 
-#ifndef ARY_DHT_PLAIN_HXX
-#define ARY_DHT_PLAIN_HXX
+#include <precomp.h>
+#include <x_docu.hxx>
 
-// BASE CLASSES
-#include <ary/doc/ht/dht_interpreter.hxx>
-
+// NOT FULLY DECLARED SERVICES
 
 
 
-namespace ary
+X_Docu::X_Docu( const char *        i_tag,
+                const char *        i_explanation  )
+    :	sTagName(i_tag),
+        sExplanation(i_explanation)
 {
-namespace doc
+}
+
+X_Docu::~X_Docu()
 {
-namespace ht
+}
+
+X_Docu::E_Event
+X_Docu::GetEvent() const
 {
-    class Component;
+     return x_Any;
+}
 
-
-/** Documentation text, simple ASCII.
-*/
-class PlainText : public Interpreter
+void
+X_Docu::GetInfo( std::ostream & o_rOutputMedium ) const
 {
-  public:
-    virtual				~PlainText();
-
-    static Component    Create_Component_(
-                            const String &      i_text );
-  private:
-    // Interface Interpreter:
-    virtual	void		do_Accept(
-                            Processor &         io_processor,
-                            const String &      i_data ) const;
-};
-
-
-
-
-}   // namespace ht
-}   // namespace doc
-}   // namespace ary
-#endif
+    o_rOutputMedium
+        << "Error in tag '"
+        << sTagName
+        << "': "
+        << sExplanation
+        << Endl();
+}
