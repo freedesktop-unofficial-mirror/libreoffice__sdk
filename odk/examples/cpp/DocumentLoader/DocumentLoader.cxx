@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  *  The Contents of this file are made available subject to the terms of
@@ -113,7 +114,7 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
     */
     Reference< XInterface > xInterface =
         xMultiComponentFactoryClient->createInstanceWithContext( 
-            OUString::createFromAscii( "com.sun.star.bridge.UnoUrlResolver" ),
+            OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.bridge.UnoUrlResolver")),
             xComponentContext );
 
     Reference< XUnoUrlResolver > resolver( xInterface, UNO_QUERY );
@@ -134,7 +135,7 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
     
     // gets the server component context as property of the office component factory
     Reference< XPropertySet > xPropSet( xInterface, UNO_QUERY );
-    xPropSet->getPropertyValue( OUString::createFromAscii("DefaultContext") ) >>= xComponentContext;
+    xPropSet->getPropertyValue( OUString(RTL_CONSTASCII_USTRINGPARAM("DefaultContext")) ) >>= xComponentContext;
 
     // gets the service manager from the office
     Reference< XMultiComponentFactory > xMultiComponentFactoryServer(
@@ -165,3 +166,5 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
 
     return 0;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

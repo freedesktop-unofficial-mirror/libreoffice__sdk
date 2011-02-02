@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70,7 +71,7 @@ void generateIncludes(std::ostream & o,
         o << "#include \""
           << ((*iter).replace('.', '/').getStr())
           << ".hpp\"\n";
-        iter++;
+        ++iter;
     }        
 }
 
@@ -167,7 +168,7 @@ void generateCompHelperDefinition(std::ostream & o,
         o << "    s[" << i++ << "] = ::rtl::OUString("
           << "RTL_CONSTASCII_USTRINGPARAM(\n        \""
           << (*iter).replace('/','.') << "\"));\n";
-        iter++;
+        ++iter;
     }  
     o << "    return s;\n}\n\n";
 
@@ -448,7 +449,7 @@ void generateXDispatch(std::ostream& o,
         }
 
         o << "    }\n";
-        iter++;
+        ++iter;
     }
     o << "}\n\n";
     
@@ -492,7 +493,7 @@ void generateXDispatchProvider(std::ostream& o,
         }
 
         o << "    }\n";
-        iter++;
+        ++iter;
     }
     o << "    return xRet;\n}\n\n";
 
@@ -535,13 +536,13 @@ void generateAddinConstructorAndHelper(std::ostream& o,
             "            RTL_CONSTASCII_USTRINGPARAM(\n"
             "                \"com.sun.star.configuration.ConfigurationAccess\"));\n\n";
         
-        o << "        ::rtl::OUStringBuffer sPath(::rtl::OUString::createFromAscii(\n"
-            "             \"/org.openoffice.Office.CalcAddIns/AddInInfo/\"));\n"
+        o << "        ::rtl::OUStringBuffer sPath(::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\n"
+            "             \"/org.openoffice.Office.CalcAddIns/AddInInfo/\")));\n"
             "        sPath.appendAscii(sADDIN_SERVICENAME);\n"
             "        sPath.appendAscii(\"/AddInFunctions\");\n\n"
             "        // create arguments: nodepath\n"
             "        css::beans::PropertyValue aArgument;\n"
-            "        aArgument.Name = ::rtl::OUString::createFromAscii(\"nodepath\");\n"
+            "        aArgument.Name = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\"nodepath\"));\n"
             "        aArgument.Value <<= sPath.makeStringAndClear();\n\n"
             "        css::uno::Sequence< css::uno::Any > aArguments(1);\n"
             "        aArguments[0] <<= aArgument;\n\n";
@@ -556,8 +557,8 @@ void generateAddinConstructorAndHelper(std::ostream& o,
         
         o << "        // extend arguments to create a view for all locales to get "
             "simple\n        // access to the compatibilityname property\n"
-            "        aArgument.Name = ::rtl::OUString::createFromAscii(\"locale\");\n"
-            "        aArgument.Value <<= ::rtl::OUString::createFromAscii(\"*\");\n"
+            "        aArgument.Name = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\"locale\"));\n"
+            "        aArgument.Value <<= ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\"*\"));\n"
             "        aArguments.realloc(2);\n"
             "        aArguments[1] <<= aArgument;\n\n"
             "        // create view for all locales\n"
@@ -581,7 +582,7 @@ void generateAddinConstructorAndHelper(std::ostream& o,
             "            m_xHAccess->getByHierarchicalName(\n"
             "                buf.makeStringAndClear()), css::uno::UNO_QUERY);\n"
             "        xPropSet->getPropertyValue(\n            "
-            "::rtl::OUString::createFromAscii(propName)) >>= ret;\n    }\n"
+            "::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(propName))) >>= ret;\n    }\n"
             "     catch ( css::uno::RuntimeException & e ) {\n        throw e;\n    }\n"
             "     catch ( css::uno::Exception & ) {\n    }\n    return ret;\n";
     }
@@ -661,7 +662,7 @@ OString generateClassDefinition(std::ostream& o,
         while (iter != interfaces.end())
         {
             o << "\n        " << scopedCppName(*iter, false, true);
-            iter++;
+            ++iter;
             if (iter != interfaces.end())
                 o << ",";
             else
@@ -702,7 +703,7 @@ OString generateClassDefinition(std::ostream& o,
         while (iter != interfaces.end())
         {
             buffer.append(scopedCppName(*iter, false, true));            
-            iter++;
+            ++iter;
             if (iter != interfaces.end())
                 buffer.append(", ");
             else
@@ -723,7 +724,7 @@ OString generateClassDefinition(std::ostream& o,
         typereg::Reader reader(manager.getTypeReader((*it).replace('.','/')));
         printMethods(o, options, manager, reader, generated, "", "", "    ",
                      true, propertyhelper);
-        it++;
+        ++it;
     }
     
     o << "private:\n    " << classname << "(const " << classname << " &); // not defined\n"
@@ -813,7 +814,7 @@ OString generateClassDefinition(std::ostream& o,
                 interfaces.begin();
             while (iter != interfaces.end()) {
                 o << "\n        " << scopedCppName(*iter, false, true);
-                iter++;
+                ++iter;
                 if (iter != interfaces.end())
                     o << ",";
                 else
@@ -914,7 +915,7 @@ void generateMethodBodies(std::ostream& o,
             printMethods(o, options, manager, reader, generated, "_",
                          name, "", true, propertyhelper);
         }
-        iter++;
+        ++iter;
     }
 }
 
@@ -944,7 +945,7 @@ void generateQueryInterface(std::ostream& o,
     while (iter != interfaces.end())
     {
         o << "\n        " << scopedCppName(*iter, false, true);
-        iter++;
+        ++iter;
         if (iter != interfaces.end())
             o << ",";
         else
@@ -990,7 +991,7 @@ void generateSkeleton(ProgramOptions const & options,
     std::vector< OString >::const_iterator iter = types.begin();
     while (iter != types.end()) {
         checkType(manager, *iter, interfaces, services, properties);
-        iter++;
+        ++iter;
     }
 
     if (options.componenttype == 3) {
@@ -1124,7 +1125,7 @@ void generateCalcAddin(ProgramOptions const & options,
     std::vector< OString >::const_iterator iter = types.begin();
     while (iter != types.end()) {
         checkType(manager, *iter, interfaces, services, properties);
-        iter++;
+        ++iter;
     }
     
     OString sAddinService;
@@ -1275,3 +1276,4 @@ void generateCalcAddin(ProgramOptions const & options,
 } }
 
 
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

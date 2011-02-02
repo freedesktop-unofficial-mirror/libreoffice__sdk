@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -391,7 +392,7 @@ OString checkPropertyHelper(
                     osl_getThreadTextEncoding());
             }
         }
-        iter++;
+        ++iter;
     }
     
     return (oldStyleWithProperties ? "_" : "");
@@ -442,7 +443,7 @@ bool checkXComponentSupport(TypeManager const & manager,
         typereg::Reader reader(manager.getTypeReader((*iter).replace('.', '/')));
         if ( checkXComponentSupport(manager, reader) )
             return true;
-        iter++;
+        ++iter;
     }
 
     return false;
@@ -668,9 +669,9 @@ void generateFunctionParamterMap(std::ostream& o,
         for ( sal_uInt16 p = 0; p < reader.getMethodParameterCount(m); ++p ) {
             if ( options.language == 2 ) {
                 o << "        fpm[" << p
-                  << "] = ::rtl::OUString::createFromAscii(\""
+                  << "] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\""
                   << codemaker::convertString(reader.getMethodParameterName(m, p))
-                  << "\");\n";
+                  << "\"));\n";
             }
             else {
                 if ( options.java5 )
@@ -687,8 +688,8 @@ void generateFunctionParamterMap(std::ostream& o,
         }
 
         if ( options.language == 2 ) {
-            o << "        m_functionMap[::rtl::OUString::createFromAscii(\""
-              << sMethod << "\")] = fpm;\n\n";
+            o << "        m_functionMap[::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(\""
+              << sMethod << "\"))] = fpm;\n\n";
         }
         else {
             o << "        m_functionMap.put(\"" << sMethod << "\", fpm);\n\n";
@@ -714,9 +715,10 @@ void generateFunctionParameterMap(std::ostream& o,
         }
         
         generateFunctionParamterMap(o, options, manager, reader, generated, bFirst);
-        iter++;
+        ++iter;
     }
 }
 
 }
 
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

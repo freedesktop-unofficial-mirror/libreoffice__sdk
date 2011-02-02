@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  *  The Contents of this file are made available subject to the terms of
@@ -60,7 +61,7 @@ SAL_IMPLEMENT_MAIN()
     // instantiate a sample service with the servicemanager.
     Reference< XInterface > rInstance =
         rServiceManager->createInstanceWithContext( 
-            OUString::createFromAscii("com.sun.star.bridge.UnoUrlResolver" ),
+            OUString(RTL_CONSTASCII_USTRINGPARAM("com.sun.star.bridge.UnoUrlResolver")),
             rComponentContext );
     
     // Query for the XUnoUrlResolver interface
@@ -74,8 +75,8 @@ SAL_IMPLEMENT_MAIN()
     try
     {
         // resolve the uno-url
-        rInstance = rResolver->resolve( OUString::createFromAscii( 
-            "uno:socket,host=localhost,port=2083;urp;StarOffice.ServiceManager" ) );
+        rInstance = rResolver->resolve( OUString(RTL_CONSTASCII_USTRINGPARAM(
+            "uno:socket,host=localhost,port=2083;urp;StarOffice.ServiceManager" )) );
     
         if( ! rInstance.is() )
         {
@@ -102,3 +103,5 @@ SAL_IMPLEMENT_MAIN()
     }
     return 0;
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

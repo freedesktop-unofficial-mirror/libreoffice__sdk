@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99,14 +100,14 @@ SAL_DLLPUBLIC_EXPORT void* SAL_CALL component_getFactory(const sal_Char* pImplNa
     if (sImplName.equalsAscii(MYLISTENER_IMPLEMENTATIONNAME))
     {
         css::uno::Sequence< ::rtl::OUString > lNames(1);
-        lNames[0] = ::rtl::OUString::createFromAscii(MYLISTENER_IMPLEMENTATIONNAME);
+        lNames[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(MYLISTENER_IMPLEMENTATIONNAME));
         xFactory = ::cppu::createSingleFactory(xSMGR, sImplName, MyListener::st_createInstance, lNames);
     }
     else
     if (sImplName.equalsAscii(MYPROTOCOLHANDLER_IMPLEMENTATIONNAME))
     {
         css::uno::Sequence< ::rtl::OUString > lNames(1);
-        lNames[0] = ::rtl::OUString::createFromAscii(MYPROTOCOLHANDLER_SERVICENAME);
+        lNames[0] = ::rtl::OUString(RTL_CONSTASCII_USTRINGPARAM(MYPROTOCOLHANDLER_SERVICENAME));
         xFactory = ::cppu::createSingleFactory(xSMGR, sImplName, MyProtocolHandler_createInstance, lNames);
     }
 
@@ -118,3 +119,5 @@ SAL_DLLPUBLIC_EXPORT void* SAL_CALL component_getFactory(const sal_Char* pImplNa
 }
 
 } // extern C
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

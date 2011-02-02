@@ -1,3 +1,4 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  *  The Contents of this file are made available subject to the terms of
@@ -66,7 +67,7 @@ sal_Bool SAL_CALL component_writeInfo(
         {
             Reference< XRegistryKey > xNewKey(
                 reinterpret_cast< XRegistryKey * >( pRegistryKey )->createKey( FilterDetect_getImplementationName() ) ); 
-            xNewKey = xNewKey->createKey( OUString::createFromAscii( "/UNO/SERVICES" ) );
+            xNewKey = xNewKey->createKey( OUString(RTL_CONSTASCII_USTRINGPARAM("/UNO/SERVICES")) );
             
             const Sequence< OUString > & rSNL = FilterDetect_getSupportedServiceNames();
             const OUString * pArray = rSNL.getConstArray();
@@ -107,3 +108,5 @@ void * SAL_CALL component_getFactory(
 }
 
 }
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
