@@ -2,7 +2,7 @@
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- * 
+ *
  * Copyright 2000, 2010 Oracle and/or its affiliates.
  *
  * OpenOffice.org - a multi-platform office productivity suite
@@ -41,21 +41,21 @@ namespace typereg { class Reader; }
 
 #if defined( _MSC_VER ) && ( _MSC_VER < 1200 )
 typedef	::std::__hash_map__
-<	
+<
     ::rtl::OString, // Typename
     RTTypeClass, 	// TypeClass
-    HashString, 
-    EqualString, 
+    HashString,
+    EqualString,
     NewAlloc
-> T2TypeClassMap; 
+> T2TypeClassMap;
 #else
-typedef	::std::hash_map
-<	
+typedef boost::unordered_map
+<
     ::rtl::OString, // Typename
     RTTypeClass, 	// TypeClass
-    HashString, 
+    HashString,
     EqualString
-> T2TypeClassMap; 
+> T2TypeClassMap;
 #endif
 
 namespace unodevtools {
@@ -67,7 +67,7 @@ struct UnoTypeManagerImpl
     T2TypeClassMap	m_t2TypeClass;
     ::com::sun::star::uno::Reference<
         ::com::sun::star::container::XHierarchicalNameAccess> m_tdmgr;
-};	
+};
 
 class UnoTypeManager : public TypeManager
 {
