@@ -40,18 +40,18 @@ TARGET=copying
 #----------------------------------------------------
 
 CHARTS_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/AddInChart.ods \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/CalcHelper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartHelper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInCalc.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInDraw.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInWriter.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/Helper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/JavaSampleChartAddIn.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ListenAtCalcRangeInDraw.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/SelectionChangeListener.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/bullet.gif \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/Makefile
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/AddInChart.ods \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/CalcHelper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartHelper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInCalc.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInDraw.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ChartInWriter.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/Helper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/JavaSampleChartAddIn.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/ListenAtCalcRangeInDraw.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/SelectionChangeListener.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/bullet.gif \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Charts$/Makefile
 
 DIR_FILE_LIST= \
     $(CHARTS_FILES)
@@ -64,8 +64,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_charts.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

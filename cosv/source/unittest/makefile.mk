@@ -47,8 +47,8 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/file_ut.obj             \
-    $(OBJ)$/simplestring_ut.obj
+	$(OBJ)$/file_ut.obj             \
+	$(OBJ)$/simplestring_ut.obj
 
 
 

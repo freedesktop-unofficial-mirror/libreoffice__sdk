@@ -41,10 +41,10 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 LIB1FILES= 	\
-        $(LB)$/cosv_service.lib		\
-        $(LB)$/cosv_storage.lib     	\
-        $(LB)$/cosv_strings.lib		\
-        $(LB)$/cosv_badcast_wnt.lib
+		$(LB)$/cosv_service.lib		\
+		$(LB)$/cosv_storage.lib     	\
+		$(LB)$/cosv_strings.lib		\
+		$(LB)$/cosv_badcast_wnt.lib
 
 
 # --- Targets ------------------------------------------------------

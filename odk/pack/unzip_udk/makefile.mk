@@ -37,10 +37,10 @@ TARGET=unzip_udk
 all: ..$/misc$/deltree.txt
 
 ..$/misc$/deltree.txt .SETDIR=$(OUT)$/bin : $(PRJ)$/pack$/unzip_udk$/deltree.txt
-    @@-$(MY_DELETE_RECURSIVE) $(PRODUCT_NAME)
-    @@-rm -f $(PRODUCT_NAME).zip
-    @@-$(MY_DELETE_RECURSIVE) $(PRODUCT_NAME2)
-    @@-rm -f odkidl.zip
-    @@-rm -f odk_ooidl.zip
-    @echo "" > ..$/misc$/deltree.txt
+	@@-$(MY_DELETE_RECURSIVE) $(PRODUCT_NAME)
+	@@-rm -f $(PRODUCT_NAME).zip
+	@@-$(MY_DELETE_RECURSIVE) $(PRODUCT_NAME2)
+	@@-rm -f odkidl.zip
+	@@-rm -f odk_ooidl.zip
+	@echo "" > ..$/misc$/deltree.txt
 

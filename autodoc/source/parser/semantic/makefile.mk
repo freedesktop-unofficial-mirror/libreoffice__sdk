@@ -45,7 +45,7 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/parseenv.obj
+	$(OBJ)$/parseenv.obj
 
 
 

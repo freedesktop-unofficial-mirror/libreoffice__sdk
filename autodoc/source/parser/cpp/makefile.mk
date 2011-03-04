@@ -46,36 +46,36 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/all_toks.obj	\
-    $(OBJ)$/c_dealer.obj	\
-    $(OBJ)$/c_rcode.obj		\
-    $(OBJ)$/cpp_pe.obj		\
-    $(OBJ)$/cx_base.obj	    \
-    $(OBJ)$/cx_c_pp.obj	    \
-    $(OBJ)$/cx_c_std.obj	\
-    $(OBJ)$/cx_c_sub.obj	\
-    $(OBJ)$/cxt2ary.obj	    \
-    $(OBJ)$/defdescr.obj	\
-    $(OBJ)$/icprivow.obj	\
-    $(OBJ)$/pe_base.obj		\
-    $(OBJ)$/pe_class.obj	\
-    $(OBJ)$/pe_defs.obj	    \
-    $(OBJ)$/pe_expr.obj	    \
-    $(OBJ)$/pe_enum.obj	    \
-    $(OBJ)$/pe_enval.obj    \
-    $(OBJ)$/pe_file.obj		\
-    $(OBJ)$/pe_funct.obj	\
-    $(OBJ)$/pe_ignor.obj	\
-    $(OBJ)$/pe_namsp.obj	\
-    $(OBJ)$/pe_param.obj	\
-    $(OBJ)$/pe_tpltp.obj    \
-    $(OBJ)$/pe_type.obj		\
-    $(OBJ)$/pe_tydef.obj	\
-    $(OBJ)$/pe_vafu.obj		\
-    $(OBJ)$/pe_vari.obj		\
-    $(OBJ)$/preproc.obj		\
-    $(OBJ)$/prs_cpp.obj		\
-    $(OBJ)$/tkp_cpp.obj
+	$(OBJ)$/all_toks.obj	\
+	$(OBJ)$/c_dealer.obj	\
+	$(OBJ)$/c_rcode.obj		\
+	$(OBJ)$/cpp_pe.obj		\
+	$(OBJ)$/cx_base.obj	    \
+	$(OBJ)$/cx_c_pp.obj	    \
+	$(OBJ)$/cx_c_std.obj	\
+	$(OBJ)$/cx_c_sub.obj	\
+	$(OBJ)$/cxt2ary.obj	    \
+	$(OBJ)$/defdescr.obj	\
+	$(OBJ)$/icprivow.obj	\
+	$(OBJ)$/pe_base.obj		\
+	$(OBJ)$/pe_class.obj	\
+	$(OBJ)$/pe_defs.obj	    \
+	$(OBJ)$/pe_expr.obj	    \
+	$(OBJ)$/pe_enum.obj	    \
+	$(OBJ)$/pe_enval.obj    \
+	$(OBJ)$/pe_file.obj		\
+	$(OBJ)$/pe_funct.obj	\
+	$(OBJ)$/pe_ignor.obj	\
+	$(OBJ)$/pe_namsp.obj	\
+	$(OBJ)$/pe_param.obj	\
+	$(OBJ)$/pe_tpltp.obj    \
+	$(OBJ)$/pe_type.obj		\
+	$(OBJ)$/pe_tydef.obj	\
+	$(OBJ)$/pe_vafu.obj		\
+	$(OBJ)$/pe_vari.obj		\
+	$(OBJ)$/preproc.obj		\
+	$(OBJ)$/prs_cpp.obj		\
+	$(OBJ)$/tkp_cpp.obj
 
 
 

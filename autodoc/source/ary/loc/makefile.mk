@@ -46,13 +46,13 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/loc_dir.obj         \
-    $(OBJ)$/loc_file.obj        \
-    $(OBJ)$/loc_filebase.obj    \
-    $(OBJ)$/loc_root.obj        \
-    $(OBJ)$/loc_traits.obj      \
-    $(OBJ)$/loca_le.obj         \
-    $(OBJ)$/locs_le.obj
+	$(OBJ)$/loc_dir.obj         \
+	$(OBJ)$/loc_file.obj        \
+	$(OBJ)$/loc_filebase.obj    \
+	$(OBJ)$/loc_root.obj        \
+	$(OBJ)$/loc_traits.obj      \
+	$(OBJ)$/loca_le.obj         \
+	$(OBJ)$/locs_le.obj
 
 
 

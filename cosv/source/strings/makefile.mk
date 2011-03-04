@@ -44,9 +44,9 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/str_types.obj   \
-    $(OBJ)$/streamstr.obj   \
-    $(OBJ)$/string.obj      
+	$(OBJ)$/str_types.obj   \
+	$(OBJ)$/streamstr.obj   \
+	$(OBJ)$/string.obj      
 
 
 

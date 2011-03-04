@@ -160,7 +160,7 @@ DESTPLATFROM=macosx
 
 .ELIF "$(OS)"=="AIX"
 ###########
-# MACOSX
+# AIX
 ###########
 DESTPLATFROM=aix
 

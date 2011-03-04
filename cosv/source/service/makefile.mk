@@ -44,11 +44,11 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/comdline.obj 	\
-    $(OBJ)$/comfunc.obj 	\
-    $(OBJ)$/csv_ostream.obj \
-    $(OBJ)$/datetime.obj 	\
-    $(OBJ)$/std_outp.obj
+	$(OBJ)$/comdline.obj 	\
+	$(OBJ)$/comfunc.obj 	\
+	$(OBJ)$/csv_ostream.obj \
+	$(OBJ)$/datetime.obj 	\
+	$(OBJ)$/std_outp.obj
 
 
 # --- Targets ------------------------------------------------------

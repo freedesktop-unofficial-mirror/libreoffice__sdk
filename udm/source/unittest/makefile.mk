@@ -25,33 +25,53 @@
 #
 #*************************************************************************
 
-PRJ := ..$/..
-PRJNAME := unodevtools
+PRJ=..$/..
 
-TARGET := uno-skeletonmaker
-TARGETTYPE := CUI
-LIBTARGET := NO
+PRJNAME=cosv
+TARGET=udm_unittest
+TARGETTYPE=CUI
 
-ENABLE_EXCEPTIONS := TRUE
+# --- Settings -----------------------------------------------------
 
-.INCLUDE: settings.mk
-.INCLUDE : $(PRJ)$/unodevtools.pmk
+ENABLE_EXCEPTIONS=true
+PRJINC=$(PRJ)$/source
 
-APP1TARGET = $(TARGET)
-APP1RPATH=SDK
+.INCLUDE :  settings.mk
+.INCLUDE :  static.mk
 
-APP1OBJS = $(OBJ)$/skeletonmaker.obj \
-	$(OBJ)$/skeletoncommon.obj \
-	$(OBJ)$/javatypemaker.obj \
-	$(OBJ)$/cpptypemaker.obj \
-	$(OBJ)$/javacompskeleton.obj \
-	$(OBJ)$/cppcompskeleton.obj
+.INCLUDE : $(PRJ)$/source$/mkinc$/fullcpp.mk
 
-APP1DEPN= $(OUT)$/lib$/$(UNODEVTOOLSLIBDEPN) $(SOLARLIBDIR)$/$(CODEMAKERLIBDEPN) \
-	$(SOLARLIBDIR)$/$(COMMONCPPLIBDEPN) $(SOLARLIBDIR)$/$(COMMONJAVALIBDEPN)
-APP1STDLIBS = $(REGLIB) $(SALLIB) $(SALHELPERLIB) $(CPPULIB) $(CPPUHELPERLIB) \
-	$(UNODEVTOOLSLIBST) $(CODEMAKERLIBST) $(COMMONCPPLIBST) $(COMMONJAVALIBST)
 
-OBJFILES = $(APP1OBJS)
 
-.INCLUDE: target.mk
+
+# --- Files --------------------------------------------------------
+
+OBJFILES= \
+	$(OBJ)$/test.obj
+
+
+
+
+APP1TARGET=	$(TARGET)
+APP1STACK=	1000000
+APP1OBJS=   $(OBJ)$/test.obj
+
+.IF "$(COMEX)"=="10"
+APP1STDLIBS= $(STATIC_LIBS) cosv.lib
+.ELSE
+APP1STDLIBS= $(STATIC_LIBS) msvcirt.lib cosv.lib
+.ENDIF
+
+
+APP1LIBS=	$(LB)$/$(TARGET).lib
+
+
+APP1DEPN=   $(LB)$/$(TARGET).lib $(L)$/cosv.lib
+
+
+# --- Targets ------------------------------------------------------
+
+.INCLUDE :  target.mk
+
+
+

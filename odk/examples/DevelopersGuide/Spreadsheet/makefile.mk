@@ -40,19 +40,19 @@ TARGET=copying
 #----------------------------------------------------
 
 SPREADSHEET_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleAddIn.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleAddIn.ods \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleDataPilotSource.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/GeneralTableSample.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/SpreadsheetDocHelper.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/SpreadsheetSample.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ViewSample.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/XExampleAddIn.idl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/DataPilotReadme.txt
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleAddIn.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleAddIn.ods \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ExampleDataPilotSource.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/GeneralTableSample.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/SpreadsheetDocHelper.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/SpreadsheetSample.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/ViewSample.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/XExampleAddIn.idl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Spreadsheet$/DataPilotReadme.txt
 
 DIR_FILE_LIST= \
-    $(SPREADSHEET_FILES) \
+	$(SPREADSHEET_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_spreadsheet_dirs_created.txt
@@ -62,8 +62,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_spreadsheet.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

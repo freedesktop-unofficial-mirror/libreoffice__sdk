@@ -45,13 +45,13 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/stmstarr.obj	\
-    $(OBJ)$/stmstate.obj	\
-    $(OBJ)$/stmstfin.obj	\
-    $(OBJ)$/tkpstama.obj	\
-    $(OBJ)$/tkp.obj			\
-    $(OBJ)$/tkpcontx.obj	\
-    $(OBJ)$/tokdeal.obj		
+	$(OBJ)$/stmstarr.obj	\
+	$(OBJ)$/stmstate.obj	\
+	$(OBJ)$/stmstfin.obj	\
+	$(OBJ)$/tkpstama.obj	\
+	$(OBJ)$/tkp.obj			\
+	$(OBJ)$/tkpcontx.obj	\
+	$(OBJ)$/tokdeal.obj		
 
 
 # --- Targets ------------------------------------------------------

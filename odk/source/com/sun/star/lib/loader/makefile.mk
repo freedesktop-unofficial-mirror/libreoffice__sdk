@@ -38,16 +38,16 @@ TARGET  = com_sun_star_lib_loader
 
 .IF "$(SOLAR_JAVA)"==""
 nojava:
-    @echo "Not building javaunohelper because Java is disabled"
+	@echo "Not building javaunohelper because Java is disabled"
 .ENDIF
 
 # Files --------------------------------------------------------
 
 JAVAFILES= \
-    Loader.java\
-    InstallationFinder.java\
-    WinRegKey.java\
-    WinRegKeyException.java
+	Loader.java\
+	InstallationFinder.java\
+	WinRegKey.java\
+	WinRegKeyException.java
 
 JAVACLASSFILES=	$(foreach,i,$(JAVAFILES) $(CLASSDIR)$/$(PACKAGE)$/$(i:b).class)
 

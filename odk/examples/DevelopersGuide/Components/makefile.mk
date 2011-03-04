@@ -41,69 +41,69 @@ TARGET=copying
 
 DESTJOBSADDON=$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/Addons$/JobsAddon
 JOBSADDON_FILES=\
-    $(DESTJOBSADDON)$/Addons.xcu \
-    $(DESTJOBSADDON)$/AsyncJob.java \
-    $(DESTJOBSADDON)$/Jobs.xcu \
-    $(DESTJOBSADDON)$/Makefile
+	$(DESTJOBSADDON)$/Addons.xcu \
+	$(DESTJOBSADDON)$/AsyncJob.java \
+	$(DESTJOBSADDON)$/Jobs.xcu \
+	$(DESTJOBSADDON)$/Makefile
 
 DESTPROTOCOLHANDLERADDONCPP=$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/Addons$/ProtocolHandlerAddon_cpp
 PROTOCOLHANLDERADDONCPP_FILES=\
-    $(DESTPROTOCOLHANDLERADDONCPP)$/addon.cxx \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/addon.hxx \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/Addons.xcu \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/component.cxx \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/Makefile \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/ProtocolHandler.xcu \
-    $(DESTPROTOCOLHANDLERADDONCPP)$/ProtocolHandlerAddon_cpp.uno.xml
+	$(DESTPROTOCOLHANDLERADDONCPP)$/addon.cxx \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/addon.hxx \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/Addons.xcu \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/component.cxx \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/Makefile \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/ProtocolHandler.xcu \
+	$(DESTPROTOCOLHANDLERADDONCPP)$/ProtocolHandlerAddon_cpp.uno.xml
 
 DESTPROTOCOLHANDLERADDONJAVA=$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/Addons$/ProtocolHandlerAddon_java
 PROTOCOLHANLDERADDONJAVA_FILES=\
-    $(DESTPROTOCOLHANDLERADDONJAVA)$/Addons.xcu \
-    $(DESTPROTOCOLHANDLERADDONJAVA)$/Makefile \
-    $(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandler.xcu \
-    $(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandlerAddon.java \
-    $(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandlerAddon_java.uno.xml
+	$(DESTPROTOCOLHANDLERADDONJAVA)$/Addons.xcu \
+	$(DESTPROTOCOLHANDLERADDONJAVA)$/Makefile \
+	$(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandler.xcu \
+	$(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandlerAddon.java \
+	$(DESTPROTOCOLHANDLERADDONJAVA)$/ProtocolHandlerAddon_java.uno.xml
 
 CPPCOMPONENT_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/CppComponent.uno.xml \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/service1_impl.cxx \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/service2_impl.cxx \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/TestCppComponent.cxx \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/SimpleComponent.odt \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/some.idl
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/CppComponent.uno.xml \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/service1_impl.cxx \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/service2_impl.cxx \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/TestCppComponent.cxx \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/SimpleComponent.odt \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/CppComponent$/some.idl
 
 JAVACOMPONENT_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestComponentA.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestComponentB.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestServiceProvider.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestJavaComponent.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/XSomethingA.idl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/XSomethingB.idl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/SomethingA.idl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/SomethingB.idl
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestComponentA.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestComponentB.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestServiceProvider.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/TestJavaComponent.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/XSomethingA.idl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/XSomethingB.idl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/SomethingA.idl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/JavaComponent$/SomethingB.idl
 
 DESTTHUMBS=$(DESTDIRDEVGUIDEEXAMPLES)$/Components$/Thumbs
 THUMBS_FILES=\
-    $(DESTTHUMBS)$/org$/openoffice$/comp$/test$/ImageShrink.java \
-    $(DESTTHUMBS)$/org$/openoffice$/comp$/test$/Thumbs.java \
-    $(DESTTHUMBS)$/org$/openoffice$/comp$/test$/Makefile \
-    $(DESTTHUMBS)$/org$/openoffice$/test$/ImageShrink.idl \
-    $(DESTTHUMBS)$/org$/openoffice$/test$/XImageShrink.idl \
-    $(DESTTHUMBS)$/org$/openoffice$/test$/XImageShrinkFilter.idl \
-    $(DESTTHUMBS)$/org$/openoffice$/test$/Makefile \
-    $(DESTTHUMBS)$/thumbs.mk \
-    $(DESTTHUMBS)$/Makefile
+	$(DESTTHUMBS)$/org$/openoffice$/comp$/test$/ImageShrink.java \
+	$(DESTTHUMBS)$/org$/openoffice$/comp$/test$/Thumbs.java \
+	$(DESTTHUMBS)$/org$/openoffice$/comp$/test$/Makefile \
+	$(DESTTHUMBS)$/org$/openoffice$/test$/ImageShrink.idl \
+	$(DESTTHUMBS)$/org$/openoffice$/test$/XImageShrink.idl \
+	$(DESTTHUMBS)$/org$/openoffice$/test$/XImageShrinkFilter.idl \
+	$(DESTTHUMBS)$/org$/openoffice$/test$/Makefile \
+	$(DESTTHUMBS)$/thumbs.mk \
+	$(DESTTHUMBS)$/Makefile
 
 
 DIR_FILE_LIST= \
-    $(JOBSADDON_FILES) \
-    $(PROTOCOLHANLDERADDONCPP_FILES) \
-    $(PROTOCOLHANLDERADDONJAVA_FILES) \
-    $(CPPCOMPONENT_FILES) \
-    $(JAVACOMPONENT_FILES) \
-    $(THUMBS_FILES)
+	$(JOBSADDON_FILES) \
+	$(PROTOCOLHANLDERADDONCPP_FILES) \
+	$(PROTOCOLHANLDERADDONJAVA_FILES) \
+	$(CPPCOMPONENT_FILES) \
+	$(JAVACOMPONENT_FILES) \
+	$(THUMBS_FILES)
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_components_dirs_created.txt
@@ -113,8 +113,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_components.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

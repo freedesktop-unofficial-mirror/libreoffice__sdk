@@ -40,20 +40,20 @@ TARGET=cli
 #----------------------------------------------------
 
 CSHARP=\
-    $(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/GeneralTableSample.cs \
-    $(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/SpreadsheetDocHelper.cs \
-    $(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/SpreadsheetSample.cs \
-    $(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/ViewSample.cs \
-    $(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/Makefile
+	$(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/GeneralTableSample.cs \
+	$(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/SpreadsheetDocHelper.cs \
+	$(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/SpreadsheetSample.cs \
+	$(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/ViewSample.cs \
+	$(DESTDIRCLIEXAMPLES)$/CSharp$/Spreadsheet$/Makefile
 
 VBDOTNET=\
-    $(DESTDIRCLIEXAMPLES)$/VB.NET$/WriterDemo$/WriterDemo.vb \
-    $(DESTDIRCLIEXAMPLES)$/VB.NET$/WriterDemo$/Makefile
+	$(DESTDIRCLIEXAMPLES)$/VB.NET$/WriterDemo$/WriterDemo.vb \
+	$(DESTDIRCLIEXAMPLES)$/VB.NET$/WriterDemo$/Makefile
 
 
 DIR_FILE_LIST= \
-    $(CSHARP) \
-    $(VBDOTNET)
+	$(CSHARP) \
+	$(VBDOTNET)
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/ex_$(TARGET)_dirs_created.txt
@@ -63,7 +63,7 @@ DIR_FILE_FLAG=$(MISC)$/ex_$(TARGET)_files.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

@@ -58,7 +58,7 @@ SF_FILES=\
     $(DESTSF)$/ScriptSelector$/ScriptSelector$/parcel-descriptor.xml
 
 DIR_FILE_LIST= \
-    $(SF_FILES) \
+	$(SF_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_sf_dirs_created.txt
@@ -68,8 +68,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_sf.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

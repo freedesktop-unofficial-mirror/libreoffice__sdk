@@ -46,10 +46,10 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/all_dts.obj		\
-    $(OBJ)$/all_tags.obj	\
-    $(OBJ)$/ci_attag.obj	\
-    $(OBJ)$/ci_text.obj
+	$(OBJ)$/all_dts.obj		\
+	$(OBJ)$/all_tags.obj	\
+	$(OBJ)$/ci_attag.obj	\
+	$(OBJ)$/ci_text.obj
 
 
 # --- Targets ------------------------------------------------------

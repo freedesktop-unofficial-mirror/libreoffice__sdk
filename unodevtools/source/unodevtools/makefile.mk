@@ -38,9 +38,9 @@ ENABLE_EXCEPTIONS=TRUE
 # ------------------------------------------------------------------
 
 SLOFILES= \
-    $(SLO)$/typemanager.obj	\
-    $(SLO)$/typeblob.obj \
-    $(SLO)$/options.obj
+	$(SLO)$/typemanager.obj	\
+	$(SLO)$/typeblob.obj \
+	$(SLO)$/options.obj
 
 LIB1TARGET=$(LB)$/$(TARGET).lib
 LIB1ARCHIV=$(LB)$/lib$(TARGET).a

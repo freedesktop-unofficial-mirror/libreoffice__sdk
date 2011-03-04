@@ -83,8 +83,8 @@ JAVADOCLOG = $(MISC)$/javadoc_log.txt
 
 .IF "$(SOLAR_JAVA)"!=""
 all: \
-    $(CPP_DOCU_INDEX_FILE) \
-    $(JAVA_DOCU_INDEX_FILE)
+	$(CPP_DOCU_INDEX_FILE) \
+	$(JAVA_DOCU_INDEX_FILE)
 
 .ELSE
 all: $(CPP_DOCU_INDEX_FILE)
@@ -92,19 +92,19 @@ all: $(CPP_DOCU_INDEX_FILE)
 
 
 $(CPP_DOCU_CLEANUP_FLAG) : $(INCLUDELIST) $(PRJ)$/docs$/cpp$/ref$/cpp.css
-    @@-$(MY_DELETE_RECURSIVE) $(DESTDIRGENCPPREF)
-    $(TOUCH) $@
+	@@-$(MY_DELETE_RECURSIVE) $(DESTDIRGENCPPREF)
+	$(TOUCH) $@
 
 $(CPP_DOCU_INDEX_FILE) : $(CPP_DOCU_CLEANUP_FLAG)
-    -$(MKDIRHIER) $(@:d)        
-    $(MY_AUTODOC) -html $(DESTDIRGENCPPREF) -name $(CPPDOCREFNAME) $(AUTODOCPARAMS)
-    -rm $(@:d:d)$/cpp.css
-    $(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $(PRJ)$/docs$/cpp$/ref$/cpp.css $(MY_TEXTCOPY_TARGETPRE) $(@:d:d)$/cpp.css
+	-$(MKDIRHIER) $(@:d)        
+	$(MY_AUTODOC) -html $(DESTDIRGENCPPREF) -name $(CPPDOCREFNAME) $(AUTODOCPARAMS)
+	-rm $(@:d:d)$/cpp.css
+	$(MY_TEXTCOPY) $(MY_TEXTCOPY_SOURCEPRE) $(PRJ)$/docs$/cpp$/ref$/cpp.css $(MY_TEXTCOPY_TARGETPRE) $(@:d:d)$/cpp.css
 
 $(JAVA_SRC_FILES) : $(SOLARCOMMONBINDIR)$/$$(@:f)
-    -$(MKDIRHIER) $(@:d)        
-    $(MY_COPY) $< $@
-    cd $(JAVA_SRC_DIR) && unzip -quo $(@:f)
+	-$(MKDIRHIER) $(@:d)        
+	$(MY_COPY) $< $@
+	cd $(JAVA_SRC_DIR) && unzip -quo $(@:f)
 
 #$(JAVA_SRC_DIR)$/com$/sun$/star$/beans$/%.java : $(PRJ)$/source$/bean$/com$/sun$/star$/beans$/%.java 
 #	-$(MKDIRHIER) $(@:d)        
@@ -113,8 +113,8 @@ $(JAVA_SRC_FILES) : $(SOLARCOMMONBINDIR)$/$$(@:f)
 #$(JAVA_DOCU_INDEX_FILE) .SEQUENTIAL : $(JAVA_SRC_FILES) $(JAVA_BEAN_SRC_FILES)
 .IF "$(SOLAR_JAVA)"!=""
 $(JAVA_DOCU_INDEX_FILE) .SEQUENTIAL : $(JAVA_SRC_FILES)
-    -$(MKDIRHIER) $(@:d)        
-    $(JAVADOC) -J-Xmx120m $(JAVADOCPARAMS) > $(JAVADOCLOG)
+	-$(MKDIRHIER) $(@:d)        
+	$(JAVADOC) -J-Xmx120m $(JAVADOCPARAMS) > $(JAVADOCLOG)
 .ENDIF
 
 .ELSE

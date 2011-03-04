@@ -41,8 +41,8 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 LIB1FILES= 	\
-        $(LB)$/csi_html.lib     \
-        $(LB)$/csi_xml.lib
+		$(LB)$/csi_html.lib     \
+		$(LB)$/csi_xml.lib
 
 
 # --- Targets ------------------------------------------------------

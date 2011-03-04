@@ -43,7 +43,7 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/xmlitem.obj
+	$(OBJ)$/xmlitem.obj
 
 
 

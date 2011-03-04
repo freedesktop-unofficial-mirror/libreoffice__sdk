@@ -40,31 +40,31 @@ TARGET=copying
 #----------------------------------------------------
 
 BASICANDDIALOGS_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/FirstStepsBasic.odt
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/FirstStepsBasic.odt
 
 CREATINGDIALOGS_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/SampleDialog.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/CreatingDialogs.odt \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/Makefile
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/SampleDialog.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/CreatingDialogs.odt \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/CreatingDialogs$/Makefile
 
 TOOLKITCONTROLS_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls.odt \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/dialog.xlb \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/FileDialog.xba \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/FileDialogDlg.xdl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/MultiPage.xba \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/MultiPageDlg.xdl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ProgressBar.xba \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ProgressBarDlg.xdl \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/script.xlb \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ScrollBar.xba \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ScrollBarDlg.xdl
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls.odt \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/dialog.xlb \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/FileDialog.xba \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/FileDialogDlg.xdl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/MultiPage.xba \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/MultiPageDlg.xdl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ProgressBar.xba \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ProgressBarDlg.xdl \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/script.xlb \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ScrollBar.xba \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/BasicAndDialogs$/ToolkitControls$/ToolkitControls$/ScrollBarDlg.xdl
 
 DIR_FILE_LIST= \
-    $(BASICANDDIALOGS_FILES) \
-    $(CREATINGDIALOGS_FILES) \
-    $(TOOLKITCONTROLS_FILES)
+	$(BASICANDDIALOGS_FILES) \
+	$(CREATINGDIALOGS_FILES) \
+	$(TOOLKITCONTROLS_FILES)
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_basicanddialogs_dirs_created.txt
@@ -74,8 +74,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_basicanddialogs.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

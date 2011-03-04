@@ -40,11 +40,11 @@ TARGET=copying
 #----------------------------------------------------
 
 CONFIG_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Config$/ConfigExamples.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Config$/Makefile
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Config$/ConfigExamples.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Config$/Makefile
 
 DIR_FILE_LIST= \
-    $(CONFIG_FILES) \
+	$(CONFIG_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_config_dirs_created.txt
@@ -54,8 +54,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_config.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

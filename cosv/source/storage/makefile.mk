@@ -46,13 +46,13 @@ ENABLE_EXCEPTIONS=true
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/dirchain.obj 	\
-    $(OBJ)$/file.obj 		\
-    $(OBJ)$/mbstream.obj    \
-    $(OBJ)$/persist.obj	    \
-    $(OBJ)$/ploc.obj 	    \
-    $(OBJ)$/ploc_dir.obj    \
-    $(OBJ)$/plocroot.obj
+	$(OBJ)$/dirchain.obj 	\
+	$(OBJ)$/file.obj 		\
+	$(OBJ)$/mbstream.obj    \
+	$(OBJ)$/persist.obj	    \
+	$(OBJ)$/ploc.obj 	    \
+	$(OBJ)$/ploc_dir.obj    \
+	$(OBJ)$/plocroot.obj
 
 #SLOFILES= \
 #	$(SLO)$/file.obj 		\

@@ -40,14 +40,14 @@ TARGET=copying
 #----------------------------------------------------
 
 TEXT_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Text$/Makefile \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Text$/PrintDemo.odt \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Text$/TextDocuments.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/Text$/TextTemplateWithUserFields.odt
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Text$/Makefile \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Text$/PrintDemo.odt \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Text$/TextDocuments.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/Text$/TextTemplateWithUserFields.odt
 #	$(DESTDIRDEVGUIDEEXAMPLES)$/Text$/ViewCursorExample.sxw
 
 DIR_FILE_LIST= \
-    $(TEXT_FILES) \
+	$(TEXT_FILES) \
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_text_dirs_created.txt
@@ -57,8 +57,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_text.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

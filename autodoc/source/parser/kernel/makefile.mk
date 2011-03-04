@@ -45,9 +45,9 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/parsefct.obj    \
-    $(OBJ)$/x_docu.obj      \
-    $(OBJ)$/x_parse.obj
+	$(OBJ)$/parsefct.obj    \
+	$(OBJ)$/x_docu.obj      \
+	$(OBJ)$/x_parse.obj
 
 
 # --- Targets ------------------------------------------------------

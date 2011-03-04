@@ -44,13 +44,13 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/cx_docu2.obj	\
-    $(OBJ)$/cx_dsapi.obj	\
-    $(OBJ)$/docu_pe2.obj	\
-    $(OBJ)$/tk_atag2.obj  	\
-    $(OBJ)$/tk_docw2.obj   	\
-    $(OBJ)$/tk_html.obj   	\
-    $(OBJ)$/tk_xml.obj
+	$(OBJ)$/cx_docu2.obj	\
+	$(OBJ)$/cx_dsapi.obj	\
+	$(OBJ)$/docu_pe2.obj	\
+	$(OBJ)$/tk_atag2.obj  	\
+	$(OBJ)$/tk_docw2.obj   	\
+	$(OBJ)$/tk_html.obj   	\
+	$(OBJ)$/tk_xml.obj
 
 
 

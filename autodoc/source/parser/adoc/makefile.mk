@@ -43,14 +43,14 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/adoc_tok.obj   	\
-    $(OBJ)$/a_rdocu.obj		\
-    $(OBJ)$/cx_a_std.obj	\
-    $(OBJ)$/cx_a_sub.obj	\
-    $(OBJ)$/docu_pe.obj		\
-    $(OBJ)$/prs_adoc.obj	\
-    $(OBJ)$/tk_attag.obj  	\
-    $(OBJ)$/tk_docw.obj
+	$(OBJ)$/adoc_tok.obj   	\
+	$(OBJ)$/a_rdocu.obj		\
+	$(OBJ)$/cx_a_std.obj	\
+	$(OBJ)$/cx_a_sub.obj	\
+	$(OBJ)$/docu_pe.obj		\
+	$(OBJ)$/prs_adoc.obj	\
+	$(OBJ)$/tk_attag.obj  	\
+	$(OBJ)$/tk_docw.obj
 
 
 

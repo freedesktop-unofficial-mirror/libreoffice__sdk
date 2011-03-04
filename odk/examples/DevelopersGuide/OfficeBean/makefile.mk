@@ -40,15 +40,15 @@ TARGET=copying
 #----------------------------------------------------
 
 OFFICEBEAN_FILES=\
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OOoBeanViewer.java \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconColor16.jpg \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconColor32.jpg \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconMono16.jpg \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconMono32.jpg \
-    $(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/Makefile
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OOoBeanViewer.java \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconColor16.jpg \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconColor32.jpg \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconMono16.jpg \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/OfficeIconMono32.jpg \
+	$(DESTDIRDEVGUIDEEXAMPLES)$/OfficeBean$/Makefile
 
 DIR_FILE_LIST= \
-    $(OFFICEBEAN_FILES) 
+	$(OFFICEBEAN_FILES) 
 
 DIR_DIRECTORY_LIST=$(uniq $(DIR_FILE_LIST:d))
 DIR_CREATE_FLAG=$(MISC)$/devguide_officebean_dirs_created.txt
@@ -58,8 +58,8 @@ DIR_FILE_FLAG=$(MISC)$/devguide_officebean.txt
 # TARGETS
 #--------------------------------------------------
 all : \
-    $(DIR_FILE_LIST) \
-    $(DIR_FILE_FLAG)
+	$(DIR_FILE_LIST) \
+	$(DIR_FILE_FLAG)
 
 #--------------------------------------------------
 # use global rules

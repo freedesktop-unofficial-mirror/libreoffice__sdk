@@ -46,8 +46,8 @@ PRJINC=$(PRJ)$/source
 # --- Files --------------------------------------------------------
 
 OBJFILES= \
-    $(OBJ)$/filecoll.obj	\
-    $(OBJ)$/tkpchars.obj 
+	$(OBJ)$/filecoll.obj	\
+	$(OBJ)$/tkpchars.obj 
 
 
 # --- Targets ------------------------------------------------------

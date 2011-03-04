@@ -46,9 +46,9 @@ PRJINC=$(PRJ)$/source
 
 
 OBJFILES= \
-    $(OBJ)$/ci_atag2.obj	\
-    $(OBJ)$/ci_text2.obj	\
-    $(OBJ)$/d_token.obj
+	$(OBJ)$/ci_atag2.obj	\
+	$(OBJ)$/ci_text2.obj	\
+	$(OBJ)$/d_token.obj
 
 
 
