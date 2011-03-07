@@ -48,6 +48,7 @@
 
 #include <osl/file.hxx>
 #include <osl/process.h>
+#include <rtl/process.h>
 
 #include <com/sun/star/beans/XPropertySet.hpp>
 #include <com/sun/star/bridge/XUnoUrlResolver.hpp>
@@ -71,36 +72,22 @@ using namespace com::sun::star::registry;
 SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
 {
     OUString sConnectionString(RTL_CONSTASCII_USTRINGPARAM("uno:socket,host=localhost,port=2083;urp;StarOffice.ServiceManager"));
-     if (argc < 2)
+
+    sal_Int32 nCount = (sal_Int32)rtl_getAppCommandArgCount();
+
+    if (nCount < 1)
     {
-        printf("using: DocumentLoader <file_url> [<uno_connection_url>]\n\n"
-               "example: DocumentLoader  \"file:///e:/temp/test.odt\" \"uno:socket,host=localhost,port=2083;urp;StarOffice.ServiceManager\"\n");
+        printf("using: DocumentLoader -env:URE_MORE_TYPES=<office_types_rdb_url> <file_url> [<uno_connection_url>]\n\n"
+               "example: DocumentLoader -env:URE_MORE_TYPES=\"file:///.../basis-link/program/offapi.rdb\" \"file:///e:/temp/test.odt\" \"uno:socket,host=localhost,port=2083;urp;StarOffice.ServiceManager\"\n");
         exit(1);
     }
-     if (argc == 3)
+     if (nCount == 2)
     {
-        sConnectionString = OUString::createFromAscii(argv[2]);        
+        rtl_getAppCommandArg(1, &sConnectionString.pData);
     }
-    
-    // Creates a simple registry service instance.
-    Reference< XSimpleRegistry > xSimpleRegistry(
-        ::cppu::createSimpleRegistry() );
 
-    // Connects the registry to a persistent data source represented by an URL.
-    xSimpleRegistry->open( OUString( RTL_CONSTASCII_USTRINGPARAM(
-        "DocumentLoader.rdb") ), sal_True, sal_False );
+    Reference< XComponentContext > xComponentContext(::cppu::defaultBootstrap_InitialComponentContext());
 
-    /* Bootstraps an initial component context with service manager upon a given
-       registry. This includes insertion of initial services:
-       - (registry) service manager, shared lib loader,
-       - simple registry, nested registry,
-       - implementation registration
-       - registry typedescription provider, typedescription manager (also
-         installs it into cppu core)
-    */
-    Reference< XComponentContext > xComponentContext(
-        ::cppu::bootstrap_InitialComponentContext( xSimpleRegistry ) );
-    
     /* Gets the service manager instance to be used (or null). This method has
        been added for convenience, because the service manager is a often used
        object.
@@ -131,7 +118,7 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
                OUStringToOString(e.Message, RTL_TEXTENCODING_ASCII_US).getStr());
         exit(1);        
     }
-    
+
     // gets the server component context as property of the office component factory
     Reference< XPropertySet > xPropSet( xInterface, UNO_QUERY );
     xPropSet->getPropertyValue( OUString::createFromAscii("DefaultContext") ) >>= xComponentContext;
@@ -139,7 +126,7 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
     // gets the service manager from the office
     Reference< XMultiComponentFactory > xMultiComponentFactoryServer(
         xComponentContext->getServiceManager() );
-  
+
     /* Creates an instance of a component which supports the services specified
        by the factory. Important: using the office component context.
     */
@@ -151,9 +138,11 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
     /* Loads a component specified by an URL into the specified new or existing
        frame.
     */
-    OUString sAbsoluteDocUrl, sWorkingDir, sDocPathUrl;
+    OUString sAbsoluteDocUrl, sWorkingDir, sDocPathUrl, sArgDocUrl;
+    rtl_getAppCommandArg(0, &sArgDocUrl.pData);
+
     osl_getProcessWorkingDir(&sWorkingDir.pData);
-    osl::FileBase::getFileURLFromSystemPath( OUString::createFromAscii(argv[1]), sDocPathUrl);
+    osl::FileBase::getFileURLFromSystemPath( sArgDocUrl, sDocPathUrl);
     osl::FileBase::getAbsoluteFileURL( sWorkingDir, sDocPathUrl, sAbsoluteDocUrl);
     
     Reference< XComponent > xComponent = xComponentLoader->loadComponentFromURL(
