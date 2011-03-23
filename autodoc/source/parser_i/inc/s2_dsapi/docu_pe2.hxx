@@ -2,7 +2,7 @@
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- * 
+ *
  * Copyright 2000, 2010 Oracle and/or its affiliates.
  *
  * OpenOffice.org - a multi-platform office productivity suite
@@ -145,13 +145,20 @@ class SapiDocu_PE : public TokenInterpreter
     void				SetCurSeeAlsoAtTagLinkText_3(
                             DYN ary::inf::DocuToken &
                                                 let_drNewToken );
-    void				SetCurSinceAtTagVersion(
+    void				SetCurSinceAtTagVersion_OOo(
+                            DYN ary::inf::DocuToken &
+                                                let_drNewToken );
+    void				SetCurSinceAtTagVersion_Number(
                             DYN ary::inf::DocuToken &
                                                 let_drNewToken );
     void				AddDocuToken2SinceAtTag(
                             DYN ary::inf::DocuToken &
                                                 let_drNewToken );
 
+    bool				CheckVersionSyntax_OOo(
+                            const String &      i_versionPart1 );
+    bool				CheckVersionSyntax_Number(
+                            const String &      i_versionPart2 );
     // DATA
     Dyn<ary::doc::OldIdlDocu>
                         pDocu;
