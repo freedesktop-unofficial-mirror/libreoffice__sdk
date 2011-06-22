@@ -69,7 +69,7 @@ public class TestServiceProvider
 //             TestComponentB.class.getName(),
 //             TestComponentB.__serviceName, regKey);
 //         return bregA && bregB;
-//     }     
+//     }
 }
 
 

@@ -1,7 +1,8 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- * 
+ *
  * Copyright 2000, 2010 Oracle and/or its affiliates.
  *
  * OpenOffice.org - a multi-platform office productivity suite
@@ -31,31 +32,20 @@
 #include <codemaker/typemanager.hxx>
 #include <com/sun/star/container/XHierarchicalNameAccess.hpp>
 
-#include <hash_map>
+#include <boost/unordered_map.hpp>
 #include <vector>
 
 class RegistryKey;
 
 namespace typereg { class Reader; }
 
-#if defined( _MSC_VER ) && ( _MSC_VER < 1200 )
-typedef	::std::__hash_map__
-<	
+typedef boost::unordered_map
+<
     ::rtl::OString, // Typename
     RTTypeClass, 	// TypeClass
-    HashString, 
-    EqualString, 
-    NewAlloc
-> T2TypeClassMap; 
-#else
-typedef	::std::hash_map
-<	
-    ::rtl::OString, // Typename
-    RTTypeClass, 	// TypeClass
-    HashString, 
+    HashString,
     EqualString
-> T2TypeClassMap; 
-#endif
+> T2TypeClassMap;
 
 namespace unodevtools {
 
@@ -66,7 +56,7 @@ struct UnoTypeManagerImpl
     T2TypeClassMap	m_t2TypeClass;
     ::com::sun::star::uno::Reference<
         ::com::sun::star::container::XHierarchicalNameAccess> m_tdmgr;
-};	
+};
 
 class UnoTypeManager : public TypeManager
 {
@@ -98,3 +88,5 @@ protected:
 }
 
 #endif // _UNODEVTOOLS_TYPEMANAGER_HXX_
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
